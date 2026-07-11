@@ -1,17 +1,21 @@
 #include <iostream>
+#include <filesystem>
 
 #include "GameDatabase.hpp"
 #include "ProfileBuilder.hpp"
+#include "ProfileExporter.hpp"
 #include "EnumConverter.hpp"
 
 int main()
 {
+    const std::string dbPath = (std::filesystem::path(PROJECT_ROOT) / "data/animegamedata2").string();
+    const std::string outputPath = (std::filesystem::path(PROJECT_ROOT) / "output").string();
+
     GameDatabase db;
 
     try
     {
-        db.Load(
-            "data/animegamedata2");
+        db.Load(dbPath);
     }
     catch (const std::exception &e)
     {
@@ -23,25 +27,40 @@ int main()
         return 1;
     }
 
-    try
-    {
-        ProfileBuilder builder;
+    ProfileBuilder builder;
 
-        for (const auto &[id, avatar] : db.GetAvatars())
+    ProfileExporter exporter;
+
+    const auto avatars = db.GetAvatars();
+
+    for (const auto &[id, avatar] : avatars)
+    {
+        // Skip test characters
+        if (avatar.useType != "AVATAR_FORMAL")
+            continue;
+        
+        // There are some avatars that are malformed, so we need to skip them
+        try
         {
-            auto profile = builder.Build(avatar, db);
-
-            std::cout << profile.name << '\n';
+            db.GetFetterInfo(avatar.id);
         }
-    }
-    catch (const std::exception &e)
-    {
-        std::cerr << "Exception type: "
-                  << typeid(e).name() << '\n';
-        std::cerr << "Message: "
-                  << e.what() << '\n';
+        catch (const std::out_of_range &)
+        {
+            continue;
+        }
 
-        return 1;
+        // Skipping manekins
+        if (avatar.id == 10000117 || avatar.id == 10000118) 
+        {
+            continue;
+        }
+
+        auto profile = builder.Build(avatar, db);
+
+        exporter.Export(
+            profile,
+            outputPath + "/characters"
+        );
     }
 
     return 0;

@@ -3,6 +3,8 @@
 #include <map>
 #include <optional>
 
+#include <nlohmann/json.hpp>
+
 #include "CharacterProfile.hpp"
 #include "CharacterTalents.hpp"
 #include "CharacterStats.hpp"
@@ -15,20 +17,39 @@ struct CharacterVariant
     CharacterConstellation constellation;
 };
 
+inline void to_json(
+    nlohmann::json &j,
+    const CharacterVariant &variant)
+{
+    j = nlohmann::json{
+        {"talents", variant.talents},
+        {"constellation", variant.constellation}};
+}
+
 struct Character
 {
     CharacterProfile profile;
 
-    std::optional<CharacterTalents>
-        talents;
+    CharacterTalents talents;
 
     CharacterStats stats;
 
-    std::optional<CharacterConstellation>
-        constellation;
+    CharacterConstellation constellation;
 
     std::map<
         ElementType,
         CharacterVariant>
         variants;
 };
+
+inline void to_json(
+    nlohmann::json &j,
+    const Character &character)
+{
+    j = nlohmann::json{
+        {"profile", character.profile},
+        {"talents", character.talents},
+        {"stats", character.stats},
+        {"constellation", character.constellation},
+        {"variants", character.variants}};
+}

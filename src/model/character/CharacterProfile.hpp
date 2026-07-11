@@ -5,7 +5,10 @@
 #include <vector>
 
 #include "Enums.hpp"
+#include "EnumConverter.hpp"
 #include "Item.hpp"
+
+#include <nlohmann/json.hpp>
 
 struct CharacterImages
 {
@@ -15,6 +18,18 @@ struct CharacterImages
     std::string gachaSplash;
     std::string gachaSlice;
 };
+
+inline void to_json(
+    nlohmann::json &j,
+    const CharacterImages &images)
+{
+    j = nlohmann::json{
+        {"icon", images.icon},
+        {"iconCard", images.iconCard},
+        {"sideIcon", images.sideIcon},
+        {"gachaSplash", images.gachaSplash},
+        {"gachaSlice", images.gachaSlice}};
+}
 
 struct CharacterProfile
 {
@@ -53,3 +68,27 @@ struct CharacterProfile
 
     bool isTraveler = false;
 };
+
+inline void to_json(
+    nlohmann::json &j,
+    const CharacterProfile &profile)
+{
+    j = nlohmann::json{
+        {"id", profile.id},
+        {"name", profile.name},
+        {"normalizedName", profile.normalizedName},
+        {"title", profile.title},
+        {"description", profile.description},
+        {"weaponType", WeaponTypeToDM(profile.weaponType)},
+        {"qualityType", QualityTypeToDM(profile.qualityType)},
+        {"rarity", profile.rarity},
+        {"birthdayMMDD", profile.birthdayMMDD},
+        {"elementType", ElementTypeToDM(profile.elementType)},
+        {"affiliation", profile.affiliation},
+        {"substatType", StatTypeToDM(profile.substatType)},
+        {"constellation", profile.constellation},
+        {"ascensionCosts", profile.ascensionCosts},
+        {"images", profile.images},
+        {"version", profile.version},
+        {"isTraveler", profile.isTraveler}};
+}

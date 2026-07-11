@@ -126,7 +126,7 @@ GameDatabase::GetAvatar(int id) const
     return avatars.at(id);
 }
 
-const std::unordered_map<int, AvatarExcelConfig> &
+const std::unordered_map<int, AvatarExcelConfig>
 GameDatabase::GetAvatars() const
 {
     return avatars;

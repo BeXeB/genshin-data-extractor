@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 
+#include <nlohmann/json.hpp>
+
 #include "Item.hpp"
 
 struct CombatTalent
@@ -22,6 +24,18 @@ struct CombatTalent
         parameters;
 };
 
+inline void to_json(
+    nlohmann::json &j,
+    const CombatTalent &talent)
+{
+    j = nlohmann::json{
+        {"name", talent.name},
+        {"description", talent.description},
+        {"descriptionRaw", talent.descriptionRaw},
+        {"labels", talent.labels},
+        {"parameters", talent.parameters}};
+}
+
 struct PassiveTalent
 {
     std::string name;
@@ -29,6 +43,16 @@ struct PassiveTalent
     std::string description;
     std::string descriptionRaw;
 };
+
+inline void to_json(
+    nlohmann::json &j,
+    const PassiveTalent &talent)
+{
+    j = nlohmann::json{
+        {"name", talent.name},
+        {"description", talent.description},
+        {"descriptionRaw", talent.descriptionRaw}};
+}
 
 struct CharacterTalents
 {
@@ -47,6 +71,20 @@ struct CharacterTalents
 
     std::array<std::vector<Item>, 9>
         levelCosts;
-
-    std::string version;
 };
+
+inline void to_json(
+    nlohmann::json &j,
+    const CharacterTalents &talents)
+{
+    j = nlohmann::json{
+        {"id", talents.id},
+        {"name", talents.name},
+        {"combat1", talents.combat1},
+        {"combat2", talents.combat2},
+        {"combat3", talents.combat3},
+        {"passive1", talents.passive1},
+        {"passive2", talents.passive2},
+        {"passiveExtra", talents.passiveExtra},
+        {"levelCosts", talents.levelCosts}};
+}

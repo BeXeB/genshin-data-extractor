@@ -3,6 +3,8 @@
 #include <array>
 #include <string>
 
+#include <nlohmann/json.hpp>
+
 struct ConstellationDetail
 {
     std::string name;
@@ -11,6 +13,17 @@ struct ConstellationDetail
 
     std::string descriptionRaw;
 };
+
+inline void to_json(
+    nlohmann::json &j,
+    const ConstellationDetail &detail)
+{
+    j = nlohmann::json{
+        {"name", detail.name},
+        {"description", detail.description},
+        {"descriptionRaw", detail.descriptionRaw}
+    };
+}
 
 struct CharacterConstellation
 {
@@ -27,6 +40,16 @@ struct CharacterConstellation
         std::string,
         6>
         images;
-
-    std::string version;
 };
+
+inline void to_json(
+    nlohmann::json &j,
+    const CharacterConstellation &constellation)
+{
+    j = nlohmann::json{
+        {"id", constellation.id},
+        {"name", constellation.name},
+        {"constellations", constellation.constellations},
+        {"images", constellation.images}
+    };
+}

@@ -72,6 +72,6 @@ vcpkg_installed/
 Testing/
 .cache/
 
-output/*.json
+output/*/*.json
 data/*
 !data/.gitkeep

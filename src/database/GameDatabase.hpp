@@ -18,7 +18,8 @@ public:
 
     const AvatarExcelConfig &GetAvatar(
         int id) const;
-    const std::unordered_map<int, AvatarExcelConfig> &GetAvatars() const;
+
+    const std::unordered_map<int, AvatarExcelConfig> GetAvatars() const;
 
     const FetterInoExcelConfig &GetFetterInfo(
         int avatarId) const;

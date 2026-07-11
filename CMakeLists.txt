@@ -23,10 +23,10 @@ add_executable(
     src/database/GameDatabase.cpp
 
     src/builder/character/ProfileBuilder.cpp
-    
+    src/export/character/ProfileExporter.cpp
+
     src/util/EnumConverter.cpp
-    src/util/Slug.cpp
-)
+    src/util/Slug.cpp)
 
 target_include_directories(
     GenshinDataExtractor
@@ -35,6 +35,8 @@ target_include_directories(
     src/database
     src/builder
     src/builder/character
+    src/export
+    src/export/character
     src/model
     src/util
 )
@@ -45,6 +47,6 @@ target_link_libraries(
     nlohmann_json::nlohmann_json
 )
 
-set_property(TARGET GenshinDataExtractor PROPERTY
-    VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+target_compile_definitions(GenshinDataExtractor PRIVATE
+    PROJECT_ROOT="${CMAKE_SOURCE_DIR}"
 )
