@@ -17,20 +17,34 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(json)
 
-
 add_executable(
     GenshinDataExtractor
     src/main.cpp
+    src/database/GameDatabase.cpp
+
+    src/builder/character/ProfileBuilder.cpp
+    
+    src/util/EnumConverter.cpp
+    src/util/Slug.cpp
 )
 
 target_include_directories(
     GenshinDataExtractor
     PRIVATE
-    include
+    src
+    src/database
+    src/builder
+    src/builder/character
+    src/model
+    src/util
 )
 
 target_link_libraries(
     GenshinDataExtractor
     PRIVATE
     nlohmann_json::nlohmann_json
+)
+
+set_property(TARGET GenshinDataExtractor PROPERTY
+    VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
 )
