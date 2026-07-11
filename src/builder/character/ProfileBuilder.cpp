@@ -49,15 +49,17 @@ CharacterProfile ProfileBuilder::Build(const AvatarExcelConfig &avatar,
         db.GetText(
             fetter.avatarNativeTextMapHash);
 
-    profile.substatType =
-        db.GetCharacterSubstat(
-            avatar.id);
+    const auto& promotes =
+        db.GetAvatarPromoteInfo(
+            avatar.avatarPromoteId);
+
+    profile.substatType = GetCharacterSubstat(promotes);
 
     profile.constellation =
         db.GetText(
             fetter.avatarConstellationBeforTextMapHash);
 
-    // ascensionCosts
+    profile.ascensionCosts = GetCharacterAscensionCosts(promotes, db);
 
     // to get the rest of the images we need to get the suffix of the icon,
     // then we can build the rest of the image names from that suffix.
@@ -78,8 +80,76 @@ CharacterProfile ProfileBuilder::Build(const AvatarExcelConfig &avatar,
     profile.version =
         "unknown";
 
-    profile.isTraveler =
-        profile.id == 10000005 || profile.id == 10000007;
-
     return profile;
+}
+
+StatType ProfileBuilder::GetCharacterSubstat(
+    const std::vector<AvatarPromoteExcelConfig>& promotes
+) const 
+{
+
+    const auto& first = promotes.front();
+    for (const auto& prop : first.addProps)
+    {
+        if (prop.propType == StatTypeToDM(StatType::BaseHp))
+            continue;
+        if (prop.propType == StatTypeToDM(StatType::BaseAttack))
+            continue;
+        if (prop.propType == StatTypeToDM(StatType::BaseDefense))
+            continue;
+
+        return StatTypeFromDM(
+            prop.propType);
+    }
+
+    return StatType::Unknown;
+}
+
+std::array<std::vector<Item>, 6>
+ProfileBuilder::GetCharacterAscensionCosts(
+    const std::vector<AvatarPromoteExcelConfig>& promotes,
+    const GameDatabase& db
+) const
+{
+    std::array<std::vector<Item>, 6> result;
+
+    auto& moraMaterial =
+        db.GetMaterial(202);
+    std::string moraName = 
+        db.GetText(moraMaterial.nameTextMapHash);
+
+    for (const auto& promote : promotes) {
+        if (promote.promoteLevel == 0) 
+        {
+            continue;
+        }
+
+        Item mora;
+        mora.id = 202;
+        mora.name = moraName;
+        mora.count = promote.scoinCost;
+        result[promote.promoteLevel - 1].push_back(mora);
+
+        for (const auto& cost : promote.costItems)
+        {
+            if (cost.id == 0) 
+            {
+                continue;
+            }
+
+            auto& material =
+                db.GetMaterial(cost.id);
+
+            Item item;
+
+            item.id = material.id;
+            item.name =
+                db.GetText(material.nameTextMapHash);
+            item.count = cost.count;
+
+            result[promote.promoteLevel - 1].push_back(item);
+        }
+    }
+
+    return result;
 }

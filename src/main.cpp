@@ -31,7 +31,7 @@ int main()
 
     ProfileExporter exporter;
 
-    const auto avatars = db.GetAvatars();
+    const auto& avatars = db.GetAvatars();
 
     for (const auto &[id, avatar] : avatars)
     {

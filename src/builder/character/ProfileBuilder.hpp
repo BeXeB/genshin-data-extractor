@@ -15,4 +15,15 @@ public:
         const AvatarExcelConfig &avatar,
         const GameDatabase &db
     ) const;
+
+private:
+
+    StatType GetCharacterSubstat(
+        const std::vector<AvatarPromoteExcelConfig>& promotes
+    ) const;
+
+    std::array<std::vector<Item>, 6> GetCharacterAscensionCosts(
+        const std::vector<AvatarPromoteExcelConfig>& promotes,
+        const GameDatabase& db
+    ) const;
 };

@@ -7,6 +7,7 @@
 #include "dm/AvatarExcelConfig.hpp"
 #include "dm/FetterInoExcelConfig.hpp"
 #include "dm/AvatarPromoteExcelConfig.hpp"
+#include "dm/MaterialExcelConfig.hpp"
 #include "dm/TextMap.hpp"
 #include "model/Enums.hpp"
 
@@ -19,7 +20,7 @@ public:
     const AvatarExcelConfig &GetAvatar(
         int id) const;
 
-    const std::unordered_map<int, AvatarExcelConfig> GetAvatars() const;
+    const std::unordered_map<int, AvatarExcelConfig> &GetAvatars() const;
 
     const FetterInoExcelConfig &GetFetterInfo(
         int avatarId) const;
@@ -27,8 +28,9 @@ public:
     const std::vector<AvatarPromoteExcelConfig> &GetAvatarPromoteInfo(
         int promoteId) const;
 
-    StatType GetCharacterSubstat(
-        int avatarId) const;
+    const MaterialExcelConfig &GetMaterial(
+        int id) const;
+
 
     std::string GetText(
         uint64_t hash) const;
@@ -42,6 +44,9 @@ private:
 
     void LoadAvatarPromoteInfo(
         const std::string &path);
+
+    void LoadMaterials(
+        const std::string& path);
 
     TextMap textMap;
 
@@ -59,6 +64,11 @@ private:
         int,
         std::vector<AvatarPromoteExcelConfig>>
         avatarPromotes;
+
+    std::unordered_map<
+        int,
+        MaterialExcelConfig>
+        materials;
 
     nlohmann::json LoadJson(
         const std::string &path) const;

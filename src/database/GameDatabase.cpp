@@ -21,35 +21,10 @@ void GameDatabase::Load(
         path + "/ExcelBinOutput/FetterInfoExcelConfigData.json");
     LoadAvatarPromoteInfo(
         path + "/ExcelBinOutput/AvatarPromoteExcelConfigData.json");
+    LoadMaterials(
+        path + "/ExcelBinOutput/MaterialExcelConfigData.json");
 
     std::cout << "Database loaded\n";
-}
-
-StatType GameDatabase::GetCharacterSubstat(
-    int avatarId) const
-{
-    const auto &avatar =
-        GetAvatar(avatarId);
-
-    const auto &promotes =
-        GetAvatarPromoteInfo(
-            avatar.avatarPromoteId);
-
-    const auto &first = promotes.front();
-    for (const auto &prop : first.addProps)
-    {
-        if (prop.propType == StatTypeToDM(StatType::BaseHp))
-            continue;
-        if (prop.propType == StatTypeToDM(StatType::BaseAttack))
-            continue;
-        if (prop.propType == StatTypeToDM(StatType::BaseDefense))
-            continue;
-
-        return StatTypeFromDM(
-            prop.propType);
-    }
-
-    return StatType::Unknown;
 }
 
 std::string GameDatabase::GetText(uint64_t hash) const
@@ -120,13 +95,29 @@ void GameDatabase::LoadAvatarPromoteInfo(
     }
 }
 
+void GameDatabase::LoadMaterials(
+    const std::string &path) 
+{
+    auto json = LoadJson(path);
+
+    for (const auto& entry : json)
+    {
+        MaterialExcelConfig material =
+            entry.get<MaterialExcelConfig>();
+
+        materials.emplace(
+            material.id,
+            std::move(material));
+    }
+}
+
 const AvatarExcelConfig &
 GameDatabase::GetAvatar(int id) const
 {
     return avatars.at(id);
 }
 
-const std::unordered_map<int, AvatarExcelConfig>
+const std::unordered_map<int, AvatarExcelConfig> &
 GameDatabase::GetAvatars() const
 {
     return avatars;
@@ -142,6 +133,12 @@ const std::vector<AvatarPromoteExcelConfig> &
 GameDatabase::GetAvatarPromoteInfo(int promoteId) const
 {
     return avatarPromotes.at(promoteId);
+}
+
+const MaterialExcelConfig &
+GameDatabase::GetMaterial(int id) const
+{
+    return materials.at(id);
 }
 
 nlohmann::json GameDatabase::LoadJson(

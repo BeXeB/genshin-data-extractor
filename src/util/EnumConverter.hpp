@@ -31,3 +31,10 @@ std::string StatTypeToDM(
     StatType type);
 std::string StatTypeToText(
     StatType type);
+
+MaterialType MaterialTypeFromDM(
+    const std::string &value);
+std::string StatTypeToDM(
+    StatType type);
+std::string StatTypeToText(
+    StatType type);

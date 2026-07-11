@@ -65,8 +65,6 @@ struct CharacterProfile
     CharacterImages images;
 
     std::string version;
-
-    bool isTraveler = false;
 };
 
 inline void to_json(
@@ -82,13 +80,11 @@ inline void to_json(
         {"weaponType", WeaponTypeToDM(profile.weaponType)},
         {"qualityType", QualityTypeToDM(profile.qualityType)},
         {"rarity", profile.rarity},
-        {"birthdayMMDD", profile.birthdayMMDD},
+        {"birthdaymmdd", profile.birthdayMMDD},
         {"elementType", ElementTypeToDM(profile.elementType)},
         {"affiliation", profile.affiliation},
         {"substatType", StatTypeToDM(profile.substatType)},
         {"constellation", profile.constellation},
-        {"ascensionCosts", profile.ascensionCosts},
         {"images", profile.images},
         {"version", profile.version},
-        {"isTraveler", profile.isTraveler}};
 }

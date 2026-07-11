@@ -62,3 +62,28 @@ enum class StatType
 
     Unknown
 };
+
+enum class MaterialType
+{
+    // These are the ingame types, will need to map these to custom ones
+    // Will also need to ignore ones we dont care about
+    // ADSORBATE,
+    // AVATAR_MATERIAL,
+    // CONSUME,
+    // ELEM_CRYSTAL,
+    // EXCHANGE,
+    // EXP_FRUIT,
+    // FISH_BAIT,
+    // FISH_ROD,
+    // NONE,
+    // NOTICE_ADD_HP,
+    // WEAPON_EXP_STONE,
+    // WOOD
+    Talent,
+    Boss,
+    Gemstone,
+    LocalSpecialty,
+    WeaponMaterial,
+    GenericMaterial,
+    XpAndMora
+};
