@@ -32,13 +32,6 @@ target_include_directories(
     GenshinDataExtractor
     PRIVATE
     src
-    src/database
-    src/builder
-    src/builder/character
-    src/export
-    src/export/character
-    src/model
-    src/util
 )
 
 target_link_libraries(

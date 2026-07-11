@@ -4,9 +4,9 @@
 #include <string>
 #include <vector>
 
-#include "Enums.hpp"
-#include "EnumConverter.hpp"
-#include "Item.hpp"
+#include "model/Enums.hpp"
+#include "util/EnumConverter.hpp"
+#include "model/Item.hpp"
 
 #include <nlohmann/json.hpp>
 
@@ -24,11 +24,11 @@ inline void to_json(
     const CharacterImages &images)
 {
     j = nlohmann::json{
-        {"icon", images.icon},
-        {"iconCard", images.iconCard},
-        {"sideIcon", images.sideIcon},
-        {"gachaSplash", images.gachaSplash},
-        {"gachaSlice", images.gachaSlice}};
+        {"filename_icon", images.icon},
+        {"filename_iconCard", images.iconCard},
+        {"filename_sideIcon", images.sideIcon},
+        {"filename_gachaSplash", images.gachaSplash},
+        {"filename_gachaSlice", images.gachaSlice}};
 }
 
 struct CharacterProfile
@@ -86,5 +86,5 @@ inline void to_json(
         {"substatType", StatTypeToDM(profile.substatType)},
         {"constellation", profile.constellation},
         {"images", profile.images},
-        {"version", profile.version},
+        {"version", profile.version}};
 }

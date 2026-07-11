@@ -7,7 +7,7 @@
 
 #include <nlohmann/json.hpp>
 
-#include "Item.hpp"
+#include "model/Item.hpp"
 
 struct CombatTalent
 {

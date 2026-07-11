@@ -5,7 +5,7 @@
 
 #include <nlohmann/json.hpp>
 
-#include "Enums.hpp"
+#include "model/Enums.hpp"
 
 struct MaterialExcelConfig
 {

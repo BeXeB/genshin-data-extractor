@@ -4,6 +4,7 @@
 #include "dm/FetterInoExcelConfig.hpp"
 #include "dm/TextMap.hpp"
 #include "model/character/CharacterProfile.hpp"
+#include "model/Item.hpp"
 #include "database/GameDatabase.hpp"
 
 

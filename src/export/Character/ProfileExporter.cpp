@@ -2,11 +2,11 @@
 
 #include <fstream>
 #include <filesystem>
+#include <iostream>
 
 #include <nlohmann/json.hpp>
 
-#include "Slug.hpp"
-#include <iostream>
+#include "util/Slug.hpp"
 
 
 void ProfileExporter::Export(

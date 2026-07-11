@@ -5,8 +5,8 @@
 
 #include <nlohmann/json.hpp>
 
-#include "Enums.hpp"
-#include "EnumConverter.hpp"
+#include "model/Enums.hpp"
+#include "util/EnumConverter.hpp"
 
 void GameDatabase::Load(
     const std::string &path)

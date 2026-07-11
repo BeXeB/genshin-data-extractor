@@ -1,10 +1,10 @@
 #include <iostream>
 #include <filesystem>
 
-#include "GameDatabase.hpp"
-#include "ProfileBuilder.hpp"
-#include "ProfileExporter.hpp"
-#include "EnumConverter.hpp"
+#include "database/GameDatabase.hpp"
+#include "builder/character/ProfileBuilder.hpp"
+#include "export/character/ProfileExporter.hpp"
+#include "util/EnumConverter.hpp"
 
 int main()
 {

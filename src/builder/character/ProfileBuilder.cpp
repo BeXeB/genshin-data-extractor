@@ -2,9 +2,10 @@
 
 #include <algorithm>
 #include <cctype>
-#include "../../util/Slug.hpp"
-#include "../../util/EnumConverter.hpp"
-#include "../../model/Enums.hpp"
+
+#include "util/Slug.hpp"
+#include "util/EnumConverter.hpp"
+#include "model/Enums.hpp"
 
 CharacterProfile ProfileBuilder::Build(const AvatarExcelConfig &avatar,
     const GameDatabase &db) const
