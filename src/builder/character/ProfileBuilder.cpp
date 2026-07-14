@@ -88,6 +88,10 @@ StatType ProfileBuilder::GetCharacterSubstat(
     const std::vector<AvatarPromoteExcelConfig>& promotes
 ) const 
 {
+    if (promotes.empty())
+    {
+        return StatType::Unknown;
+    }
 
     const auto& first = promotes.front();
     for (const auto& prop : first.addProps)
@@ -125,11 +129,20 @@ ProfileBuilder::GetCharacterAscensionCosts(
             continue;
         }
 
+        if (promote.promoteLevel < 1 ||
+            static_cast<size_t>(promote.promoteLevel) > result.size())
+        {
+            continue;
+        }
+
+        const size_t ascensionIndex =
+            static_cast<size_t>(promote.promoteLevel - 1);
+
         Item mora;
         mora.id = 202;
         mora.name = moraName;
         mora.count = promote.scoinCost;
-        result[promote.promoteLevel - 1].push_back(mora);
+        result[ascensionIndex].push_back(mora);
 
         for (const auto& cost : promote.costItems)
         {
@@ -148,7 +161,7 @@ ProfileBuilder::GetCharacterAscensionCosts(
                 db.GetText(material.nameTextMapHash);
             item.count = cost.count;
 
-            result[promote.promoteLevel - 1].push_back(item);
+            result[ascensionIndex].push_back(item);
         }
     }
 

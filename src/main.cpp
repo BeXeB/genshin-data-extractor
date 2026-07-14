@@ -2,9 +2,8 @@
 #include <filesystem>
 
 #include "database/GameDatabase.hpp"
-#include "builder/character/ProfileBuilder.hpp"
-#include "export/character/ProfileExporter.hpp"
 #include "util/EnumConverter.hpp"
+#include <builder/character/CharacterBuilder.hpp>
 
 int main()
 {
@@ -27,9 +26,7 @@ int main()
         return 1;
     }
 
-    ProfileBuilder builder;
-
-    ProfileExporter exporter;
+    CharacterBuilder charBuilder;
 
     const auto& avatars = db.GetAvatars();
 
@@ -55,12 +52,21 @@ int main()
             continue;
         }
 
-        auto profile = builder.Build(avatar, db);
+        if (avatar.id == 10000119) {
 
-        exporter.Export(
-            profile,
-            outputPath + "/characters"
-        );
+            const auto& character = charBuilder.Build(avatar, db);
+
+
+            nlohmann::json json =
+                character;
+
+
+            std::cout
+                << json.dump(4)
+                << "\n";
+        }
+
+        
     }
 
     return 0;

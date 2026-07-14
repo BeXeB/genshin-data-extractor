@@ -34,11 +34,16 @@ inline void to_json(
 }
 
 using CharacterStats =
-    std::vector<CharacterStat>;
+    std::unordered_map<std::string, CharacterStat>;
 
 inline void to_json(
-    nlohmann::json &j,
-    const CharacterStats &stats)
+    nlohmann::json& j,
+    const CharacterStats& stats)
 {
-    j = nlohmann::json(stats);
+    j = nlohmann::json::object();
+
+    for (const auto& [key, value] : stats)
+    {
+        j[key] = value;
+    }
 }

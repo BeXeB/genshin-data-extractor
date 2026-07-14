@@ -23,10 +23,16 @@ add_executable(
     src/database/GameDatabase.cpp
 
     src/builder/character/ProfileBuilder.cpp
+    src/builder/character/StatBuilder.cpp
+    src/builder/character/ConstellationBuilder.cpp
+    src/builder/character/TalentBuilder.cpp
+    src/builder/character/CharacterBuilder.cpp
+
     src/export/character/ProfileExporter.cpp
 
     src/util/EnumConverter.cpp
-    src/util/Slug.cpp)
+    src/util/Slug.cpp 
+)
 
 target_include_directories(
     GenshinDataExtractor

@@ -11,6 +11,17 @@
 void GameDatabase::Load(
     const std::string &path)
 {
+    textMap.entries.clear();
+    avatars.clear();
+    fetters.clear();
+    avatarPromotes.clear();
+    materials.clear();
+    avatarCurves.clear();
+    skillDepots.clear();
+    talents.clear();
+    skills.clear();
+    proudSkills.clear();
+
     textMap = LoadJson(
                   path + "/TextMap/TextMap_MediumEN.json")
                   .get<TextMap>();
@@ -23,18 +34,37 @@ void GameDatabase::Load(
         path + "/ExcelBinOutput/AvatarPromoteExcelConfigData.json");
     LoadMaterials(
         path + "/ExcelBinOutput/MaterialExcelConfigData.json");
+    LoadAvatarCurves(
+        path + "/ExcelBinOutput/AvatarCurveExcelConfigData.json");
+    LoadSkillDepots(
+        path + "/ExcelBinOutput/AvatarSkillDepotExcelConfigData.json");
+    LoadTalents(
+        path + "/ExcelBinOutput/AvatarTalentExcelConfigData.json");
+    LoadSkills(
+        path + "/ExcelBinOutput/AvatarSkillExcelConfigData.json");
+    LoadProudSkills(
+        path + "/ExcelBinOutput/ProudSkillExcelConfigData.json");
 
     std::cout << "Database loaded\n";
 }
 
-std::string GameDatabase::GetText(uint64_t hash) const
+// Loaders
+
+nlohmann::json GameDatabase::LoadJson(
+    const std::string& path) const
 {
-    auto it = textMap.entries.find(hash);
+    std::ifstream file(path);
 
-    if (it == textMap.entries.end())
-        return "[Missing:" + std::to_string(hash) + "]";
+    if (!file)
+    {
+        throw std::runtime_error(
+            "Failed to open: " + path);
+    }
 
-    return it->second;
+    nlohmann::json json;
+    file >> json;
+
+    return json;
 }
 
 void GameDatabase::LoadAvatars(
@@ -111,6 +141,108 @@ void GameDatabase::LoadMaterials(
     }
 }
 
+void GameDatabase::LoadAvatarCurves(
+    const std::string& path)
+{
+    auto json = LoadJson(path);
+
+    for (const auto& entry : json)
+    {
+        AvatarCurveExcelConfig curve =
+            entry.get<AvatarCurveExcelConfig>();
+
+        avatarCurves.emplace(
+            curve.level,
+            std::move(curve));
+    }
+}
+
+void GameDatabase::LoadSkillDepots(
+    const std::string& path)
+{
+    auto json = LoadJson(path);
+
+    for (const auto& entry : json)
+    {
+        AvatarSkillDepotExcelConfig skillDepot =
+            entry.get<AvatarSkillDepotExcelConfig>();
+
+        skillDepots.emplace(
+            skillDepot.id,
+            std::move(skillDepot));
+    }
+}
+
+void GameDatabase::LoadTalents(
+    const std::string& path)
+{
+    auto json = LoadJson(path);
+
+    for (const auto& entry : json)
+    {
+        AvatarTalentExcelConfig talent =
+            entry.get<AvatarTalentExcelConfig>();
+
+        talents.emplace(
+            talent.talentId,
+            std::move(talent));
+    }
+}
+
+void GameDatabase::LoadSkills(
+    const std::string& path)
+{
+    auto json = LoadJson(path);
+
+    for (const auto& entry : json)
+    {
+        AvatarSkillExcelConfig skill =
+            entry.get<AvatarSkillExcelConfig>();
+
+        skills.emplace(
+            skill.id,
+            std::move(skill));
+    }
+}
+
+void GameDatabase::LoadProudSkills(
+    const std::string& path)
+{
+    auto json = LoadJson(path);
+
+    for (const auto& entry : json)
+    {
+        ProudSkillExcelConfig skill =
+            entry.get<ProudSkillExcelConfig>();
+
+        proudSkills[skill.proudSkillGroupId]
+            .push_back(std::move(skill));
+    }
+
+    for (auto& [id, skills] : proudSkills)
+    {
+        std::sort(
+            skills.begin(),
+            skills.end(),
+            [](const auto& a, const auto& b)
+            {
+                return a.level < b.level;
+            });
+    }
+}
+
+// Getters
+
+std::string GameDatabase::GetText(uint64_t hash) const
+{
+    auto it = textMap.entries.find(hash);
+
+    if (it == textMap.entries.end())
+        return "";
+
+    return it->second;
+}
+
 const AvatarExcelConfig &
 GameDatabase::GetAvatar(int id) const
 {
@@ -141,19 +273,34 @@ GameDatabase::GetMaterial(int id) const
     return materials.at(id);
 }
 
-nlohmann::json GameDatabase::LoadJson(
-    const std::string &path) const
+const AvatarCurveExcelConfig & 
+GameDatabase::GetAvatarCurve(int level) const 
 {
-    std::ifstream file(path);
+    return avatarCurves.at(level);
+}
 
-    if (!file)
-    {
-        throw std::runtime_error(
-            "Failed to open: " + path);
-    }
+const AvatarSkillDepotExcelConfig&
+GameDatabase::GetSkillDepot(int id) const
+{
+    return skillDepots.at(id);
+}
 
-    nlohmann::json json;
-    file >> json;
+const AvatarTalentExcelConfig &
+GameDatabase::GetTalent(int id) const
+{
+    return talents.at(id);
+}
 
-    return json;
+const AvatarSkillExcelConfig&
+GameDatabase::GetSkill(
+    int id) const
+{
+    return skills.at(id);
+}
+
+const std::vector<ProudSkillExcelConfig>&
+GameDatabase::GetProudSkills(
+    int proudSkillGroupId) const
+{
+    return proudSkills.at(proudSkillGroupId);
 }

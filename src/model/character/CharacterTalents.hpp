@@ -2,6 +2,7 @@
 
 #include <array>
 #include <map>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -13,7 +14,6 @@ struct CombatTalent
 {
     std::string name;
 
-    std::string description;
     std::string descriptionRaw;
 
     std::vector<std::string> labels;
@@ -30,7 +30,6 @@ inline void to_json(
 {
     j = nlohmann::json{
         {"name", talent.name},
-        {"description", talent.description},
         {"descriptionRaw", talent.descriptionRaw},
         {"labels", talent.labels},
         {"parameters", talent.parameters}};
@@ -40,7 +39,6 @@ struct PassiveTalent
 {
     std::string name;
 
-    std::string description;
     std::string descriptionRaw;
 };
 
@@ -50,15 +48,12 @@ inline void to_json(
 {
     j = nlohmann::json{
         {"name", talent.name},
-        {"description", talent.description},
         {"descriptionRaw", talent.descriptionRaw}};
 }
 
 struct CharacterTalents
 {
     int id{};
-
-    std::string name;
 
     CombatTalent combat1;
     CombatTalent combat2;
@@ -67,24 +62,29 @@ struct CharacterTalents
     PassiveTalent passive1;
     PassiveTalent passive2;
 
-    std::vector<PassiveTalent> passiveExtra;
+    std::optional<PassiveTalent> passive3;
+    std::optional<PassiveTalent> passive4;
 
-    std::array<std::vector<Item>, 9>
-        levelCosts;
+    std::unordered_map<std::string, std::vector<Item>> costs;
 };
 
 inline void to_json(
-    nlohmann::json &j,
-    const CharacterTalents &talents)
+    nlohmann::json& j,
+    const CharacterTalents& talents)
 {
     j = nlohmann::json{
         {"id", talents.id},
-        {"name", talents.name},
         {"combat1", talents.combat1},
         {"combat2", talents.combat2},
         {"combat3", talents.combat3},
         {"passive1", talents.passive1},
         {"passive2", talents.passive2},
-        {"passiveExtra", talents.passiveExtra},
-        {"levelCosts", talents.levelCosts}};
+        {"costs", talents.costs}
+    };
+
+    if (talents.passive3)
+        j["passive3"] = *talents.passive3;
+
+    if (talents.passive4)
+        j["passive4"] = *talents.passive4;
 }

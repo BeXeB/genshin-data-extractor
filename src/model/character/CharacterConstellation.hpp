@@ -9,8 +9,6 @@ struct ConstellationDetail
 {
     std::string name;
 
-    std::string description;
-
     std::string descriptionRaw;
 };
 
@@ -20,7 +18,6 @@ inline void to_json(
 {
     j = nlohmann::json{
         {"name", detail.name},
-        {"description", detail.description},
         {"descriptionRaw", detail.descriptionRaw}
     };
 }
@@ -28,8 +25,6 @@ inline void to_json(
 struct CharacterConstellation
 {
     int id{};
-
-    std::string name;
 
     std::array<
         ConstellationDetail,
@@ -48,7 +43,6 @@ inline void to_json(
 {
     j = nlohmann::json{
         {"id", constellation.id},
-        {"name", constellation.name},
         {"constellations", constellation.constellations},
         {"images", constellation.images}
     };
