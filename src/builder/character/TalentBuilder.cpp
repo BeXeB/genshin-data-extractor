@@ -10,6 +10,7 @@ CharacterTalents TalentBuilder::Build(
 {
     CharacterTalents talents;
     TalentImages images;
+    const std::vector<ProudSkillExcelConfig> emptyProudSkills;
 
     talents.id = skillDepot.id;
 
@@ -41,6 +42,16 @@ CharacterTalents TalentBuilder::Build(
             return std::optional<std::string>{};
         };
 
+    auto getProudSkillsOrEmpty =
+        [&](int proudSkillGroupId)
+        -> const std::vector<ProudSkillExcelConfig>&
+        {
+            if (proudSkillGroupId == 0)
+                return emptyProudSkills;
+
+            return db.GetProudSkills(proudSkillGroupId);
+        };
+
     std::vector<ProudSkillExcelConfig> costSkills;
 
     // Normal Attack
@@ -50,8 +61,8 @@ CharacterTalents TalentBuilder::Build(
         auto skill =
             db.GetSkill(skillDepot.skills[0]);
 
-        auto proudSkills =
-            db.GetProudSkills(
+        const auto& proudSkills =
+            getProudSkillsOrEmpty(
                 skill.proudSkillGroupId);
 
 
@@ -79,8 +90,8 @@ CharacterTalents TalentBuilder::Build(
         auto skill =
             db.GetSkill(skillDepot.skills[1]);
 
-        auto proudSkills =
-            db.GetProudSkills(
+        const auto& proudSkills =
+            getProudSkillsOrEmpty(
                 skill.proudSkillGroupId);
 
         talents.combat2 =
@@ -102,8 +113,8 @@ CharacterTalents TalentBuilder::Build(
         auto skill =
             db.GetSkill(skillDepot.energySkill);
 
-        auto proudSkills =
-            db.GetProudSkills(
+        const auto& proudSkills =
+            getProudSkillsOrEmpty(
                 skill.proudSkillGroupId);
 
         talents.combat3 =
@@ -128,8 +139,8 @@ CharacterTalents TalentBuilder::Build(
             continue;
 
 
-        auto passiveSkills =
-            db.GetProudSkills(
+        const auto& passiveSkills =
+            getProudSkillsOrEmpty(
                 passiveGroup.passiveSkillGroupId);
 
 

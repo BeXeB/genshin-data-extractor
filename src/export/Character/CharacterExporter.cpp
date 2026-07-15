@@ -26,9 +26,13 @@ void CharacterExporter::Export(
 
     nlohmann::json json;
     json["profile"] = profileExporter.Export(character.profile);
-    json["skills"] = skillsExporter.Export(character.talents);
     json["stats"] = statsExporter.Export(character.stats);
-    json["constellation"] = constellationExporter.Export(character.constellation);
+
+    if (character.variants.empty())
+    {
+        json["skills"] = skillsExporter.Export(character.talents);
+        json["constellation"] = constellationExporter.Export(character.constellation);
+    }
 
     if (!character.variants.empty())
     {

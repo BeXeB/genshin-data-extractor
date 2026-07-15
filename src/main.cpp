@@ -60,7 +60,7 @@ int main()
         }
 
         // Skipping traveler for now
-        if (avatar.id == 10000005 || avatar.id == 10000007)
+        if (avatar.id != 10000005 && avatar.id != 10000007)
         {
             continue;
         }

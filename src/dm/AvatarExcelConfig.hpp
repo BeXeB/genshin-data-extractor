@@ -48,6 +48,8 @@ struct AvatarExcelConfig
     double criticalHurt;
 
     std::vector<PropGrowCurve> propGrowCurves;
+
+    std::vector<int> candSkillDepotIds;
 };
 
 inline void from_json(
@@ -86,4 +88,6 @@ inline void from_json(
         .get_to(avatar.criticalHurt);
     j.at("propGrowCurves")
         .get_to(avatar.propGrowCurves);
+    j.at("candSkillDepotIds")
+        .get_to(avatar.candSkillDepotIds);
 }

@@ -12,6 +12,10 @@ CharacterConstellation ConstellationBuilder::Build(
 
     for (size_t i = 0; i < skillDepot.talents.size() && i < 6; i++)
     {
+        if (skillDepot.talents[i] == 0) {
+            continue;
+        }
+
         const auto& talent =
             db.GetTalent(
                 skillDepot.talents[i]);

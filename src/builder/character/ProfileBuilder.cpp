@@ -8,7 +8,7 @@
 #include "model/Enums.hpp"
 
 CharacterProfile ProfileBuilder::Build(const AvatarExcelConfig &avatar,
-    const GameDatabase &db) const
+                                       const GameDatabase &db) const
 {
     CharacterProfile profile;
 
@@ -20,6 +20,17 @@ CharacterProfile ProfileBuilder::Build(const AvatarExcelConfig &avatar,
     profile.name =
         db.GetText(
             avatar.nameTextMapHash);
+
+    switch (avatar.id)
+    {
+    case 10000005: // Aether
+        profile.name = "Aether";
+        break;
+    case 10000007: // Lumine
+        profile.name = "Lumine";
+        break;
+    }
+
     profile.normalizedName =
         Normalize(profile.name);
 
@@ -41,6 +52,11 @@ CharacterProfile ProfileBuilder::Build(const AvatarExcelConfig &avatar,
     profile.birthdayMMDD =
         std::to_string(fetter.infoBirthMonth) + "/" + std::to_string(fetter.infoBirthDay);
 
+    if (profile.birthdayMMDD == "0/0")
+    {
+        profile.birthdayMMDD = "";
+    }
+
     profile.elementType =
         ElementTypeFromDM(
             db.GetText(
@@ -50,7 +66,12 @@ CharacterProfile ProfileBuilder::Build(const AvatarExcelConfig &avatar,
         db.GetText(
             fetter.avatarNativeTextMapHash);
 
-    const auto& promotes =
+    if (profile.affiliation == "-")
+    {
+        profile.affiliation = "";
+    }
+
+    const auto &promotes =
         db.GetAvatarPromoteInfo(
             avatar.avatarPromoteId);
 
@@ -85,16 +106,15 @@ CharacterProfile ProfileBuilder::Build(const AvatarExcelConfig &avatar,
 }
 
 StatType ProfileBuilder::GetCharacterSubstat(
-    const std::vector<AvatarPromoteExcelConfig>& promotes
-) const 
+    const std::vector<AvatarPromoteExcelConfig> &promotes) const
 {
     if (promotes.empty())
     {
         return StatType::Unknown;
     }
 
-    const auto& first = promotes.front();
-    for (const auto& prop : first.addProps)
+    const auto &first = promotes.front();
+    for (const auto &prop : first.addProps)
     {
         if (prop.propType == StatTypeToDM(StatType::BaseHp))
             continue;
@@ -112,19 +132,19 @@ StatType ProfileBuilder::GetCharacterSubstat(
 
 std::array<std::vector<Item>, 6>
 ProfileBuilder::GetCharacterAscensionCosts(
-    const std::vector<AvatarPromoteExcelConfig>& promotes,
-    const GameDatabase& db
-) const
+    const std::vector<AvatarPromoteExcelConfig> &promotes,
+    const GameDatabase &db) const
 {
     std::array<std::vector<Item>, 6> result;
 
-    auto& moraMaterial =
+    auto &moraMaterial =
         db.GetMaterial(202);
-    std::string moraName = 
+    std::string moraName =
         db.GetText(moraMaterial.nameTextMapHash);
 
-    for (const auto& promote : promotes) {
-        if (promote.promoteLevel == 0) 
+    for (const auto &promote : promotes)
+    {
+        if (promote.promoteLevel == 0)
         {
             continue;
         }
@@ -144,14 +164,14 @@ ProfileBuilder::GetCharacterAscensionCosts(
         mora.count = promote.scoinCost;
         result[ascensionIndex].push_back(mora);
 
-        for (const auto& cost : promote.costItems)
+        for (const auto &cost : promote.costItems)
         {
-            if (cost.id == 0) 
+            if (cost.id == 0)
             {
                 continue;
             }
 
-            auto& material =
+            auto &material =
                 db.GetMaterial(cost.id);
 
             Item item;

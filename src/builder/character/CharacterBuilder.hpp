@@ -30,4 +30,6 @@ private:
     StatBuilder statsBuilder;
 
     ConstellationBuilder constellationBuilder;
+
+    ElementType GetTravelerElement(int depotId) const;
 };
