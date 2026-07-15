@@ -253,11 +253,10 @@ double StatBuilder::GetSpecializedStat(
     int ascension
 ) const
 {
+    std::string propType;
     double result = 0.0;
 
-    std::string propType;
-
-    if (ascension > 0 &&
+    if (
         static_cast<size_t>(ascension) < promotes.size())
     {
         const auto& promote =
@@ -275,30 +274,25 @@ double StatBuilder::GetSpecializedStat(
                 continue;
 
             propType = prop.propType;
-            result = prop.value;
+
+            if (propType == "FIGHT_PROP_ELEMENT_MASTERY")
+            {
+                result = avatar.elementMastery + prop.value;
+            }
+            else if (propType == "FIGHT_PROP_CRITICAL")
+            {
+                result = avatar.critical + prop.value;
+            }
+            else if (propType == "FIGHT_PROP_CRITICAL_HURT")
+            {
+                result = avatar.criticalHurt + prop.value;
+            }
+            else
+            {
+                result = prop.value;
+            }
             break;
         }
     }
-
-
-    // Add base value from AvatarExcelConfig
-    if (propType == "FIGHT_PROP_ELEMENT_MASTERY")
-    {
-        result += avatar.elementMastery;
-        return result;
-    }
-
-    if (propType == "FIGHT_PROP_CRITICAL")
-    {
-        result += avatar.critical * 100.0;
-        return result;
-    }
-
-    if (propType == "FIGHT_PROP_CRITICAL_HURT")
-    {
-        result += avatar.criticalHurt * 100.0;
-        return result;
-    }
-
-    return result * 100.0;
+    return result;
 }

@@ -1,9 +1,14 @@
 #include <iostream>
 #include <filesystem>
+#include <fstream>
+#include <vector>
 
 #include "database/GameDatabase.hpp"
 #include "util/EnumConverter.hpp"
 #include <builder/character/CharacterBuilder.hpp>
+#include "export/character/CharacterExporter.hpp"
+#include "model/character/Character.hpp"
+#include <nlohmann/json.hpp>
 
 int main()
 {
@@ -27,6 +32,8 @@ int main()
     }
 
     CharacterBuilder charBuilder;
+    CharacterExporter charExporter;
+    std::vector<CharacterProfile> profiles;
 
     const auto& avatars = db.GetAvatars();
 
@@ -52,22 +59,31 @@ int main()
             continue;
         }
 
-        if (avatar.id == 10000119) {
-
-            const auto& character = charBuilder.Build(avatar, db);
-
-
-            nlohmann::json json =
-                character;
-
-
-            std::cout
-                << json.dump(4)
-                << "\n";
+        // Skipping traveler for now
+        if (avatar.id == 10000005 || avatar.id == 10000007)
+        {
+            continue;
         }
 
-        
+        const auto& character = charBuilder.Build(avatar, db);
+        charExporter.Export(character, outputPath + "/characters");
+        profiles.push_back(character.profile);
     }
+
+    nlohmann::json profilesJson = profiles;
+
+    std::ofstream profilesFile(
+        std::filesystem::path(outputPath) / "characters/profiles.json");
+
+    if (!profilesFile)
+    {
+        std::cerr
+            << "Failed writing profiles.json\n";
+
+        return 1;
+    }
+
+    profilesFile << profilesJson.dump(4);
 
     return 0;
 }

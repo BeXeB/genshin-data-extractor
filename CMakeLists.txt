@@ -29,6 +29,10 @@ add_executable(
     src/builder/character/CharacterBuilder.cpp
 
     src/export/character/ProfileExporter.cpp
+    src/export/character/SkillsExporter.cpp
+    src/export/character/StatsExporter.cpp
+    src/export/character/ConstellationExporter.cpp
+    src/export/character/CharacterExporter.cpp
 
     src/util/EnumConverter.cpp
     src/util/Slug.cpp 

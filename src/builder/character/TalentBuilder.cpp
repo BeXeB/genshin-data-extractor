@@ -9,8 +9,37 @@ CharacterTalents TalentBuilder::Build(
 ) const
 {
     CharacterTalents talents;
+    TalentImages images;
 
     talents.id = skillDepot.id;
+
+    auto selectCombatIcon =
+        [](const AvatarSkillExcelConfig& skill,
+           const std::vector<ProudSkillExcelConfig>& proudSkills)
+        {
+            if (!skill.skillIcon.empty())
+                return std::optional<std::string>{skill.skillIcon};
+
+            for (const auto& proudSkill : proudSkills)
+            {
+                if (!proudSkill.icon.empty())
+                    return std::optional<std::string>{proudSkill.icon};
+            }
+
+            return std::optional<std::string>{};
+        };
+
+    auto selectPassiveIcon =
+        [](const std::vector<ProudSkillExcelConfig>& proudSkills)
+        {
+            for (const auto& proudSkill : proudSkills)
+            {
+                if (!proudSkill.icon.empty())
+                    return std::optional<std::string>{proudSkill.icon};
+            }
+
+            return std::optional<std::string>{};
+        };
 
     std::vector<ProudSkillExcelConfig> costSkills;
 
@@ -32,6 +61,11 @@ CharacterTalents TalentBuilder::Build(
                 proudSkills,
                 db);
 
+        images.filename_combat1 =
+            selectCombatIcon(
+                skill,
+                proudSkills);
+
 
         // Costs are shared, use Normal Attack
         costSkills = proudSkills;
@@ -45,12 +79,20 @@ CharacterTalents TalentBuilder::Build(
         auto skill =
             db.GetSkill(skillDepot.skills[1]);
 
+        auto proudSkills =
+            db.GetProudSkills(
+                skill.proudSkillGroupId);
+
         talents.combat2 =
             BuildCombatTalent(
                 skill,
-                db.GetProudSkills(
-                    skill.proudSkillGroupId),
+                proudSkills,
                 db);
+
+        images.filename_combat2 =
+            selectCombatIcon(
+                skill,
+                proudSkills);
     }
 
 
@@ -60,12 +102,20 @@ CharacterTalents TalentBuilder::Build(
         auto skill =
             db.GetSkill(skillDepot.energySkill);
 
+        auto proudSkills =
+            db.GetProudSkills(
+                skill.proudSkillGroupId);
+
         talents.combat3 =
             BuildCombatTalent(
                 skill,
-                db.GetProudSkills(
-                    skill.proudSkillGroupId),
+                proudSkills,
                 db);
+
+        images.filename_combat3 =
+            selectCombatIcon(
+                skill,
+                proudSkills);
     }
 
     std::vector<PassiveTalent> passives;
@@ -90,6 +140,27 @@ CharacterTalents TalentBuilder::Build(
 
 
         passives.push_back(passive);
+
+        auto passiveIcon =
+            selectPassiveIcon(passiveSkills);
+
+        switch (passives.size())
+        {
+        case 1:
+            images.filename_passive1 = passiveIcon;
+            break;
+        case 2:
+            images.filename_passive2 = passiveIcon;
+            break;
+        case 3:
+            images.filename_passive3 = passiveIcon;
+            break;
+        case 4:
+            images.filename_passive4 = passiveIcon;
+            break;
+        default:
+            break;
+        }
     }
 
     if (!costSkills.empty())
@@ -112,6 +183,17 @@ CharacterTalents TalentBuilder::Build(
     if (passives.size() > 3)
         talents.passive4 = passives[3];
 
+    if (images.filename_combat1 ||
+        images.filename_combat2 ||
+        images.filename_combat3 ||
+        images.filename_passive1 ||
+        images.filename_passive2 ||
+        images.filename_passive3 ||
+        images.filename_passive4)
+    {
+        talents.images = images;
+    }
+
     return talents;
 }
 
@@ -130,7 +212,6 @@ CombatTalent TalentBuilder::BuildCombatTalent(
     result.descriptionRaw =
         db.GetText(
             skill.descTextMapHash);
-
 
     if (!proudSkills.empty())
     {

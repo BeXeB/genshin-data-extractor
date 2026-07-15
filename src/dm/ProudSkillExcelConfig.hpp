@@ -43,6 +43,8 @@ struct ProudSkillExcelConfig
     std::vector<ProudSkillCostItem> costItems;
 
     int coinCost{};
+
+    std::string icon{};
 };
 
 inline void from_json(
@@ -75,4 +77,7 @@ inline void from_json(
     
     j.at("coinCost")
         .get_to(skill.coinCost);
+
+    j.at("icon")
+        .get_to(skill.icon);
 }

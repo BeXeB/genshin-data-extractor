@@ -9,34 +9,10 @@
 #include "util/Slug.hpp"
 
 
-void ProfileExporter::Export(
-    const CharacterProfile& profile,
-    const std::string& outputDirectory
+nlohmann::json ProfileExporter::Export(
+    const CharacterProfile& profile
 ) const
 {
-    std::filesystem::create_directories(
-        outputDirectory
-    );
-
-
-    std::string filename =
-        outputDirectory
-        + "/"
-        + profile.normalizedName
-        + ".json";
-
-
-    std::ofstream file(filename);
-
-
-    if (!file)
-    {
-        throw std::runtime_error(
-            "Failed writing: " + filename
-        );
-    }
-
-
     nlohmann::json json = profile;
 
     nlohmann::json costs;
@@ -49,6 +25,5 @@ void ProfileExporter::Export(
 
     json["costs"] = costs;
 
-    file
-        << json.dump(4);
+    return json;
 }

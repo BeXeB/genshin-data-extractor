@@ -22,7 +22,7 @@ inline void to_json(
     const CharacterVariant &variant)
 {
     j = nlohmann::json{
-        {"talents", variant.talents},
+        {"skills", variant.talents},
         {"constellation", variant.constellation}};
 }
 
@@ -48,7 +48,7 @@ inline void to_json(
 {
     j = nlohmann::json{
         {"profile", character.profile},
-        {"talents", character.talents},
+        {"skills", character.talents},
         {"stats", character.stats},
         {"constellation", character.constellation},
         {"variants", character.variants}};

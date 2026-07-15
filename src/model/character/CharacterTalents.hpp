@@ -42,6 +42,45 @@ struct PassiveTalent
     std::string descriptionRaw;
 };
 
+struct TalentImages
+{
+    std::optional<std::string> filename_combat1;
+    std::optional<std::string> filename_combat2;
+    std::optional<std::string> filename_combat3;
+    std::optional<std::string> filename_passive1;
+    std::optional<std::string> filename_passive2;
+    std::optional<std::string> filename_passive3;
+    std::optional<std::string> filename_passive4;
+};
+
+inline void to_json(
+    nlohmann::json& j,
+    const TalentImages& images)
+{
+    j = nlohmann::json::object();
+
+    if (images.filename_combat1)
+        j["filename_combat1"] = *images.filename_combat1;
+
+    if (images.filename_combat2)
+        j["filename_combat2"] = *images.filename_combat2;
+
+    if (images.filename_combat3)
+        j["filename_combat3"] = *images.filename_combat3;
+
+    if (images.filename_passive1)
+        j["filename_passive1"] = *images.filename_passive1;
+
+    if (images.filename_passive2)
+        j["filename_passive2"] = *images.filename_passive2;
+
+    if (images.filename_passive3)
+        j["filename_passive3"] = *images.filename_passive3;
+
+    if (images.filename_passive4)
+        j["filename_passive4"] = *images.filename_passive4;
+}
+
 inline void to_json(
     nlohmann::json &j,
     const PassiveTalent &talent)
@@ -65,6 +104,8 @@ struct CharacterTalents
     std::optional<PassiveTalent> passive3;
     std::optional<PassiveTalent> passive4;
 
+    std::optional<TalentImages> images;
+
     std::unordered_map<std::string, std::vector<Item>> costs;
 };
 
@@ -87,4 +128,7 @@ inline void to_json(
 
     if (talents.passive4)
         j["passive4"] = *talents.passive4;
+
+    if (talents.images)
+        j["images"] = *talents.images;
 }

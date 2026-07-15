@@ -16,13 +16,40 @@ CharacterConstellation ConstellationBuilder::Build(
             db.GetTalent(
                 skillDepot.talents[i]);
 
-        constellation.constellations[i] =
+        auto detail =
             BuildDetail(
                 talent,
                 db);
 
-        constellation.images[i] =
-            talent.icon;
+        switch (i)
+        {
+        case 0:
+            constellation.c1 = detail;
+            constellation.images.filename_c1 = talent.icon;
+            break;
+        case 1:
+            constellation.c2 = detail;
+            constellation.images.filename_c2 = talent.icon;
+            break;
+        case 2:
+            constellation.c3 = detail;
+            constellation.images.filename_c3 = talent.icon;
+            break;
+        case 3:
+            constellation.c4 = detail;
+            constellation.images.filename_c4 = talent.icon;
+            break;
+        case 4:
+            constellation.c5 = detail;
+            constellation.images.filename_c5 = talent.icon;
+            break;
+        case 5:
+            constellation.c6 = detail;
+            constellation.images.filename_c6 = talent.icon;
+            break;
+        default:
+            break;
+        }
     }
 
     return constellation;

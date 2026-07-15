@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string>
+#include <nlohmann/json.hpp>
 
 #include "model/character/CharacterProfile.hpp"
 
@@ -9,9 +9,8 @@ class ProfileExporter
 {
 public:
 
-    void Export(
-        const CharacterProfile& profile,
-        const std::string& outputDirectory
+    nlohmann::json Export(
+        const CharacterProfile& profile
     ) const;
 
 };
