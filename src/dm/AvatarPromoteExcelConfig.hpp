@@ -7,8 +7,8 @@
 
 struct PromoteProp
 {
-    std::string propType;
-    double value;
+    std::string propType{};
+    double value{};
 };
 
 inline void from_json(

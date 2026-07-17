@@ -59,12 +59,6 @@ int main()
             continue;
         }
 
-        // Skipping traveler for now
-        if (avatar.id != 10000005 && avatar.id != 10000007)
-        {
-            continue;
-        }
-
         const auto& character = charBuilder.Build(avatar, db);
         charExporter.Export(character, outputPath + "/characters");
         profiles.push_back(character.profile);
