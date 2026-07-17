@@ -7,8 +7,8 @@
 
 struct AvatarCurveInfo
 {
-    std::string type;
-    double value;
+    std::string type{};
+    double value{};
 };
 
 inline void from_json(

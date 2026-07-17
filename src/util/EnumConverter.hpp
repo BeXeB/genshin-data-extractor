@@ -17,6 +17,8 @@ std::string QualityTypeToDM(
     QualityType type);
 int QualityTypeToRarity(
     QualityType type);
+QualityType QualityTypeFromRarity(
+    const int value);
 
 ElementType ElementTypeFromDM(
     const std::string &value);

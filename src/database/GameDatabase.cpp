@@ -27,6 +27,7 @@ void GameDatabase::Load(
     equipAffixes.clear();
 
     textMap = LoadJson(path + "/TextMap/TextMap_MediumEN.json").get<TextMap>();
+    readableTextLoader.SetPath(path + "/Readable/EN");
 
     LoadAvatars(path + "/ExcelBinOutput/AvatarExcelConfigData.json");
     LoadFetterInfo(path + "/ExcelBinOutput/FetterInfoExcelConfigData.json");
@@ -242,9 +243,19 @@ void GameDatabase::LoadEquipAffixes(const std::string& path)
         EquipAffixExcelConfig affix =
             entry.get<EquipAffixExcelConfig>();
 
-        equipAffixes.emplace(
-            affix.id,
-            std::move(affix));
+        equipAffixes[affix.id]
+            .push_back(std::move(affix));
+    }
+
+    for (auto& [id, affixes] : equipAffixes)
+    {
+        std::sort(
+            affixes.begin(),
+            affixes.end(),
+            [](const auto& a, const auto& b)
+            {
+                return a.level < b.level;
+            });
     }
 }
 
@@ -298,6 +309,12 @@ std::string GameDatabase::GetText(uint64_t hash) const
         return "";
 
     return it->second;
+}
+
+const ReadableTextLoader&
+GameDatabase::GetReadableTextLoader() const
+{
+    return readableTextLoader;
 }
 
 const AvatarExcelConfig &GameDatabase::GetAvatar(int id) const
@@ -355,7 +372,12 @@ const WeaponExcelConfig&GameDatabase::GetWeapon(int id) const
     return weapons.at(id);
 }
 
-const EquipAffixExcelConfig&GameDatabase::GetEquipAffix(int id) const
+const std::unordered_map<int, WeaponExcelConfig> &GameDatabase::GetWeapons() const
+{
+    return weapons;
+}
+
+const std::vector<EquipAffixExcelConfig> &GameDatabase::GetEquipAffixes(int id) const
 {
     return equipAffixes.at(id);
 }

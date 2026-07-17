@@ -5,7 +5,7 @@
 
 #include <nlohmann/json.hpp>
 
-struct PropGrowCurve
+struct WeaponPropGrowCurve
 {
     std::string type{};
     std::string propType{};
@@ -15,7 +15,7 @@ struct PropGrowCurve
 
 inline void from_json(
     const nlohmann::json &j,
-    PropGrowCurve &curve)
+    WeaponPropGrowCurve &curve)
 {
     j.at("type").get_to(curve.type);
     j.at("propType").get_to(curve.propType);
@@ -40,9 +40,7 @@ struct WeaponExcelConfig
 
     uint64_t weaponPromoteId{};
 
-    std::vector<PropGrowCurve> weaponProp;
-
-    std::vector<int> awakenCosts;
+    std::vector<WeaponPropGrowCurve> weaponProp;
 
     std::vector<int> skillAffix;
 };
@@ -62,6 +60,5 @@ inline void from_json(
     j.at("storyId").get_to(weapon.storyId);
     j.at("weaponPromoteId").get_to(weapon.weaponPromoteId);
     j.at("weaponProp").get_to(weapon.weaponProp);
-    j.at("awakenCosts").get_to(weapon.awakenCosts);
     j.at("skillAffix").get_to(weapon.skillAffix);
 };

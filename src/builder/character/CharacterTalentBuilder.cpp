@@ -1,9 +1,9 @@
-#include "TalentBuilder.hpp"
+#include "CharacterTalentBuilder.hpp"
 
 #include <stdexcept>
 
 
-CharacterTalents TalentBuilder::Build(
+CharacterTalents CharacterTalentBuilder::Build(
     const AvatarSkillDepotExcelConfig& skillDepot,
     const GameDatabase& db
 ) const
@@ -208,7 +208,7 @@ CharacterTalents TalentBuilder::Build(
     return talents;
 }
 
-CombatTalent TalentBuilder::BuildCombatTalent(
+CombatTalent CharacterTalentBuilder::BuildCombatTalent(
     const AvatarSkillExcelConfig& skill,
     const std::vector<ProudSkillExcelConfig>& proudSkills,
     const GameDatabase& db
@@ -270,7 +270,7 @@ CombatTalent TalentBuilder::BuildCombatTalent(
     return result;
 }
 
-PassiveTalent TalentBuilder::BuildPassiveTalent(
+PassiveTalent CharacterTalentBuilder::BuildPassiveTalent(
     const std::vector<ProudSkillExcelConfig>& proudSkills,
     const GameDatabase& db
 ) const
@@ -300,7 +300,7 @@ PassiveTalent TalentBuilder::BuildPassiveTalent(
 }
 
 std::unordered_map<std::string, std::vector<Item>>
-TalentBuilder::GetTalentCosts(
+CharacterTalentBuilder::GetTalentCosts(
     const std::vector<ProudSkillExcelConfig>& proudSkills,
     const GameDatabase& db) const
 {

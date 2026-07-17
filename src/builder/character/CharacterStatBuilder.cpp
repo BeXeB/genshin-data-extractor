@@ -1,7 +1,7 @@
-#include "StatBuilder.hpp"
+#include "CharacterStatBuilder.hpp"
 #include <iostream>
 
-CharacterStats StatBuilder::Build(
+CharacterStats CharacterStatBuilder::Build(
     const AvatarExcelConfig& avatar,
     const GameDatabase& db
 ) const
@@ -49,7 +49,7 @@ CharacterStats StatBuilder::Build(
     return stats;
 }
 
-int StatBuilder::GetAscension(
+int CharacterStatBuilder::GetAscension(
     int level
 ) const
 {
@@ -69,7 +69,7 @@ int StatBuilder::GetAscension(
     return 6;
 }
 
-bool StatBuilder::IsAscensionLevel(
+bool CharacterStatBuilder::IsAscensionLevel(
     int level
 ) const
 {
@@ -81,7 +81,7 @@ bool StatBuilder::IsAscensionLevel(
         level == 80;
 }
 
-CharacterStat StatBuilder::BuildStat(
+CharacterStat CharacterStatBuilder::BuildStat(
     const AvatarExcelConfig& avatar,
     int level,
     int ascension,
@@ -139,7 +139,7 @@ CharacterStat StatBuilder::BuildStat(
     return stat;
 }
 
-double StatBuilder::GetCurveMultiplier(
+double CharacterStatBuilder::GetCurveMultiplier(
     const AvatarExcelConfig& avatar,
     int level,
     const GameDatabase& db,
@@ -183,7 +183,7 @@ double StatBuilder::GetCurveMultiplier(
         std::to_string(level));
 }
 
-double StatBuilder::CalculateBaseStat(
+double CharacterStatBuilder::CalculateBaseStat(
     const AvatarExcelConfig& avatar,
     int level,
     const GameDatabase& db,
@@ -217,7 +217,7 @@ double StatBuilder::CalculateBaseStat(
             propType);
 }
 
-double StatBuilder::GetAscensionBonus(
+double CharacterStatBuilder::GetAscensionBonus(
     const std::vector<AvatarPromoteExcelConfig>& promotes,
     int ascension,
     const std::string& propType
@@ -247,7 +247,7 @@ double StatBuilder::GetAscensionBonus(
     return 0.0;
 }
 
-double StatBuilder::GetSpecializedStat(
+double CharacterStatBuilder::GetSpecializedStat(
     const AvatarExcelConfig& avatar,
     const std::vector<AvatarPromoteExcelConfig>& promotes,
     int ascension

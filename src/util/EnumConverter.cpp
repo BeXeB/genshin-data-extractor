@@ -137,6 +137,26 @@ int QualityTypeToRarity(
     }
 }
 
+QualityType QualityTypeFromRarity(
+    const int value) 
+{
+    switch (value)
+    {
+    case 5:
+        return QualityType::FiveStar;
+    case 4:
+        return QualityType::FourStar;
+    case 3:
+        return QualityType::ThreeStar;
+    case 2:
+        return QualityType::TwoStar;
+    case 1:
+        return QualityType::OneStar;
+    default:
+        return QualityType::Unknown;
+    }
+}
+
 ElementType ElementTypeFromDM(
     const std::string &value)
 {

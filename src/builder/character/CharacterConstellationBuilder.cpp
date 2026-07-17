@@ -1,7 +1,7 @@
-#include "ConstellationBuilder.hpp"
+#include "CharacterConstellationBuilder.hpp"
 
 
-CharacterConstellation ConstellationBuilder::Build(
+CharacterConstellation CharacterConstellationBuilder::Build(
     const AvatarSkillDepotExcelConfig& skillDepot,
     const GameDatabase& db
 ) const
@@ -60,7 +60,7 @@ CharacterConstellation ConstellationBuilder::Build(
 }
 
 
-ConstellationDetail ConstellationBuilder::BuildDetail(
+ConstellationDetail CharacterConstellationBuilder::BuildDetail(
     const AvatarTalentExcelConfig& talent,
     const GameDatabase& db
 ) const

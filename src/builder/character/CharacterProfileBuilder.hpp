@@ -8,7 +8,7 @@
 #include "database/GameDatabase.hpp"
 
 
-class ProfileBuilder
+class CharacterProfileBuilder
 {
 public:
 

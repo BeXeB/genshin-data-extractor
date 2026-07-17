@@ -8,7 +8,7 @@
 
 #include "model/character/CharacterTalents.hpp"
 
-class TalentBuilder
+class CharacterTalentBuilder
 {
 public:
     CharacterTalents Build(

@@ -6,7 +6,7 @@
 #include "dm/AvatarTalentExcelConfig.hpp"
 
 
-class ConstellationBuilder
+class CharacterConstellationBuilder
 {
 public:
     CharacterConstellation Build(

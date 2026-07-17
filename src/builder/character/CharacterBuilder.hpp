@@ -3,10 +3,10 @@
 #include "dm/AvatarExcelConfig.hpp"
 #include "model/character/Character.hpp"
 
-#include "ProfileBuilder.hpp"
-#include "TalentBuilder.hpp"
-#include "StatBuilder.hpp"
-#include "ConstellationBuilder.hpp"
+#include "CharacterProfileBuilder.hpp"
+#include "CharacterTalentBuilder.hpp"
+#include "CharacterStatBuilder.hpp"
+#include "CharacterConstellationBuilder.hpp"
 
 #include "database/GameDatabase.hpp"
 
@@ -23,13 +23,13 @@ public:
 
 private:
 
-    ProfileBuilder profileBuilder;
+    CharacterProfileBuilder profileBuilder;
 
-    TalentBuilder talentBuilder;
+    CharacterTalentBuilder talentBuilder;
 
-    StatBuilder statsBuilder;
+    CharacterStatBuilder statsBuilder;
 
-    ConstellationBuilder constellationBuilder;
+    CharacterConstellationBuilder constellationBuilder;
 
     ElementType GetTravelerElement(int depotId) const;
 };

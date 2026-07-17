@@ -19,24 +19,29 @@ FetchContent_MakeAvailable(json)
 
 add_executable(
     GenshinDataExtractor
-    src/main.cpp
-    src/database/GameDatabase.cpp
+    "src/main.cpp"
+    "src/database/GameDatabase.cpp"
 
-    src/builder/character/ProfileBuilder.cpp
-    src/builder/character/StatBuilder.cpp
-    src/builder/character/ConstellationBuilder.cpp
-    src/builder/character/TalentBuilder.cpp
-    src/builder/character/CharacterBuilder.cpp
+    "src/builder/character/CharacterProfileBuilder.cpp"
+    "src/builder/character/CharacterStatBuilder.cpp"
+    "src/builder/character/CharacterConstellationBuilder.cpp"
+    "src/builder/character/CharacterTalentBuilder.cpp"
+    "src/builder/character/CharacterBuilder.cpp"
 
-    src/export/character/ProfileExporter.cpp
-    src/export/character/SkillsExporter.cpp
-    src/export/character/StatsExporter.cpp
-    src/export/character/ConstellationExporter.cpp
-    src/export/character/CharacterExporter.cpp
+    "src/builder/weapon/WeaponBuilder.cpp" 
+    "src/builder/weapon/WeaponAffixBuilder.cpp" 
+    "src/builder/weapon/WeaponStatBuilder.cpp" 
+    "src/builder/weapon/WeaponPromoteBuilder.cpp"
 
-    src/util/EnumConverter.cpp
-    src/util/Slug.cpp 
-)
+    "src/export/character/ProfileExporter.cpp"
+    "src/export/character/SkillsExporter.cpp"
+    "src/export/character/StatsExporter.cpp"
+    "src/export/character/ConstellationExporter.cpp"
+    "src/export/character/CharacterExporter.cpp"
+
+    "src/util/EnumConverter.cpp"
+    "src/util/Slug.cpp" 
+  "src/util/ReadableTextLoader.cpp")
 
 target_include_directories(
     GenshinDataExtractor

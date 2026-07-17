@@ -5,7 +5,8 @@
 
 #include "database/GameDatabase.hpp"
 #include "util/EnumConverter.hpp"
-#include <builder/character/CharacterBuilder.hpp>
+#include "builder/character/CharacterBuilder.hpp"
+#include "builder/weapon/WeaponBuilder.hpp"
 #include "export/character/CharacterExporter.hpp"
 #include "model/character/Character.hpp"
 #include <nlohmann/json.hpp>
@@ -60,24 +61,54 @@ int main()
         }
 
         const auto& character = charBuilder.Build(avatar, db);
-        charExporter.Export(character, outputPath + "/characters");
+        //charExporter.Export(character, outputPath + "/characters");
         profiles.push_back(character.profile);
     }
 
-    nlohmann::json profilesJson = profiles;
+    //nlohmann::json profilesJson = profiles;
 
-    std::ofstream profilesFile(
-        std::filesystem::path(outputPath) / "characters/profiles.json");
+    //std::ofstream profilesFile(
+    //    std::filesystem::path(outputPath) / "characters/profiles.json");
 
-    if (!profilesFile)
+    //if (!profilesFile)
+    //{
+    //    std::cerr
+    //        << "Failed writing profiles.json\n";
+
+    //    return 1;
+    //}
+
+    //profilesFile << profilesJson.dump(4);
+
+    WeaponBuilder weaponBuilder;
+
+    const auto& weapons = db.GetWeapons();
+
+    for (const auto& [id, weapon] : weapons)
     {
-        std::cerr
-            << "Failed writing profiles.json\n";
+        try
+        {
+            if (id == 12514) {
+                const auto builtWeapon =
+                    weaponBuilder.Build(db, id);
 
-        return 1;
+                nlohmann::json json = builtWeapon;
+
+                std::cout
+                    << json.dump(4)
+                    << "\n";
+            }
+        }
+        catch (const std::exception& e)
+        {
+            std::cerr
+                << "Failed weapon "
+                << id
+                << ": "
+                << e.what()
+                << "\n";
+        }
     }
-
-    profilesFile << profilesJson.dump(4);
 
     return 0;
 }

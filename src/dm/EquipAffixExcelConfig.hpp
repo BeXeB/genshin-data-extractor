@@ -26,8 +26,6 @@ struct EquipAffixExcelConfig
 {
     int id{};
 
-    uint64_t affixId{};
-
     int level{};
 
     uint64_t descTextMapHash{};
@@ -44,4 +42,9 @@ inline void from_json(
     EquipAffixExcelConfig &affix)
 {
     j.at("id").get_to(affix.id);
+    j.at("level").get_to(affix.level);
+    j.at("descTextMapHash").get_to(affix.descTextMapHash);
+    j.at("nameTextMapHash").get_to(affix.nameTextMapHash);
+    j.at("paramList").get_to(affix.paramList);
+    j.at("addProps").get_to(affix.addProps);
 };

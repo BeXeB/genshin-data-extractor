@@ -56,19 +56,11 @@ struct Weapon
 
     std::string story;
 
-    double baseAtkValue{};
-
-    std::string mainStatType;
-
-    std::optional<std::string> mainStatText;
-
-    std::optional<std::string> baseStatText;
-
+    std::optional<std::string> mainStatType;
 
     std::optional<std::string> effectName;
 
     std::optional<std::string> effectTemplateRaw;
-
 
     std::optional<WeaponRefine> r1;
     std::optional<WeaponRefine> r2;
@@ -76,15 +68,11 @@ struct Weapon
     std::optional<WeaponRefine> r4;
     std::optional<WeaponRefine> r5;
 
-
     std::map<std::string, std::vector<Item>> costs;
-
 
     WeaponImages images;
 
-
     std::string version;
-
 
     WeaponStats stats;
 };
@@ -107,10 +95,6 @@ inline void to_json(
 
         {"story", weapon.story},
 
-        {"baseAtkValue", weapon.baseAtkValue},
-
-        {"mainStatType", weapon.mainStatType},
-
         {"costs", weapon.costs},
 
         {"images", weapon.images},
@@ -120,11 +104,8 @@ inline void to_json(
         {"stats", weapon.stats}
     };
 
-    if (weapon.mainStatText)
-        j["mainStatText"] = *weapon.mainStatText;
-
-    if (weapon.baseStatText)
-        j["baseStatText"] = *weapon.baseStatText;
+    if (weapon.mainStatType)
+        j["mainStatType"] = *weapon.mainStatType;
 
     if (weapon.effectName)
         j["effectName"] = *weapon.effectName;

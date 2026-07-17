@@ -82,5 +82,6 @@ ElementType CharacterBuilder::GetTravelerElement(int depotId) const
         case 6: return ElementType::Geo;
         case 7: return ElementType::Electro;
         case 8: return ElementType::Dendro;
+        default: return ElementType::None;
     }
 }

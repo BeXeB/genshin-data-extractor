@@ -4,7 +4,7 @@
 #include "database/GameDatabase.hpp"
 #include "model/character/CharacterStats.hpp"
 
-class StatBuilder
+class CharacterStatBuilder
 {
 public:
     CharacterStats Build(

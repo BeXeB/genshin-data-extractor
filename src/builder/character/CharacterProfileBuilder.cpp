@@ -1,4 +1,4 @@
-#include "ProfileBuilder.hpp"
+#include "CharacterProfileBuilder.hpp"
 
 #include <algorithm>
 #include <cctype>
@@ -7,7 +7,7 @@
 #include "util/EnumConverter.hpp"
 #include "model/Enums.hpp"
 
-CharacterProfile ProfileBuilder::Build(const AvatarExcelConfig &avatar,
+CharacterProfile CharacterProfileBuilder::Build(const AvatarExcelConfig &avatar,
                                        const GameDatabase &db) const
 {
     CharacterProfile profile;
@@ -105,7 +105,7 @@ CharacterProfile ProfileBuilder::Build(const AvatarExcelConfig &avatar,
     return profile;
 }
 
-StatType ProfileBuilder::GetCharacterSubstat(
+StatType CharacterProfileBuilder::GetCharacterSubstat(
     const std::vector<AvatarPromoteExcelConfig> &promotes) const
 {
     if (promotes.empty())
@@ -131,7 +131,7 @@ StatType ProfileBuilder::GetCharacterSubstat(
 }
 
 std::array<std::vector<Item>, 6>
-ProfileBuilder::GetCharacterAscensionCosts(
+CharacterProfileBuilder::GetCharacterAscensionCosts(
     const std::vector<AvatarPromoteExcelConfig> &promotes,
     const GameDatabase &db) const
 {

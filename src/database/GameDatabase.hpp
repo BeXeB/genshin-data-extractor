@@ -6,6 +6,7 @@
 
 #include "dm/TextMap.hpp"
 #include "model/Enums.hpp"
+#include "util/ReadableTextLoader.hpp"
 
 #include "dm/MaterialExcelConfig.hpp"
 #include "dm/FetterInoExcelConfig.hpp"
@@ -37,13 +38,15 @@ public:
     const std::vector<ProudSkillExcelConfig> &GetProudSkills(int proudSkillGroupId) const;
 
     const WeaponExcelConfig& GetWeapon(int id) const;
-    const EquipAffixExcelConfig& GetEquipAffix(int id) const;
+    const std::unordered_map<int, WeaponExcelConfig>& GetWeapons() const;
+    const std::vector<EquipAffixExcelConfig>& GetEquipAffixes(int id) const;
     const std::vector<WeaponPromoteExcelConfig>& GetWeaponPromoteInfo(int id) const;
     const WeaponCurveExcelConfig& GetWeaponCurve(int level) const;
 
     const MaterialExcelConfig& GetMaterial(int id) const;
 
     std::string GetText(uint64_t hash) const;
+    const ReadableTextLoader& GetReadableTextLoader() const;
 
 private:
     void LoadAvatars(const std::string &path);
@@ -61,6 +64,7 @@ private:
     void LoadWeaponCurves(const std::string &path);
 
     TextMap textMap;
+    ReadableTextLoader readableTextLoader;
 
     std::unordered_map<int, AvatarExcelConfig> avatars;
     std::unordered_map<int, FetterInoExcelConfig> fetters;
@@ -72,7 +76,7 @@ private:
     std::unordered_map<int, AvatarSkillExcelConfig> skills;
     std::unordered_map<int, std::vector<ProudSkillExcelConfig>> proudSkills;
     std::unordered_map<int, WeaponExcelConfig> weapons;
-    std::unordered_map<int, EquipAffixExcelConfig> equipAffixes;
+    std::unordered_map<int,std::vector<EquipAffixExcelConfig>> equipAffixes;
     std::unordered_map<int, std::vector<WeaponPromoteExcelConfig>> weaponPromotes;
     std::unordered_map<int, WeaponCurveExcelConfig> weaponCurves;
 
