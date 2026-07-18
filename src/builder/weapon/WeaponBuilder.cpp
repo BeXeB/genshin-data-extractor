@@ -49,6 +49,13 @@ Weapon WeaponBuilder::Build(
             dmWeapon.awakenIcon;
     }
 
+    std::string iconSuffix =
+        dmWeapon.icon.substr(
+            dmWeapon.icon.find_last_of('_') + 1);
+
+    weapon.images.filename_gacha = 
+        "UI_Gacha_EquipIcon_" + WeaponTypeToText(WeaponTypeFromDM(weapon.weaponType)) + "_" + iconSuffix;
+
     weapon.story =
         database.GetReadableTextLoader()
         .Get("Weapon", dmWeapon.id);
@@ -83,7 +90,7 @@ Weapon WeaponBuilder::Build(
 
 
     auto refinements =
-        WeaponAffixBuilder::Build(
+        affixBuilder.Build(
             database,
             dmWeapon.skillAffix);
 
@@ -104,15 +111,15 @@ Weapon WeaponBuilder::Build(
 
 
     weapon.costs =
-        WeaponPromoteBuilder::Build(
+        promoteBuilder.Build(
             database,
             dmWeapon.weaponPromoteId);
 
 
     weapon.stats =
-        WeaponStatBuilder::Build(
-            database,
-            dmWeapon);
+        statBuilder.Build(
+            dmWeapon,
+            database);
 
     // Couldn't find a way to get the version, so just set it to unknown for now.
     // Will need to be set manually in the future.

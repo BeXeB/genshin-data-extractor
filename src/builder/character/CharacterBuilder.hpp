@@ -14,21 +14,15 @@
 class CharacterBuilder
 {
 public:
-
     Character Build(
         const AvatarExcelConfig& avatar,
         const GameDatabase& db
     ) const;
 
-
 private:
-
     CharacterProfileBuilder profileBuilder;
-
     CharacterTalentBuilder talentBuilder;
-
     CharacterStatBuilder statsBuilder;
-
     CharacterConstellationBuilder constellationBuilder;
 
     ElementType GetTravelerElement(int depotId) const;
