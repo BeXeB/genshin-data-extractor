@@ -5,6 +5,7 @@
 #include <nlohmann/json.hpp>
 
 #include "model/Enums.hpp"
+#include <util/EnumConverter.hpp>
 
 struct ArtifactPiece
 {
@@ -23,7 +24,7 @@ inline void to_json(
 {
     j = nlohmann::json{
         {"name", piece.name},
-        {"relicType", piece.relicType},
+        {"relicType", ArtifactTypeToDM(piece.relicType)},
         {"description", piece.description},
         {"story", piece.story}
     };

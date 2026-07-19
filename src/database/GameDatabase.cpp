@@ -45,6 +45,9 @@ void GameDatabase::Load(
     LoadReliquarySets(path + "/ExcelBinOutput/ReliquarySetExcelConfigData.json");
     LoadReliquaries(path + "/ExcelBinOutput/ReliquaryExcelConfigData.json");
     LoadCombines(path + "/ExcelBinOutput/CombineExcelConfigData.json");
+    LoadAvaterCodexes(path + "/ExcelBinOutput/AvatarCodexExcelConfigData.json");
+    LoadWeaponCodexes(path + "/ExcelBinOutput/WeaponCodexExcelConfigData.json");
+    LoadHyperlinks(path + "/ExcelBinOutput/HyperLinkNameExcelConfigData.json");
 
     std::cout << "Database loaded\n";
 }
@@ -346,6 +349,52 @@ void GameDatabase::LoadCombines(const std::string& path)
     }
 }
 
+void GameDatabase::LoadAvaterCodexes(const std::string& path)
+{
+    auto json = LoadJson(path);
+
+    for (const auto& entry : json)
+    {
+        AvatarCodexExcelConfig codex =
+            entry.get<AvatarCodexExcelConfig>();
+
+        avatarCodexes.emplace(
+            codex.avatarId,
+            std::move(codex));
+    }
+}
+
+void GameDatabase::LoadWeaponCodexes(const std::string& path)
+{
+    auto json = LoadJson(path);
+
+    for (const auto& entry : json)
+    {
+        WeaponCodexExcelConfig codex =
+            entry.get<WeaponCodexExcelConfig>();
+
+        weaponCodexes.emplace(
+            codex.weaponId,
+            std::move(codex));
+    }
+}
+
+void GameDatabase::LoadHyperlinks(
+    const std::string& path)
+{
+    auto json = LoadJson(path);
+
+    for (const auto& entry : json)
+    {
+        HyperLinkNameExcelConfig hyperlink =
+            entry.get<HyperLinkNameExcelConfig>();
+
+        hyperlinks.emplace(
+            hyperlink.id,
+            std::move(hyperlink));
+    }
+}
+
 // Getters
 
 std::string GameDatabase::GetText(uint64_t hash) const
@@ -462,4 +511,19 @@ const std::unordered_map<int, ReliquarySetExcelConfig> &GameDatabase::GetReliqua
 const std::unordered_map<int, CombineExcelConfig> &GameDatabase::GetCombines() const
 {
     return combines;
+}
+
+const WeaponCodexExcelConfig &GameDatabase::GetWeaponCodex(int weaponId) const
+{
+    return weaponCodexes.at(weaponId);
+}
+
+const AvatarCodexExcelConfig& GameDatabase::GetAvatarCodex(int avatarId) const
+{
+    return avatarCodexes.at(avatarId);
+}
+
+const std::unordered_map<int64_t, HyperLinkNameExcelConfig>& GameDatabase::GetHyperlinks() const
+{
+    return hyperlinks;
 }

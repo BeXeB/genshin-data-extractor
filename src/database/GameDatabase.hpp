@@ -23,7 +23,10 @@
 #include "dm/weapon/WeaponPromoteExcelConfig.hpp"
 #include "dm/artifact/ReliquarySetExcelConfig.hpp"
 #include "dm/artifact/ReliquaryExcelConfig.hpp"
-#include <dm/CombineExcelConfig.hpp>
+#include "dm/CombineExcelConfig.hpp"
+#include "dm/weapon/WeaponCodexExcelConfig.hpp"
+#include "dm/character/AvatarCodexExcelConfig.hpp"
+#include "dm/HyperLinkNameExcelConfig.hpp"
 
 class GameDatabase
 {
@@ -39,12 +42,14 @@ public:
     const AvatarTalentExcelConfig &GetTalent(int id) const;
     const AvatarSkillExcelConfig &GetSkill(int id) const;
     const std::vector<ProudSkillExcelConfig> &GetProudSkills(int proudSkillGroupId) const;
+    const AvatarCodexExcelConfig& GetAvatarCodex(int avatarId) const;
 
     const WeaponExcelConfig& GetWeapon(int id) const;
     const std::unordered_map<int, WeaponExcelConfig>& GetWeapons() const;
     const std::vector<EquipAffixExcelConfig>& GetEquipAffixes(int id) const;
     const std::vector<WeaponPromoteExcelConfig>& GetWeaponPromoteInfo(int id) const;
     const WeaponCurveExcelConfig& GetWeaponCurve(int level) const;
+    const WeaponCodexExcelConfig& GetWeaponCodex(int weaponId) const;
 
     const ReliquarySetExcelConfig& GetReliquarySet(int setId) const;
     const std::vector<ReliquaryExcelConfig>& GetReliquaries(int setId) const;
@@ -53,6 +58,8 @@ public:
     const MaterialExcelConfig& GetMaterial(int id) const;
     const std::unordered_map<int, MaterialExcelConfig>& GetMaterials() const;
     const std::unordered_map<int, CombineExcelConfig>& GetCombines() const;
+
+    const std::unordered_map<int64_t, HyperLinkNameExcelConfig>& GetHyperlinks() const;
 
     std::string GetText(uint64_t hash) const;
     const ReadableTextLoader& GetReadableTextLoader() const;
@@ -74,6 +81,9 @@ private:
     void LoadReliquarySets(const std::string& path);
     void LoadReliquaries(const std::string& path);
     void LoadCombines(const std::string& path);
+    void LoadAvaterCodexes(const std::string& path);
+    void LoadWeaponCodexes(const std::string& path);
+    void LoadHyperlinks(const std::string& path);
 
     TextMap textMap;
     ReadableTextLoader readableTextLoader;
@@ -94,6 +104,9 @@ private:
     std::unordered_map<int, ReliquarySetExcelConfig> reliquarySets;
     std::unordered_map<int, std::vector<ReliquaryExcelConfig>> reliquaries;
     std::unordered_map<int, CombineExcelConfig> combines;
+    std::unordered_map<int, AvatarCodexExcelConfig> avatarCodexes;
+    std::unordered_map<int, WeaponCodexExcelConfig> weaponCodexes;
+    std::unordered_map<int64_t, HyperLinkNameExcelConfig> hyperlinks;
 
     nlohmann::json LoadJson(const std::string &path) const;
 };

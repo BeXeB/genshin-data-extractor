@@ -62,6 +62,8 @@ struct CharacterProfile
     std::array<std::vector<Item>, 6>
         ascensionCosts;
 
+    int sortId{};
+
     CharacterImages images;
 };
 
@@ -83,5 +85,6 @@ inline void to_json(
         {"affiliation", profile.affiliation},
         {"substatType", StatTypeToDM(profile.substatType)},
         {"constellation", profile.constellation},
-        {"images", profile.images},
+        {"sortId", profile.sortId},
+        {"images", profile.images} };
 }

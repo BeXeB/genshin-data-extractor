@@ -58,7 +58,7 @@ MaterialType MaterialBuilder::DetermineType(
             material.typeDescTextMapHash);
 
     if (typeText == "Character Talent Material")
-        return MaterialType::Talent;
+        return MaterialType::TalentMaterial;
 
     if (typeText == "Character Level-Up Material")
         return MaterialType::Boss;

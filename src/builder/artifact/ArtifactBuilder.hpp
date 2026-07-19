@@ -1,7 +1,5 @@
 #pragma once
 
-#include "model/artifact/Artifact.hpp"
-
 #include "database/GameDatabase.hpp"
 #include "builder/artifact/ArtifactPieceBuilder.hpp"
 

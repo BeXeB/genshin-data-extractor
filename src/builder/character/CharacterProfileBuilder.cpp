@@ -97,6 +97,18 @@ CharacterProfile CharacterProfileBuilder::Build(const AvatarExcelConfig &avatar,
     profile.images.gachaSplash = "UI_Gacha_AvatarImg_" + iconSuffix;
     profile.images.gachaSlice = "UI_Gacha_AvatarIcon_" + iconSuffix;
 
+
+    const auto codex = db.GetAvatarCodex(avatar.id);
+
+    if (codex.sortFactor != codex.sortId) 
+    {
+        profile.sortId = codex.sortFactor;
+    }
+    else
+    {
+        profile.sortId = codex.sortId;
+    }
+
     return profile;
 }
 

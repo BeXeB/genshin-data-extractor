@@ -84,7 +84,7 @@ enum class DmMaterialType
 
 enum class MaterialType
 {
-    Talent,
+    TalentMaterial,
     Boss,
     Gemstone,
     LocalSpecialty,

@@ -16,7 +16,7 @@ class CharacterExporter
 public:
 
     void Export(
-        const Character& character,
+        const std::vector<Character>& characters,
         const std::string& outputDirectory
     ) const;
 

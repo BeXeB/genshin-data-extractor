@@ -121,5 +121,8 @@ Weapon WeaponBuilder::Build(
             dmWeapon,
             database);
 
+    weapon.sortOrder = 
+        database.GetWeaponCodex(weapon.id).sortOrder;
+
     return weapon;
 }

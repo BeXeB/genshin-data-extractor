@@ -573,3 +573,34 @@ std::string DmMaterialTypeToDM(
         return "UNKNOWN";
     }
 }
+
+std::string MaterialTypeToText(
+    MaterialType type) 
+{
+    switch (type)
+    {
+    case MaterialType::Boss:
+        return "boss";
+
+    case MaterialType::Gemstone:
+        return "gemstone";
+
+    case MaterialType::GenericMaterial:
+        return "generic";
+
+    case MaterialType::LocalSpecialty:
+        return "local-specialty";
+
+    case MaterialType::TalentMaterial:
+        return "talent";
+
+    case MaterialType::WeaponMaterial:
+        return "weapon";
+
+    case MaterialType::XpAndMora:
+        return "xp-and-mora";
+
+    default:
+        return "generic";
+    }
+}

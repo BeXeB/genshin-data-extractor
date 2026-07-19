@@ -19,6 +19,6 @@ inline void to_json(
 {
     j = nlohmann::json{
         {"description", refine.description},
-        {"values", refine.values}
+        //{"values", refine.values}
     };
 }

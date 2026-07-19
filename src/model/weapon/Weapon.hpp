@@ -75,6 +75,8 @@ struct Weapon
     WeaponImages images;
 
     WeaponStats stats;
+
+    int sortOrder{};
 };
 
 
@@ -99,7 +101,9 @@ inline void to_json(
 
         {"images", weapon.images},
 
-        {"stats", weapon.stats}
+        {"stats", weapon.stats},
+
+        {"sortOrder", weapon.sortOrder}
     };
 
     if (weapon.mainStatType)
