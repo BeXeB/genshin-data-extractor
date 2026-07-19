@@ -10,6 +10,9 @@
 #include "export/character/CharacterExporter.hpp"
 #include "model/character/Character.hpp"
 #include <nlohmann/json.hpp>
+#include <builder/artifact/ArtifactBuilder.hpp>
+#include <builder/material/MaterialBuilder.hpp>
+#include <builder/material/MaterialCraftBuilder.hpp>
 
 int main()
 {
@@ -32,38 +35,38 @@ int main()
         return 1;
     }
 
-    CharacterBuilder charBuilder;
-    CharacterExporter charExporter;
-    std::vector<CharacterProfile> profiles;
+    //CharacterBuilder charBuilder;
+    //CharacterExporter charExporter;
+    //std::vector<CharacterProfile> profiles;
 
-    const auto& avatars = db.GetAvatars();
+    //const auto& avatars = db.GetAvatars();
 
-    for (const auto &[id, avatar] : avatars)
-    {
-        // Skip test characters
-        if (avatar.useType != "AVATAR_FORMAL")
-            continue;
-        
-        // There are some avatars that are malformed, so we need to skip them
-        try
-        {
-            db.GetFetterInfo(avatar.id);
-        }
-        catch (const std::out_of_range &)
-        {
-            continue;
-        }
+    //for (const auto &[id, avatar] : avatars)
+    //{
+    //    // Skip test characters
+    //    if (avatar.useType != "AVATAR_FORMAL")
+    //        continue;
+    //    
+    //    // There are some avatars that are malformed, so we need to skip them
+    //    try
+    //    {
+    //        db.GetFetterInfo(avatar.id);
+    //    }
+    //    catch (const std::out_of_range &)
+    //    {
+    //        continue;
+    //    }
 
-        // Skipping manekins
-        if (avatar.id == 10000117 || avatar.id == 10000118) 
-        {
-            continue;
-        }
+    //    // Skipping manekins
+    //    if (avatar.id == 10000117 || avatar.id == 10000118) 
+    //    {
+    //        continue;
+    //    }
 
-        const auto& character = charBuilder.Build(avatar, db);
-        //charExporter.Export(character, outputPath + "/characters");
-        profiles.push_back(character.profile);
-    }
+    //    const auto& character = charBuilder.Build(avatar, db);
+    //    //charExporter.Export(character, outputPath + "/characters");
+    //    profiles.push_back(character.profile);
+    //}
 
     //nlohmann::json profilesJson = profiles;
 
@@ -80,19 +83,124 @@ int main()
 
     //profilesFile << profilesJson.dump(4);
 
-    WeaponBuilder weaponBuilder;
+    //WeaponBuilder weaponBuilder;
 
-    const auto& weapons = db.GetWeapons();
+    //const auto& weapons = db.GetWeapons();
 
-    for (const auto& [id, weapon] : weapons)
+    //for (const auto& [id, weapon] : weapons)
+    //{
+    //    try
+    //    {
+    //        if (id == 12514) {
+    //            const auto builtWeapon =
+    //                weaponBuilder.Build(db, id);
+
+    //            nlohmann::json json = builtWeapon;
+
+    //            std::cout
+    //                << json.dump(4)
+    //                << "\n";
+    //        }
+    //    }
+    //    catch (const std::exception& e)
+    //    {
+    //        std::cerr
+    //            << "Failed weapon "
+    //            << id
+    //            << ": "
+    //            << e.what()
+    //            << "\n";
+    //    }
+    //}
+
+    //ArtifactBuilder artifactBuilder;
+
+    //const auto& artifactSets =
+    //    db.GetReliquarySets();
+
+    //for (const auto& [id, set] : artifactSets)
+    //{
+    //    try
+    //    {
+    //        if (id == 15038)
+    //        {
+    //            const auto builtArtifact =
+    //                artifactBuilder.Build(
+    //                    id,
+    //                    db);
+
+    //            nlohmann::json json =
+    //                builtArtifact;
+
+    //            std::cout
+    //                << json.dump(4)
+    //                << "\n";
+    //        }
+    //    }
+    //    catch (const std::exception& e)
+    //    {
+    //        std::cerr
+    //            << "Failed artifact "
+    //            << id
+    //            << ": "
+    //            << e.what()
+    //            << "\n";
+    //    }
+    //}
+
+    //MaterialBuilder materialBuilder;
+
+    //const auto& materials =
+    //    db.GetMaterials();
+
+    //for (const auto& [id, material] : materials)
+    //{
+    //    try
+    //    {
+    //        if (id == 113075)
+    //        {
+    //            const auto builtMaterial =
+    //                materialBuilder.Build(
+    //                    material,
+    //                    db);
+
+    //            nlohmann::json json =
+    //                builtMaterial;
+
+    //            std::cout
+    //                << json.dump(4)
+    //                << "\n";
+    //        }
+    //    }
+    //    catch (const std::exception& e)
+    //    {
+    //        std::cerr
+    //            << "Failed material "
+    //            << id
+    //            << ": "
+    //            << e.what()
+    //            << "\n";
+    //    }
+    //}
+
+   MaterialCraftBuilder materialCraftBuilder;
+
+    const auto& combines =
+        db.GetCombines();
+
+    for (const auto& [id, combine] : combines)
     {
         try
         {
-            if (id == 12514) {
-                const auto builtWeapon =
-                    weaponBuilder.Build(db, id);
+            if (id == 104330)
+            {
+                const auto builtCraft =
+                    materialCraftBuilder.Build(
+                        combine,
+                        db);
 
-                nlohmann::json json = builtWeapon;
+                nlohmann::json json =
+                    builtCraft;
 
                 std::cout
                     << json.dump(4)
@@ -102,13 +210,14 @@ int main()
         catch (const std::exception& e)
         {
             std::cerr
-                << "Failed weapon "
+                << "Failed craft "
                 << id
                 << ": "
                 << e.what()
                 << "\n";
         }
     }
+
 
     return 0;
 }

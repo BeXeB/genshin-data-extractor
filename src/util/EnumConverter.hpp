@@ -34,9 +34,14 @@ std::string StatTypeToDM(
 std::string StatTypeToText(
     StatType type);
 
-MaterialType MaterialTypeFromDM(
+ArtifactType ArtifactTypeFromDM(
     const std::string &value);
-std::string StatTypeToDM(
-    StatType type);
-std::string StatTypeToText(
-    StatType type);
+std::string ArtifactTypeToDM(
+    ArtifactType type);
+std::string ArtifactTypeToText(
+    ArtifactType type);
+
+DmMaterialType DmMaterialTypeFromDM(
+    const std::string& value);
+std::string DmMaterialTypeToDM(
+    DmMaterialType type);

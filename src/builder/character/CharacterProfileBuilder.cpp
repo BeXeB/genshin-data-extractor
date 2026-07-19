@@ -97,11 +97,6 @@ CharacterProfile CharacterProfileBuilder::Build(const AvatarExcelConfig &avatar,
     profile.images.gachaSplash = "UI_Gacha_AvatarImg_" + iconSuffix;
     profile.images.gachaSlice = "UI_Gacha_AvatarIcon_" + iconSuffix;
 
-    // Couldn't find a way to get the version, so just set it to unknown for now.
-    // Will need to be set manually in the future.
-    profile.version =
-        "unknown";
-
     return profile;
 }
 

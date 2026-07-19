@@ -2,8 +2,8 @@
 
 #include "model/character/CharacterConstellation.hpp"
 #include "database/GameDatabase.hpp"
-#include "dm/AvatarSkillDepotExcelConfig.hpp"
-#include "dm/AvatarTalentExcelConfig.hpp"
+#include "dm/character/AvatarSkillDepotExcelConfig.hpp"
+#include "dm/character/AvatarTalentExcelConfig.hpp"
 
 
 class CharacterConstellationBuilder

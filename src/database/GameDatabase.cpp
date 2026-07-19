@@ -42,6 +42,9 @@ void GameDatabase::Load(
     LoadEquipAffixes(path + "/ExcelBinOutput/EquipAffixExcelConfigData.json");
     LoadWeaponPromotes(path + "/ExcelBinOutput/WeaponPromoteExcelConfigData.json");
     LoadWeaponCurves(path + "/ExcelBinOutput/WeaponCurveExcelConfigData.json");
+    LoadReliquarySets(path + "/ExcelBinOutput/ReliquarySetExcelConfigData.json");
+    LoadReliquaries(path + "/ExcelBinOutput/ReliquaryExcelConfigData.json");
+    LoadCombines(path + "/ExcelBinOutput/CombineExcelConfigData.json");
 
     std::cout << "Database loaded\n";
 }
@@ -85,8 +88,8 @@ void GameDatabase::LoadFetterInfo(const std::string &path)
 
     for (const auto &entry : json)
     {
-        FetterInoExcelConfig fetter =
-            entry.get<FetterInoExcelConfig>();
+        FetterInfoExcelConfig fetter =
+            entry.get<FetterInfoExcelConfig>();
 
         fetters.emplace(
             fetter.avatarId,
@@ -299,6 +302,50 @@ void GameDatabase::LoadWeaponCurves(const std::string& path)
     }
 }
 
+void GameDatabase::LoadReliquarySets(const std::string& path)
+{
+    auto json = LoadJson(path);
+
+    for (const auto& entry : json)
+    {
+        ReliquarySetExcelConfig set =
+            entry.get<ReliquarySetExcelConfig>();
+
+        reliquarySets.emplace(
+            set.setId,
+            std::move(set));
+    }
+}
+
+void GameDatabase::LoadReliquaries(const std::string& path)
+{
+    auto json = LoadJson(path);
+
+    for (const auto& entry : json)
+    {
+        ReliquaryExcelConfig reliquary =
+            entry.get<ReliquaryExcelConfig>();
+
+        reliquaries[reliquary.setId]
+            .push_back(std::move(reliquary));
+    }
+}
+
+void GameDatabase::LoadCombines(const std::string& path)
+{
+    auto json = LoadJson(path);
+
+    for (const auto& entry : json)
+    {
+        CombineExcelConfig combine =
+            entry.get<CombineExcelConfig>();
+
+        combines.emplace(
+            combine.resultItemId,
+            std::move(combine));
+    }
+}
+
 // Getters
 
 std::string GameDatabase::GetText(uint64_t hash) const
@@ -327,7 +374,7 @@ const std::unordered_map<int, AvatarExcelConfig> &GameDatabase::GetAvatars() con
     return avatars;
 }
 
-const FetterInoExcelConfig &GameDatabase::GetFetterInfo(int avatarId) const
+const FetterInfoExcelConfig &GameDatabase::GetFetterInfo(int avatarId) const
 {
     return fetters.at(avatarId);
 }
@@ -340,6 +387,11 @@ const std::vector<AvatarPromoteExcelConfig> &GameDatabase::GetAvatarPromoteInfo(
 const MaterialExcelConfig &GameDatabase::GetMaterial(int id) const
 {
     return materials.at(id);
+}
+
+const std::unordered_map<int, MaterialExcelConfig>& GameDatabase::GetMaterials() const
+{
+    return materials;
 }
 
 const AvatarCurveExcelConfig &GameDatabase::GetAvatarCurve(int level) const
@@ -382,12 +434,32 @@ const std::vector<EquipAffixExcelConfig> &GameDatabase::GetEquipAffixes(int id) 
     return equipAffixes.at(id);
 }
 
-const std::vector<WeaponPromoteExcelConfig>&GameDatabase::GetWeaponPromoteInfo(int id) const
+const std::vector<WeaponPromoteExcelConfig> &GameDatabase::GetWeaponPromoteInfo(int id) const
 {
     return weaponPromotes.at(id);
 }
 
-const WeaponCurveExcelConfig&GameDatabase::GetWeaponCurve(int level) const
+const WeaponCurveExcelConfig &GameDatabase::GetWeaponCurve(int level) const
 {
     return weaponCurves.at(level);
+}
+
+const ReliquarySetExcelConfig &GameDatabase::GetReliquarySet(int setId) const
+{
+    return reliquarySets.at(setId);
+}
+
+const std::vector<ReliquaryExcelConfig> &GameDatabase::GetReliquaries(int setId) const
+{
+    return reliquaries.at(setId);
+}
+
+const std::unordered_map<int, ReliquarySetExcelConfig> &GameDatabase::GetReliquarySets() const
+{
+    return reliquarySets;
+}
+
+const std::unordered_map<int, CombineExcelConfig> &GameDatabase::GetCombines() const
+{
+    return combines;
 }

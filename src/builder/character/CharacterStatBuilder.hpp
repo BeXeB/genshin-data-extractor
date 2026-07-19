@@ -1,6 +1,6 @@
 #pragma once
 
-#include "dm/AvatarExcelConfig.hpp"
+#include "dm/character/AvatarExcelConfig.hpp"
 #include "database/GameDatabase.hpp"
 #include "model/character/CharacterStats.hpp"
 

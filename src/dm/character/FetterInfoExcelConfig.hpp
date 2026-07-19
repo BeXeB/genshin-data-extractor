@@ -5,7 +5,7 @@
 
 #include <nlohmann/json.hpp>
 
-struct FetterInoExcelConfig
+struct FetterInfoExcelConfig
 {
     int avatarId;
 
@@ -26,7 +26,7 @@ struct FetterInoExcelConfig
 
 inline void from_json(
     const nlohmann::json &j,
-    FetterInoExcelConfig &fetter)
+    FetterInfoExcelConfig &fetter)
 {
     j.at("avatarId")
         .get_to(fetter.avatarId);

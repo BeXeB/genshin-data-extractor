@@ -8,9 +8,11 @@
 
 #include <nlohmann/json.hpp>
 
+#include "model/Enums.hpp"
 #include "model/Item.hpp"
 #include "WeaponRefines.hpp"
 #include "WeaponStats.hpp"
+#include "util/EnumConverter.hpp"
 
 struct WeaponImages
 {
@@ -48,15 +50,15 @@ struct Weapon
 
     std::string description;
 
-    std::string weaponType;
+    WeaponType weaponType{WeaponType::Unknown};
 
-    std::string qualityType;
+    QualityType qualityType{QualityType::Unknown};
 
     int rarity{};
 
     std::string story;
 
-    std::optional<std::string> mainStatType;
+    std::optional<StatType> mainStatType;
 
     std::optional<std::string> effectName;
 
@@ -72,8 +74,6 @@ struct Weapon
 
     WeaponImages images;
 
-    std::string version;
-
     WeaponStats stats;
 };
 
@@ -88,9 +88,9 @@ inline void to_json(
         {"normalizedName", weapon.normalizedName},
 
         {"description", weapon.description},
-        {"weaponType", weapon.weaponType},
+        {"weaponType", WeaponTypeToDM(weapon.weaponType)},
 
-        {"qualityType", weapon.qualityType},
+        {"qualityType", QualityTypeToDM(weapon.qualityType)},
         {"rarity", weapon.rarity},
 
         {"story", weapon.story},
@@ -99,13 +99,11 @@ inline void to_json(
 
         {"images", weapon.images},
 
-        {"version", weapon.version},
-
         {"stats", weapon.stats}
     };
 
     if (weapon.mainStatType)
-        j["mainStatType"] = *weapon.mainStatType;
+        j["mainStatType"] = StatTypeToDM(*weapon.mainStatType);
 
     if (weapon.effectName)
         j["effectName"] = *weapon.effectName;

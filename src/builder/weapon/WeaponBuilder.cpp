@@ -32,13 +32,13 @@ Weapon WeaponBuilder::Build(
             dmWeapon.descTextMapHash);
 
     weapon.weaponType =
-        dmWeapon.weaponType;
+        WeaponTypeFromDM(dmWeapon.weaponType);
 
     weapon.rarity =
         dmWeapon.rankLevel;
 
-    weapon.qualityType = 
-        QualityTypeToDM(QualityTypeFromRarity(weapon.rarity));
+    weapon.qualityType =
+        QualityTypeFromRarity(weapon.rarity);
 
     weapon.images.filename_icon =
         dmWeapon.icon;
@@ -54,7 +54,7 @@ Weapon WeaponBuilder::Build(
             dmWeapon.icon.find_last_of('_') + 1);
 
     weapon.images.filename_gacha = 
-        "UI_Gacha_EquipIcon_" + WeaponTypeToText(WeaponTypeFromDM(weapon.weaponType)) + "_" + iconSuffix;
+        "UI_Gacha_EquipIcon_" + WeaponTypeToText(weapon.weaponType) + "_" + iconSuffix;
 
     weapon.story =
         database.GetReadableTextLoader()
@@ -74,7 +74,7 @@ Weapon WeaponBuilder::Build(
         }
         else
         {
-            weapon.mainStatType = prop.propType;
+            weapon.mainStatType = StatTypeFromDM(prop.propType);
         }
     }
 
@@ -120,11 +120,6 @@ Weapon WeaponBuilder::Build(
         statBuilder.Build(
             dmWeapon,
             database);
-
-    // Couldn't find a way to get the version, so just set it to unknown for now.
-    // Will need to be set manually in the future.
-    weapon.version =
-        "unknown";
 
     return weapon;
 }

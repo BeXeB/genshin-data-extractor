@@ -1,7 +1,7 @@
 #pragma once
 
-#include "dm/AvatarExcelConfig.hpp"
-#include "dm/FetterInoExcelConfig.hpp"
+#include "dm/character/AvatarExcelConfig.hpp"
+#include "dm/character/FetterInfoExcelConfig.hpp"
 #include "dm/TextMap.hpp"
 #include "model/character/CharacterProfile.hpp"
 #include "model/Item.hpp"

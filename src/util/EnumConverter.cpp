@@ -418,3 +418,158 @@ std::string StatTypeToText(
         return "Unknown";
     }
 }
+
+ArtifactType ArtifactTypeFromDM(
+    const std::string &value)
+{
+    if (value == "EQUIP_BRACER")
+        return ArtifactType::Flower;
+
+    if (value == "EQUIP_NECKLACE")
+        return ArtifactType::Plume;
+
+    if (value == "EQUIP_SHOES")
+        return ArtifactType::Sands;
+
+    if (value == "EQUIP_RING")
+        return ArtifactType::Goblet;
+
+    if (value == "EQUIP_DRESS")
+        return ArtifactType::Circlet;
+
+    return ArtifactType::Unknown;
+}
+
+std::string ArtifactTypeToDM(
+    ArtifactType type)
+{
+    switch (type)
+    {
+    case ArtifactType::Flower:
+        return "EQUIP_BRACER";
+    case ArtifactType::Plume:
+        return "EQUIP_NECKLACE";
+    case ArtifactType::Sands:
+        return "EQUIP_SHOES";
+    case ArtifactType::Goblet:
+        return "EQUIP_RING";
+    case ArtifactType::Circlet:
+        return "EQUIP_DRESS";
+    default:
+        return "UNKNOWN";
+    }
+}
+
+std::string ArtifactTypeToText(
+    ArtifactType type)
+{
+    switch (type)
+    {
+    case ArtifactType::Flower:
+        return "Flower";
+    case ArtifactType::Plume:
+        return "Plume";
+    case ArtifactType::Sands:
+        return "Sands";
+    case ArtifactType::Goblet:
+        return "Goblet";
+    case ArtifactType::Circlet:
+        return "Circlet";
+    default:
+        return "Unknown";
+    }
+}
+
+DmMaterialType DmMaterialTypeFromDM(
+    const std::string& value)
+{
+    if (value == "MATERIAL_ADSORBATE")
+        return DmMaterialType::Adsorbate;
+
+    if (value == "MATERIAL_AVATAR_MATERIAL")
+        return DmMaterialType::AvatarMaterial;
+
+    if (value == "MATERIAL_CONSUME")
+        return DmMaterialType::Consume;
+
+    if (value == "MATERIAL_ELEM_CRYSTAL")
+        return DmMaterialType::ElemCrystal;
+
+    if (value == "MATERIAL_EXCHANGE")
+        return DmMaterialType::Exchange;
+
+    if (value == "MATERIAL_EXP_FRUIT")
+        return DmMaterialType::ExpFruit;
+
+    if (value == "MATERIAL_FISH_BAIT")
+        return DmMaterialType::FishBait;
+
+    if (value == "MATERIAL_FISH_ROD")
+        return DmMaterialType::FishRod;
+
+    if (value == "MATERIAL_NONE")
+        return DmMaterialType::None;
+
+    if (value == "MATERIAL_NOTICE_ADD_HP")
+        return DmMaterialType::NoticeAddHp;
+
+    if (value == "MATERIAL_WEAPON_EXP_STONE")
+        return DmMaterialType::WeaponExpStone;
+
+    if (value == "MATERIAL_WEAPON_MATERIAL")
+        return DmMaterialType::WeaponMaterial;
+
+    if (value == "MATERIAL_WOOD")
+        return DmMaterialType::Wood;
+
+    return DmMaterialType::Unknown;
+}
+
+std::string DmMaterialTypeToDM(
+    DmMaterialType type)
+{
+    switch (type)
+    {
+    case DmMaterialType::Adsorbate:
+        return "MATERIAL_ADSORBATE";
+
+    case DmMaterialType::AvatarMaterial:
+        return "MATERIAL_AVATAR_MATERIAL";
+
+    case DmMaterialType::Consume:
+        return "MATERIAL_CONSUME";
+
+    case DmMaterialType::ElemCrystal:
+        return "MATERIAL_ELEM_CRYSTAL";
+
+    case DmMaterialType::Exchange:
+        return "MATERIAL_EXCHANGE";
+
+    case DmMaterialType::ExpFruit:
+        return "MATERIAL_EXP_FRUIT";
+
+    case DmMaterialType::FishBait:
+        return "MATERIAL_FISH_BAIT";
+
+    case DmMaterialType::FishRod:
+        return "MATERIAL_FISH_ROD";
+
+    case DmMaterialType::None:
+        return "MATERIAL_NONE";
+
+    case DmMaterialType::NoticeAddHp:
+        return "MATERIAL_NOTICE_ADD_HP";
+
+    case DmMaterialType::WeaponExpStone:
+        return "MATERIAL_WEAPON_EXP_STONE";
+
+    case DmMaterialType::WeaponMaterial:
+        return "MATERIAL_WEAPON_MATERIAL";
+
+    case DmMaterialType::Wood:
+        return "MATERIAL_WOOD";
+
+    default:
+        return "UNKNOWN";
+    }
+}

@@ -36,3 +36,35 @@ std::string ReadableTextLoader::Get(
 
     return buffer.str();
 }
+
+std::string ReadableTextLoader::Get(
+    const std::string& prefix,
+    int id,
+    int suffix,
+    const std::string& language) const
+{
+    const auto filePath =
+        basePath /
+        (prefix +
+            std::to_string(id) +
+            "_" +
+            std::to_string(suffix) +
+            "_" +
+            language +
+            ".txt");
+
+
+    std::ifstream file(filePath);
+
+    if (!file)
+    {
+        return "";
+    }
+
+
+    std::stringstream buffer;
+
+    buffer << file.rdbuf();
+
+    return buffer.str();
+}

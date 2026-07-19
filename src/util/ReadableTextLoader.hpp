@@ -14,6 +14,12 @@ public:
         int id,
         const std::string& language = "EN") const;
 
+    std::string Get(
+        const std::string& prefix,
+        int id,
+        int suffix,
+        const std::string& language = "EN") const;
+
 private:
     std::filesystem::path basePath;
 };

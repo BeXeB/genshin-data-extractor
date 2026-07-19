@@ -2,9 +2,9 @@
 
 #include "database/GameDatabase.hpp"
 
-#include "dm/AvatarSkillDepotExcelConfig.hpp"
-#include "dm/AvatarSkillExcelConfig.hpp"
-#include "dm/ProudSkillExcelConfig.hpp"
+#include "dm/character/AvatarSkillDepotExcelConfig.hpp"
+#include "dm/character/AvatarSkillExcelConfig.hpp"
+#include "dm/character/ProudSkillExcelConfig.hpp"
 
 #include "model/character/CharacterTalents.hpp"
 

@@ -5,7 +5,7 @@
 
 #include <nlohmann/json.hpp>
 
-#include "PromoteProp.hpp"
+#include "dm/PromoteProp.hpp"
 
 struct AvatarPromoteExcelConfig
 {

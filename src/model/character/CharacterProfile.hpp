@@ -63,8 +63,6 @@ struct CharacterProfile
         ascensionCosts;
 
     CharacterImages images;
-
-    std::string version;
 };
 
 inline void to_json(
@@ -86,5 +84,4 @@ inline void to_json(
         {"substatType", StatTypeToDM(profile.substatType)},
         {"constellation", profile.constellation},
         {"images", profile.images},
-        {"version", profile.version}};
 }

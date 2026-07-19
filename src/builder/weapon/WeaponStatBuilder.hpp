@@ -1,7 +1,7 @@
 #pragma once
 
 #include "database/GameDatabase.hpp"
-#include "dm/WeaponExcelConfig.hpp"
+#include "dm/weapon/WeaponExcelConfig.hpp"
 #include "model/weapon/Weapon.hpp"
 
 class WeaponStatBuilder

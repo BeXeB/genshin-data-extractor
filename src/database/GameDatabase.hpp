@@ -9,18 +9,21 @@
 #include "util/ReadableTextLoader.hpp"
 
 #include "dm/MaterialExcelConfig.hpp"
-#include "dm/FetterInoExcelConfig.hpp"
-#include "dm/AvatarExcelConfig.hpp"
-#include "dm/AvatarPromoteExcelConfig.hpp"
-#include "dm/AvatarCurveExcelConfig.hpp"
-#include "dm/AvatarTalentExcelConfig.hpp"
-#include "dm/AvatarSkillDepotExcelConfig.hpp"
-#include "dm/AvatarSkillExcelConfig.hpp"
-#include "dm/ProudSkillExcelConfig.hpp"
-#include "dm/WeaponCurveExcelConfig.hpp"
-#include "dm/WeaponExcelConfig.hpp"
-#include "dm/WeaponPromoteExcelConfig.hpp"
 #include "dm/EquipAffixExcelConfig.hpp"
+#include "dm/character/FetterInfoExcelConfig.hpp"
+#include "dm/character/AvatarExcelConfig.hpp"
+#include "dm/character/AvatarPromoteExcelConfig.hpp"
+#include "dm/character/AvatarCurveExcelConfig.hpp"
+#include "dm/character/AvatarTalentExcelConfig.hpp"
+#include "dm/character/AvatarSkillDepotExcelConfig.hpp"
+#include "dm/character/AvatarSkillExcelConfig.hpp"
+#include "dm/character/ProudSkillExcelConfig.hpp"
+#include "dm/weapon/WeaponCurveExcelConfig.hpp"
+#include "dm/weapon/WeaponExcelConfig.hpp"
+#include "dm/weapon/WeaponPromoteExcelConfig.hpp"
+#include "dm/artifact/ReliquarySetExcelConfig.hpp"
+#include "dm/artifact/ReliquaryExcelConfig.hpp"
+#include <dm/CombineExcelConfig.hpp>
 
 class GameDatabase
 {
@@ -29,7 +32,7 @@ public:
 
     const AvatarExcelConfig &GetAvatar(int id) const;
     const std::unordered_map<int, AvatarExcelConfig> &GetAvatars() const;
-    const FetterInoExcelConfig &GetFetterInfo(int avatarId) const;
+    const FetterInfoExcelConfig &GetFetterInfo(int avatarId) const;
     const std::vector<AvatarPromoteExcelConfig> &GetAvatarPromoteInfo(int promoteId) const;
     const AvatarCurveExcelConfig &GetAvatarCurve(int level) const;
     const AvatarSkillDepotExcelConfig &GetSkillDepot(int id) const;
@@ -43,7 +46,13 @@ public:
     const std::vector<WeaponPromoteExcelConfig>& GetWeaponPromoteInfo(int id) const;
     const WeaponCurveExcelConfig& GetWeaponCurve(int level) const;
 
+    const ReliquarySetExcelConfig& GetReliquarySet(int setId) const;
+    const std::vector<ReliquaryExcelConfig>& GetReliquaries(int setId) const;
+    const std::unordered_map<int, ReliquarySetExcelConfig>& GetReliquarySets() const;
+
     const MaterialExcelConfig& GetMaterial(int id) const;
+    const std::unordered_map<int, MaterialExcelConfig>& GetMaterials() const;
+    const std::unordered_map<int, CombineExcelConfig>& GetCombines() const;
 
     std::string GetText(uint64_t hash) const;
     const ReadableTextLoader& GetReadableTextLoader() const;
@@ -62,12 +71,15 @@ private:
     void LoadEquipAffixes(const std::string &path);
     void LoadWeaponPromotes(const std::string &path);
     void LoadWeaponCurves(const std::string &path);
+    void LoadReliquarySets(const std::string& path);
+    void LoadReliquaries(const std::string& path);
+    void LoadCombines(const std::string& path);
 
     TextMap textMap;
     ReadableTextLoader readableTextLoader;
 
     std::unordered_map<int, AvatarExcelConfig> avatars;
-    std::unordered_map<int, FetterInoExcelConfig> fetters;
+    std::unordered_map<int, FetterInfoExcelConfig> fetters;
     std::unordered_map<int, std::vector<AvatarPromoteExcelConfig>> avatarPromotes;
     std::unordered_map<int, MaterialExcelConfig> materials;
     std::unordered_map<int, AvatarCurveExcelConfig> avatarCurves;
@@ -79,6 +91,9 @@ private:
     std::unordered_map<int,std::vector<EquipAffixExcelConfig>> equipAffixes;
     std::unordered_map<int, std::vector<WeaponPromoteExcelConfig>> weaponPromotes;
     std::unordered_map<int, WeaponCurveExcelConfig> weaponCurves;
+    std::unordered_map<int, ReliquarySetExcelConfig> reliquarySets;
+    std::unordered_map<int, std::vector<ReliquaryExcelConfig>> reliquaries;
+    std::unordered_map<int, CombineExcelConfig> combines;
 
     nlohmann::json LoadJson(const std::string &path) const;
 };
