@@ -84,7 +84,6 @@ Weapon WeaponBuilder::Build(
         const auto dmEquipAffix = dmEquipAffixes[0];
 
         weapon.effectName = database.GetText(dmEquipAffix.nameTextMapHash);
-        weapon.effectTemplateRaw = "";
     }
 
 

@@ -65,6 +65,7 @@ public:
     const ReadableTextLoader& GetReadableTextLoader() const;
 
 private:
+    void LoadTextMap(const std::string& path);
     void LoadAvatars(const std::string &path);
     void LoadFetterInfo(const std::string &path);
     void LoadAvatarPromoteInfo(const std::string &path);

@@ -25,9 +25,15 @@ void GameDatabase::Load(
     weaponPromotes.clear();
     weaponCurves.clear();
     equipAffixes.clear();
+    reliquarySets.clear();
+    reliquaries.clear();
+    combines.clear();
+    avatarCodexes.clear();
+    weaponCodexes.clear();
+    hyperlinks.clear();
 
-    textMap = LoadJson(path + "/TextMap/TextMap_MediumEN.json").get<TextMap>();
     readableTextLoader.SetPath(path + "/Readable/EN");
+    LoadTextMap(path);
 
     LoadAvatars(path + "/ExcelBinOutput/AvatarExcelConfigData.json");
     LoadFetterInfo(path + "/ExcelBinOutput/FetterInfoExcelConfigData.json");
@@ -47,7 +53,7 @@ void GameDatabase::Load(
     LoadCombines(path + "/ExcelBinOutput/CombineExcelConfigData.json");
     LoadAvaterCodexes(path + "/ExcelBinOutput/AvatarCodexExcelConfigData.json");
     LoadWeaponCodexes(path + "/ExcelBinOutput/WeaponCodexExcelConfigData.json");
-    LoadHyperlinks(path + "/ExcelBinOutput/HyperLinkNameExcelConfigData.json");
+    LoadHyperlinks(path + "/ExcelBinOutput/HyperLinkNameExcelConifgData.json");
 
     std::cout << "Database loaded\n";
 }
@@ -68,6 +74,31 @@ nlohmann::json GameDatabase::LoadJson(const std::string &path) const
     file >> json;
 
     return json;
+}
+
+void GameDatabase::LoadTextMap(const std::string& path)
+{
+    auto medium =
+        LoadJson(path + "/TextMap/TextMap_MediumEN.json")
+        .get<TextMap>();
+
+    auto full =
+        LoadJson(path + "/TextMap/TextMapEN.json")
+        .get<TextMap>();
+
+    textMap.entries.clear();
+
+    // Medium first
+    for (const auto& [hash, value] : medium.entries)
+    {
+        textMap.entries.emplace(hash, value);
+    }
+
+    // Full fills missing entries
+    for (const auto& [hash, value] : full.entries)
+    {
+        textMap.entries.emplace(hash, value);
+    }
 }
 
 void GameDatabase::LoadAvatars(const std::string &path)

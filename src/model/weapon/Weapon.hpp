@@ -62,8 +62,6 @@ struct Weapon
 
     std::optional<std::string> effectName;
 
-    std::optional<std::string> effectTemplateRaw;
-
     std::optional<WeaponRefine> r1;
     std::optional<WeaponRefine> r2;
     std::optional<WeaponRefine> r3;
@@ -111,10 +109,6 @@ inline void to_json(
 
     if (weapon.effectName)
         j["effectName"] = *weapon.effectName;
-
-    if (weapon.effectTemplateRaw)
-        j["effectTemplateRaw"] = *weapon.effectTemplateRaw;
-
 
     if (weapon.r1)
         j["r1"] = *weapon.r1;

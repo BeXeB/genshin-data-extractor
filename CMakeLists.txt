@@ -45,7 +45,13 @@ add_executable(
     "src/builder/artifact/ArtifactBuilder.cpp" 
     "src/builder/artifact/ArtifactPieceBuilder.cpp"  
     "src/builder/material/MaterialBuilder.cpp" 
-    "src/builder/material/MaterialCraftBuilder.cpp" "src/builder/hyperlink/HyperLinkBuilder.cpp" "src/export/hyperlink/HyperLinkExporter.cpp" "src/export/artifact/ArtifactExporter.cpp" "src/export/weapon/WeaponExporter.cpp" "src/export/craft/CraftExporter.cpp" "src/export/material/MaterialExporter.cpp")
+    "src/builder/material/MaterialCraftBuilder.cpp" 
+    "src/builder/hyperlink/HyperLinkBuilder.cpp" 
+    "src/export/hyperlink/HyperLinkExporter.cpp" 
+    "src/export/artifact/ArtifactExporter.cpp" 
+    "src/export/weapon/WeaponExporter.cpp" 
+    "src/export/craft/CraftExporter.cpp" 
+    "src/export/material/MaterialExporter.cpp")
 
 target_include_directories(
     GenshinDataExtractor

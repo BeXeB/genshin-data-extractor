@@ -6,6 +6,7 @@
 #include <nlohmann/json.hpp>
 
 #include "model/Enums.hpp"
+#include "util/EnumConverter.hpp"
 
 struct MaterialImages
 {
@@ -55,7 +56,7 @@ inline void to_json(
         {"normalizedName", material.normalizedName},
         {"sortRank", material.sortRank},
         {"description", material.description},
-        {"type", material.type},
+        {"type", MaterialTypeToText(material.type)},
         {"images", material.images}
     };
 
