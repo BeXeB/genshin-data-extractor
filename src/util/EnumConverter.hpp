@@ -41,10 +41,5 @@ std::string ArtifactTypeToDM(
 std::string ArtifactTypeToText(
     ArtifactType type);
 
-DmMaterialType DmMaterialTypeFromDM(
-    const std::string& value);
-std::string DmMaterialTypeToDM(
-    DmMaterialType type);
-
 std::string MaterialTypeToText(
     MaterialType);

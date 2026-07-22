@@ -8,8 +8,7 @@
 class HyperLinkExporter
 {
 public:
-
     void Export(
-        const std::vector<HyperLink>& hyperlinks,
-        const std::string& outputPath) const;
+        const std::vector<HyperLink> &hyperlinks,
+        const std::string &outputPath) const;
 };

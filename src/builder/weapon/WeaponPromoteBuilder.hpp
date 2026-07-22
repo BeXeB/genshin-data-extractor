@@ -12,6 +12,6 @@ class WeaponPromoteBuilder
 {
 public:
     std::map<std::string, std::vector<Item>> Build(
-        const GameDatabase& database,
+        const GameDatabase &database,
         int weaponPromoteId);
 };

@@ -19,13 +19,12 @@ struct ArtifactPiece
 };
 
 inline void to_json(
-    nlohmann::json& j,
-    const ArtifactPiece& piece)
+    nlohmann::json &j,
+    const ArtifactPiece &piece)
 {
     j = nlohmann::json{
         {"name", piece.name},
         {"relicType", ArtifactTypeToDM(piece.relicType)},
         {"description", piece.description},
-        {"story", piece.story}
-    };
+        {"story", piece.story}};
 }

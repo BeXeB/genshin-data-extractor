@@ -4,13 +4,9 @@
 
 #include "model/character/CharacterTalents.hpp"
 
-
 class SkillsExporter
 {
 public:
-
     nlohmann::json Export(
-        const CharacterTalents& skills
-    ) const;
-
+        const CharacterTalents &skills) const;
 };

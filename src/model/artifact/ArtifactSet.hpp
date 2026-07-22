@@ -8,7 +8,6 @@
 
 #include "model/artifact/ArtifactPiece.hpp"
 
-
 struct ArtifactImages
 {
     std::optional<std::string> filename_flower;
@@ -18,10 +17,9 @@ struct ArtifactImages
     std::optional<std::string> filename_circlet;
 };
 
-
 inline void to_json(
-    nlohmann::json& j,
-    const ArtifactImages& images)
+    nlohmann::json &j,
+    const ArtifactImages &images)
 {
     j = nlohmann::json::object();
 
@@ -40,7 +38,6 @@ inline void to_json(
     if (images.filename_circlet)
         j["filename_circlet"] = *images.filename_circlet;
 }
-
 
 struct ArtifactSet
 {
@@ -65,18 +62,16 @@ struct ArtifactSet
     ArtifactImages images;
 };
 
-
 inline void to_json(
-    nlohmann::json& j,
-    const ArtifactSet& artifact)
+    nlohmann::json &j,
+    const ArtifactSet &artifact)
 {
     j = nlohmann::json{
         {"id", artifact.id},
         {"name", artifact.name},
         {"normalizedName", artifact.normalizedName},
         {"rarityList", artifact.rarityList},
-        {"images", artifact.images}
-    };
+        {"images", artifact.images}};
 
     if (artifact.effect1Pc)
         j["effect1Pc"] = *artifact.effect1Pc;

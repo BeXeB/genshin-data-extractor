@@ -1,10 +1,8 @@
 #include "CharacterConstellationBuilder.hpp"
 
-
 CharacterConstellation CharacterConstellationBuilder::Build(
-    const AvatarSkillDepotExcelConfig& skillDepot,
-    const GameDatabase& db
-) const
+    const AvatarSkillDepotExcelConfig &skillDepot,
+    const GameDatabase &db) const
 {
     CharacterConstellation constellation;
 
@@ -12,11 +10,12 @@ CharacterConstellation CharacterConstellationBuilder::Build(
 
     for (size_t i = 0; i < skillDepot.talents.size() && i < 6; i++)
     {
-        if (skillDepot.talents[i] == 0) {
+        if (skillDepot.talents[i] == 0)
+        {
             continue;
         }
 
-        const auto& talent =
+        const auto &talent =
             db.GetTalent(
                 skillDepot.talents[i]);
 
@@ -59,11 +58,9 @@ CharacterConstellation CharacterConstellationBuilder::Build(
     return constellation;
 }
 
-
 ConstellationDetail CharacterConstellationBuilder::BuildDetail(
-    const AvatarTalentExcelConfig& talent,
-    const GameDatabase& db
-) const
+    const AvatarTalentExcelConfig &talent,
+    const GameDatabase &db) const
 {
     ConstellationDetail detail;
 

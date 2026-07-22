@@ -9,6 +9,6 @@ class CraftExporter
 {
 public:
     void Export(
-        const std::vector<MaterialCraft>& crafts,
-        const std::string& outputDirectory) const;
+        const std::vector<MaterialCraft> &crafts,
+        const std::string &outputDirectory) const;
 };

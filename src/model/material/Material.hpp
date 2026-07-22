@@ -14,14 +14,12 @@ struct MaterialImages
 };
 
 inline void to_json(
-    nlohmann::json& j,
-    const MaterialImages& images)
+    nlohmann::json &j,
+    const MaterialImages &images)
 {
     j = nlohmann::json{
-        {"filename_icon", images.filename_icon}
-    };
+        {"filename_icon", images.filename_icon}};
 }
-
 
 struct Material
 {
@@ -45,10 +43,9 @@ struct Material
     MaterialImages images;
 };
 
-
 inline void to_json(
-    nlohmann::json& j,
-    const Material& material)
+    nlohmann::json &j,
+    const Material &material)
 {
     j = nlohmann::json{
         {"id", material.id},
@@ -57,8 +54,7 @@ inline void to_json(
         {"sortRank", material.sortRank},
         {"description", material.description},
         {"type", MaterialTypeToText(material.type)},
-        {"images", material.images}
-    };
+        {"images", material.images}};
 
     if (material.rarity)
         j["rarity"] = *material.rarity;

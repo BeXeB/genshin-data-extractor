@@ -42,30 +42,30 @@ public:
     const AvatarTalentExcelConfig &GetTalent(int id) const;
     const AvatarSkillExcelConfig &GetSkill(int id) const;
     const std::vector<ProudSkillExcelConfig> &GetProudSkills(int proudSkillGroupId) const;
-    const AvatarCodexExcelConfig& GetAvatarCodex(int avatarId) const;
+    const AvatarCodexExcelConfig &GetAvatarCodex(int avatarId) const;
 
-    const WeaponExcelConfig& GetWeapon(int id) const;
-    const std::unordered_map<int, WeaponExcelConfig>& GetWeapons() const;
-    const std::vector<EquipAffixExcelConfig>& GetEquipAffixes(int id) const;
-    const std::vector<WeaponPromoteExcelConfig>& GetWeaponPromoteInfo(int id) const;
-    const WeaponCurveExcelConfig& GetWeaponCurve(int level) const;
-    const WeaponCodexExcelConfig& GetWeaponCodex(int weaponId) const;
+    const WeaponExcelConfig &GetWeapon(int id) const;
+    const std::unordered_map<int, WeaponExcelConfig> &GetWeapons() const;
+    const std::vector<EquipAffixExcelConfig> &GetEquipAffixes(int id) const;
+    const std::vector<WeaponPromoteExcelConfig> &GetWeaponPromoteInfo(int id) const;
+    const WeaponCurveExcelConfig &GetWeaponCurve(int level) const;
+    const WeaponCodexExcelConfig &GetWeaponCodex(int weaponId) const;
 
-    const ReliquarySetExcelConfig& GetReliquarySet(int setId) const;
-    const std::vector<ReliquaryExcelConfig>& GetReliquaries(int setId) const;
-    const std::unordered_map<int, ReliquarySetExcelConfig>& GetReliquarySets() const;
+    const ReliquarySetExcelConfig &GetReliquarySet(int setId) const;
+    const std::vector<ReliquaryExcelConfig> &GetReliquaries(int setId) const;
+    const std::unordered_map<int, ReliquarySetExcelConfig> &GetReliquarySets() const;
 
-    const MaterialExcelConfig& GetMaterial(int id) const;
-    const std::unordered_map<int, MaterialExcelConfig>& GetMaterials() const;
-    const std::unordered_map<int, CombineExcelConfig>& GetCombines() const;
+    const MaterialExcelConfig &GetMaterial(int id) const;
+    const std::unordered_map<int, MaterialExcelConfig> &GetMaterials() const;
+    const std::unordered_map<int, CombineExcelConfig> &GetCombines() const;
 
-    const std::unordered_map<int64_t, HyperLinkNameExcelConfig>& GetHyperlinks() const;
+    const std::unordered_map<int64_t, HyperLinkNameExcelConfig> &GetHyperlinks() const;
 
     std::string GetText(uint64_t hash) const;
-    const ReadableTextLoader& GetReadableTextLoader() const;
+    const ReadableTextLoader &GetReadableTextLoader() const;
 
 private:
-    void LoadTextMap(const std::string& path);
+    void LoadTextMap(const std::string &path);
     void LoadAvatars(const std::string &path);
     void LoadFetterInfo(const std::string &path);
     void LoadAvatarPromoteInfo(const std::string &path);
@@ -79,12 +79,12 @@ private:
     void LoadEquipAffixes(const std::string &path);
     void LoadWeaponPromotes(const std::string &path);
     void LoadWeaponCurves(const std::string &path);
-    void LoadReliquarySets(const std::string& path);
-    void LoadReliquaries(const std::string& path);
-    void LoadCombines(const std::string& path);
-    void LoadAvaterCodexes(const std::string& path);
-    void LoadWeaponCodexes(const std::string& path);
-    void LoadHyperlinks(const std::string& path);
+    void LoadReliquarySets(const std::string &path);
+    void LoadReliquaries(const std::string &path);
+    void LoadCombines(const std::string &path);
+    void LoadAvaterCodexes(const std::string &path);
+    void LoadWeaponCodexes(const std::string &path);
+    void LoadHyperlinks(const std::string &path);
 
     TextMap textMap;
     ReadableTextLoader readableTextLoader;
@@ -99,7 +99,7 @@ private:
     std::unordered_map<int, AvatarSkillExcelConfig> skills;
     std::unordered_map<int, std::vector<ProudSkillExcelConfig>> proudSkills;
     std::unordered_map<int, WeaponExcelConfig> weapons;
-    std::unordered_map<int,std::vector<EquipAffixExcelConfig>> equipAffixes;
+    std::unordered_map<int, std::vector<EquipAffixExcelConfig>> equipAffixes;
     std::unordered_map<int, std::vector<WeaponPromoteExcelConfig>> weaponPromotes;
     std::unordered_map<int, WeaponCurveExcelConfig> weaponCurves;
     std::unordered_map<int, ReliquarySetExcelConfig> reliquarySets;

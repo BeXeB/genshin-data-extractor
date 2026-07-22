@@ -9,6 +9,6 @@ class MaterialExporter
 {
 public:
     void Export(
-        const std::vector<Material>& materials,
-        const std::string& outputDirectory) const;
+        const std::vector<Material> &materials,
+        const std::string &outputDirectory) const;
 };

@@ -5,12 +5,10 @@
 
 #include "model/material/MaterialCraft.hpp"
 
-
 class MaterialCraftBuilder
 {
 public:
-
     MaterialCraft Build(
-        const CombineExcelConfig& combine,
-        const GameDatabase& database) const;
+        const CombineExcelConfig &combine,
+        const GameDatabase &database) const;
 };

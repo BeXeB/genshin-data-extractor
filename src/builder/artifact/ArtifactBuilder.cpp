@@ -5,18 +5,17 @@
 
 ArtifactSet ArtifactBuilder::Build(
     int setId,
-    const GameDatabase& database) const
+    const GameDatabase &database) const
 {
     ArtifactSet artifact;
 
-    const auto& set =
+    const auto &set =
         database.GetReliquarySet(setId);
 
     artifact.id =
         set.setId;
 
-
-    const auto& affixes =
+    const auto &affixes =
         database.GetEquipAffixes(
             set.equipAffixId);
 
@@ -30,7 +29,7 @@ ArtifactSet ArtifactBuilder::Build(
             Normalize(artifact.name);
     }
 
-    for (const auto& affix : affixes)
+    for (const auto &affix : affixes)
     {
         const auto text =
             database.GetText(
@@ -52,12 +51,11 @@ ArtifactSet ArtifactBuilder::Build(
         }
     }
 
-
-    const auto& reliquaries =
+    const auto &reliquaries =
         database.GetReliquaries(setId);
     std::set<int> rarities;
 
-    for (const auto& reliquary : reliquaries)
+    for (const auto &reliquary : reliquaries)
     {
         rarities.insert(
             reliquary.rankLevel);

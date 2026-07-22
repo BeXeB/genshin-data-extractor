@@ -11,8 +11,8 @@ struct PassiveSkillGroup
 };
 
 inline void from_json(
-    const nlohmann::json& j,
-    PassiveSkillGroup& skill)
+    const nlohmann::json &j,
+    PassiveSkillGroup &skill)
 {
     j.at("proudSkillGroupId")
         .get_to(skill.passiveSkillGroupId);
@@ -32,8 +32,8 @@ struct AvatarSkillDepotExcelConfig
 };
 
 inline void from_json(
-    const nlohmann::json& j,
-    AvatarSkillDepotExcelConfig& depot)
+    const nlohmann::json &j,
+    AvatarSkillDepotExcelConfig &depot)
 {
     j.at("id")
         .get_to(depot.id);
@@ -61,7 +61,7 @@ inline void from_json(
         bool matchesPassiveSkillGroupShape = true;
         // Structured metadata marks special passive entries (quest-gated/open-condition passives).
         bool hasStructuredMetadata = false;
-        for (const auto& entry : *it)
+        for (const auto &entry : *it)
         {
             if (!entry.is_object())
             {
@@ -76,7 +76,7 @@ inline void from_json(
             }
 
             // Exclude arrays like EIBOFEEGGID that carry structured open-condition metadata.
-            for (const auto& [key, value] : entry.items())
+            for (const auto &[key, value] : entry.items())
             {
                 if (key == "proudSkillGroupId")
                 {
@@ -104,10 +104,10 @@ inline void from_json(
             it->get_to(parsedGroups);
 
             // Keep base passives first and append special passives after them.
-            auto& target =
+            auto &target =
                 hasStructuredMetadata
-                ? specialPassiveGroups
-                : normalPassiveGroups;
+                    ? specialPassiveGroups
+                    : normalPassiveGroups;
 
             target.insert(
                 target.end(),

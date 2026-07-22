@@ -4,23 +4,20 @@
 #include <fstream>
 
 void CharacterExporter::Export(
-    const std::vector<Character>& characters,
-    const std::string& outputDirectory) const
+    const std::vector<Character> &characters,
+    const std::string &outputDirectory) const
 {
     std::filesystem::create_directories(outputDirectory);
 
     nlohmann::json profiles =
         nlohmann::json::array();
 
+    nlohmann::json index = nlohmann::json::array();
 
-    for (const auto& character : characters)
+    for (const auto &character : characters)
     {
         const std::string filename =
-            outputDirectory
-            + "/"
-            + character.profile.normalizedName
-            + ".json";
-
+            outputDirectory + "/" + character.profile.normalizedName + ".json";
 
         std::ofstream file(filename);
 
@@ -29,7 +26,6 @@ void CharacterExporter::Export(
             throw std::runtime_error(
                 "Failed writing: " + filename);
         }
-
 
         nlohmann::json json;
 
@@ -40,7 +36,6 @@ void CharacterExporter::Export(
         json["stats"] =
             statsExporter.Export(
                 character.stats);
-
 
         if (character.variants.empty())
         {
@@ -53,39 +48,40 @@ void CharacterExporter::Export(
                     character.constellation);
         }
 
-
         if (!character.variants.empty())
         {
             nlohmann::json variantsJson;
 
-            for (const auto& [element, variant] : character.variants)
+            for (const auto &[element, variant] : character.variants)
             {
                 variantsJson[ElementTypeToDM(element)] =
-                {
-                    {"skills",
-                        skillsExporter.Export(
-                            variant.talents)},
+                    {
+                        {"skills",
+                         skillsExporter.Export(
+                             variant.talents)},
 
-                    {"constellation",
-                        constellationExporter.Export(
-                            variant.constellation)}
-                };
+                        {"constellation",
+                         constellationExporter.Export(
+                             variant.constellation)}};
             }
 
             json["variants"] = variantsJson;
         }
 
-
         file << json.dump(4);
-
 
         profiles.push_back(
             character.profile);
-    }
 
+        index.push_back(
+            character.profile.normalizedName);
+    }
 
     std::ofstream profileFile(
         outputDirectory + "/profiles.json");
+
+    std::ofstream indexFile(
+        outputDirectory + "/index.json");
 
     profileFile << profiles.dump(4);
 }

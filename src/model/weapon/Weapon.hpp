@@ -23,14 +23,12 @@ struct WeaponImages
     std::optional<std::string> filename_gacha;
 };
 
-
 inline void to_json(
-    nlohmann::json& j,
-    const WeaponImages& images)
+    nlohmann::json &j,
+    const WeaponImages &images)
 {
     j = nlohmann::json{
-        {"filename_icon", images.filename_icon}
-    };
+        {"filename_icon", images.filename_icon}};
 
     if (images.filename_awakenIcon)
         j["filename_awakenIcon"] = *images.filename_awakenIcon;
@@ -38,7 +36,6 @@ inline void to_json(
     if (images.filename_gacha)
         j["filename_gacha"] = *images.filename_gacha;
 }
-
 
 struct Weapon
 {
@@ -77,10 +74,9 @@ struct Weapon
     int sortOrder{};
 };
 
-
 inline void to_json(
-    nlohmann::json& j,
-    const Weapon& weapon)
+    nlohmann::json &j,
+    const Weapon &weapon)
 {
     j = nlohmann::json{
         {"id", weapon.id},
@@ -101,8 +97,7 @@ inline void to_json(
 
         {"stats", weapon.stats},
 
-        {"sortOrder", weapon.sortOrder}
-    };
+        {"sortOrder", weapon.sortOrder}};
 
     if (weapon.mainStatType)
         j["mainStatType"] = StatTypeToDM(*weapon.mainStatType);

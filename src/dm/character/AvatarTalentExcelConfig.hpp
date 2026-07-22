@@ -5,7 +5,6 @@
 
 #include <nlohmann/json.hpp>
 
-
 struct AvatarTalentExcelConfig
 {
     int talentId{};
@@ -17,10 +16,9 @@ struct AvatarTalentExcelConfig
     std::string icon;
 };
 
-
 inline void from_json(
-    const nlohmann::json& j,
-    AvatarTalentExcelConfig& talent)
+    const nlohmann::json &j,
+    AvatarTalentExcelConfig &talent)
 {
     j.at("talentId")
         .get_to(talent.talentId);

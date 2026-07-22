@@ -5,6 +5,9 @@
 
 #include <nlohmann/json.hpp>
 
+#include "model/Enums.hpp"
+#include "util/EnumConverter.hpp"
+
 struct MaterialExcelConfig
 {
     int id{};
@@ -17,14 +20,11 @@ struct MaterialExcelConfig
 
     int rank{};
     int rankLevel{};
-
-    std::string materialType;
 };
 
-
 inline void from_json(
-    const nlohmann::json& j,
-    MaterialExcelConfig& material)
+    const nlohmann::json &j,
+    MaterialExcelConfig &material)
 {
     j.at("id")
         .get_to(material.id);
@@ -46,7 +46,4 @@ inline void from_json(
 
     j.at("rankLevel")
         .get_to(material.rankLevel);
-
-    j.at("materialType")
-        .get_to(material.materialType);
 }

@@ -21,10 +21,9 @@ struct WeaponPromoteExcelConfig
     std::vector<PromoteProp> addProps;
 };
 
-
 inline void from_json(
-    const nlohmann::json& j,
-    WeaponPromoteExcelConfig& promote)
+    const nlohmann::json &j,
+    WeaponPromoteExcelConfig &promote)
 {
     j.at("weaponPromoteId").get_to(promote.weaponPromoteId);
     j.at("promoteLevel").get_to(promote.promoteLevel);

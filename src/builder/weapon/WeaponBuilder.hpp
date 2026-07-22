@@ -11,10 +11,10 @@ class WeaponBuilder
 {
 public:
     Weapon Build(
-        const GameDatabase& database,
+        const GameDatabase &database,
         int id);
 
-private :
+private:
     WeaponAffixBuilder affixBuilder;
     WeaponPromoteBuilder promoteBuilder;
     WeaponStatBuilder statBuilder;

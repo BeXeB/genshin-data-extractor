@@ -5,10 +5,9 @@
 #include "util/EnumConverter.hpp"
 #include <util/Slug.hpp>
 
-
 Material MaterialBuilder::Build(
-    const MaterialExcelConfig& dmMaterial,
-    const GameDatabase& database) const
+    const MaterialExcelConfig &dmMaterial,
+    const GameDatabase &database) const
 {
     Material material;
 
@@ -50,8 +49,8 @@ Material MaterialBuilder::Build(
 }
 
 MaterialType MaterialBuilder::DetermineType(
-    const MaterialExcelConfig& material,
-    const GameDatabase& database) const
+    const MaterialExcelConfig &material,
+    const GameDatabase &database) const
 {
     const std::string typeText =
         database.GetText(

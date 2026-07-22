@@ -19,8 +19,7 @@ inline void to_json(
 {
     j = nlohmann::json{
         {"name", detail.name},
-        {"descriptionRaw", detail.descriptionRaw}
-    };
+        {"descriptionRaw", detail.descriptionRaw}};
 }
 
 struct CharacterConstellation
@@ -56,8 +55,7 @@ inline void to_json(
         {"c3", constellation.c3},
         {"c4", constellation.c4},
         {"c5", constellation.c5},
-        {"c6", constellation.c6}
-    };
+        {"c6", constellation.c6}};
 
     j["images"] = nlohmann::json::object();
 

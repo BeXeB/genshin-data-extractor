@@ -58,6 +58,28 @@ void GameDatabase::Load(
     std::cout << "Database loaded\n";
 }
 
+std::string FixEscapedNewlines(std::string value)
+{
+    std::string result;
+
+    for (size_t i = 0; i < value.size(); i++)
+    {
+        if (value[i] == '\\' &&
+            i + 1 < value.size() &&
+            value[i + 1] == 'n')
+        {
+            result.push_back('\n');
+            i++;
+        }
+        else
+        {
+            result.push_back(value[i]);
+        }
+    }
+
+    return result;
+}
+
 // Loaders
 
 nlohmann::json GameDatabase::LoadJson(const std::string &path) const
@@ -76,28 +98,30 @@ nlohmann::json GameDatabase::LoadJson(const std::string &path) const
     return json;
 }
 
-void GameDatabase::LoadTextMap(const std::string& path)
+void GameDatabase::LoadTextMap(const std::string &path)
 {
     auto medium =
         LoadJson(path + "/TextMap/TextMap_MediumEN.json")
-        .get<TextMap>();
+            .get<TextMap>();
 
     auto full =
         LoadJson(path + "/TextMap/TextMapEN.json")
-        .get<TextMap>();
+            .get<TextMap>();
 
     textMap.entries.clear();
 
-    // Medium first
-    for (const auto& [hash, value] : medium.entries)
+    for (const auto &[hash, value] : medium.entries)
     {
-        textMap.entries.emplace(hash, value);
+        textMap.entries.emplace(
+            hash,
+            FixEscapedNewlines(value));
     }
 
-    // Full fills missing entries
-    for (const auto& [hash, value] : full.entries)
+    for (const auto &[hash, value] : full.entries)
     {
-        textMap.entries.emplace(hash, value);
+        textMap.entries.emplace(
+            hash,
+            FixEscapedNewlines(value));
     }
 }
 
@@ -256,11 +280,11 @@ void GameDatabase::LoadProudSkills(const std::string &path)
     }
 }
 
-void GameDatabase::LoadWeapons(const std::string& path)
+void GameDatabase::LoadWeapons(const std::string &path)
 {
     auto json = LoadJson(path);
 
-    for (const auto& entry : json)
+    for (const auto &entry : json)
     {
         WeaponExcelConfig weapon =
             entry.get<WeaponExcelConfig>();
@@ -271,11 +295,11 @@ void GameDatabase::LoadWeapons(const std::string& path)
     }
 }
 
-void GameDatabase::LoadEquipAffixes(const std::string& path)
+void GameDatabase::LoadEquipAffixes(const std::string &path)
 {
     auto json = LoadJson(path);
 
-    for (const auto& entry : json)
+    for (const auto &entry : json)
     {
         EquipAffixExcelConfig affix =
             entry.get<EquipAffixExcelConfig>();
@@ -284,23 +308,23 @@ void GameDatabase::LoadEquipAffixes(const std::string& path)
             .push_back(std::move(affix));
     }
 
-    for (auto& [id, affixes] : equipAffixes)
+    for (auto &[id, affixes] : equipAffixes)
     {
         std::sort(
             affixes.begin(),
             affixes.end(),
-            [](const auto& a, const auto& b)
+            [](const auto &a, const auto &b)
             {
                 return a.level < b.level;
             });
     }
 }
 
-void GameDatabase::LoadWeaponPromotes(const std::string& path)
+void GameDatabase::LoadWeaponPromotes(const std::string &path)
 {
     auto json = LoadJson(path);
 
-    for (const auto& entry : json)
+    for (const auto &entry : json)
     {
         WeaponPromoteExcelConfig promote =
             entry.get<WeaponPromoteExcelConfig>();
@@ -309,23 +333,23 @@ void GameDatabase::LoadWeaponPromotes(const std::string& path)
             .push_back(std::move(promote));
     }
 
-    for (auto& [id, promotes] : weaponPromotes)
+    for (auto &[id, promotes] : weaponPromotes)
     {
         std::sort(
             promotes.begin(),
             promotes.end(),
-            [](const auto& a, const auto& b)
+            [](const auto &a, const auto &b)
             {
                 return a.promoteLevel < b.promoteLevel;
             });
     }
 }
 
-void GameDatabase::LoadWeaponCurves(const std::string& path)
+void GameDatabase::LoadWeaponCurves(const std::string &path)
 {
     auto json = LoadJson(path);
 
-    for (const auto& entry : json)
+    for (const auto &entry : json)
     {
         WeaponCurveExcelConfig curve =
             entry.get<WeaponCurveExcelConfig>();
@@ -336,11 +360,11 @@ void GameDatabase::LoadWeaponCurves(const std::string& path)
     }
 }
 
-void GameDatabase::LoadReliquarySets(const std::string& path)
+void GameDatabase::LoadReliquarySets(const std::string &path)
 {
     auto json = LoadJson(path);
 
-    for (const auto& entry : json)
+    for (const auto &entry : json)
     {
         ReliquarySetExcelConfig set =
             entry.get<ReliquarySetExcelConfig>();
@@ -351,11 +375,11 @@ void GameDatabase::LoadReliquarySets(const std::string& path)
     }
 }
 
-void GameDatabase::LoadReliquaries(const std::string& path)
+void GameDatabase::LoadReliquaries(const std::string &path)
 {
     auto json = LoadJson(path);
 
-    for (const auto& entry : json)
+    for (const auto &entry : json)
     {
         ReliquaryExcelConfig reliquary =
             entry.get<ReliquaryExcelConfig>();
@@ -365,11 +389,11 @@ void GameDatabase::LoadReliquaries(const std::string& path)
     }
 }
 
-void GameDatabase::LoadCombines(const std::string& path)
+void GameDatabase::LoadCombines(const std::string &path)
 {
     auto json = LoadJson(path);
 
-    for (const auto& entry : json)
+    for (const auto &entry : json)
     {
         CombineExcelConfig combine =
             entry.get<CombineExcelConfig>();
@@ -380,11 +404,11 @@ void GameDatabase::LoadCombines(const std::string& path)
     }
 }
 
-void GameDatabase::LoadAvaterCodexes(const std::string& path)
+void GameDatabase::LoadAvaterCodexes(const std::string &path)
 {
     auto json = LoadJson(path);
 
-    for (const auto& entry : json)
+    for (const auto &entry : json)
     {
         AvatarCodexExcelConfig codex =
             entry.get<AvatarCodexExcelConfig>();
@@ -395,11 +419,11 @@ void GameDatabase::LoadAvaterCodexes(const std::string& path)
     }
 }
 
-void GameDatabase::LoadWeaponCodexes(const std::string& path)
+void GameDatabase::LoadWeaponCodexes(const std::string &path)
 {
     auto json = LoadJson(path);
 
-    for (const auto& entry : json)
+    for (const auto &entry : json)
     {
         WeaponCodexExcelConfig codex =
             entry.get<WeaponCodexExcelConfig>();
@@ -411,11 +435,11 @@ void GameDatabase::LoadWeaponCodexes(const std::string& path)
 }
 
 void GameDatabase::LoadHyperlinks(
-    const std::string& path)
+    const std::string &path)
 {
     auto json = LoadJson(path);
 
-    for (const auto& entry : json)
+    for (const auto &entry : json)
     {
         HyperLinkNameExcelConfig hyperlink =
             entry.get<HyperLinkNameExcelConfig>();
@@ -438,7 +462,7 @@ std::string GameDatabase::GetText(uint64_t hash) const
     return it->second;
 }
 
-const ReadableTextLoader&
+const ReadableTextLoader &
 GameDatabase::GetReadableTextLoader() const
 {
     return readableTextLoader;
@@ -469,7 +493,7 @@ const MaterialExcelConfig &GameDatabase::GetMaterial(int id) const
     return materials.at(id);
 }
 
-const std::unordered_map<int, MaterialExcelConfig>& GameDatabase::GetMaterials() const
+const std::unordered_map<int, MaterialExcelConfig> &GameDatabase::GetMaterials() const
 {
     return materials;
 }
@@ -499,7 +523,7 @@ const std::vector<ProudSkillExcelConfig> &GameDatabase::GetProudSkills(int proud
     return proudSkills.at(proudSkillGroupId);
 }
 
-const WeaponExcelConfig&GameDatabase::GetWeapon(int id) const
+const WeaponExcelConfig &GameDatabase::GetWeapon(int id) const
 {
     return weapons.at(id);
 }
@@ -549,12 +573,12 @@ const WeaponCodexExcelConfig &GameDatabase::GetWeaponCodex(int weaponId) const
     return weaponCodexes.at(weaponId);
 }
 
-const AvatarCodexExcelConfig& GameDatabase::GetAvatarCodex(int avatarId) const
+const AvatarCodexExcelConfig &GameDatabase::GetAvatarCodex(int avatarId) const
 {
     return avatarCodexes.at(avatarId);
 }
 
-const std::unordered_map<int64_t, HyperLinkNameExcelConfig>& GameDatabase::GetHyperlinks() const
+const std::unordered_map<int64_t, HyperLinkNameExcelConfig> &GameDatabase::GetHyperlinks() const
 {
     return hyperlinks;
 }

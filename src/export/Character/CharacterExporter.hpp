@@ -10,21 +10,16 @@
 #include "StatsExporter.hpp"
 #include "ConstellationExporter.hpp"
 
-
 class CharacterExporter
 {
 public:
-
     void Export(
-        const std::vector<Character>& characters,
-        const std::string& outputDirectory
-    ) const;
+        const std::vector<Character> &characters,
+        const std::string &outputDirectory) const;
 
 private:
-
     ProfileExporter profileExporter;
     SkillsExporter skillsExporter;
     StatsExporter statsExporter;
     ConstellationExporter constellationExporter;
-
 };

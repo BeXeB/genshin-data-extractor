@@ -13,8 +13,8 @@ struct AvatarCodexExcelConfig
 };
 
 inline void from_json(
-    const nlohmann::json& j,
-    AvatarCodexExcelConfig& codex)
+    const nlohmann::json &j,
+    AvatarCodexExcelConfig &codex)
 {
     j.at("avatarId").get_to(codex.avatarId);
     j.at("sortFactor").get_to(codex.sortFactor);

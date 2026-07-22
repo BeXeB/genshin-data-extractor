@@ -51,7 +51,7 @@ add_executable(
     "src/export/artifact/ArtifactExporter.cpp" 
     "src/export/weapon/WeaponExporter.cpp" 
     "src/export/craft/CraftExporter.cpp" 
-    "src/export/material/MaterialExporter.cpp")
+    "src/export/material/MaterialExporter.cpp" )
 
 target_include_directories(
     GenshinDataExtractor

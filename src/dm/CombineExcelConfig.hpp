@@ -5,13 +5,11 @@
 
 #include <nlohmann/json.hpp>
 
-
 struct CombineMaterialItem
 {
     int id{};
     int count{};
 };
-
 
 struct CombineExcelConfig
 {
@@ -24,10 +22,9 @@ struct CombineExcelConfig
     std::vector<CombineMaterialItem> materialItems;
 };
 
-
 inline void from_json(
-    const nlohmann::json& j,
-    CombineMaterialItem& item)
+    const nlohmann::json &j,
+    CombineMaterialItem &item)
 {
     j.at("id")
         .get_to(item.id);
@@ -36,10 +33,9 @@ inline void from_json(
         .get_to(item.count);
 }
 
-
 inline void from_json(
-    const nlohmann::json& j,
-    CombineExcelConfig& combine)
+    const nlohmann::json &j,
+    CombineExcelConfig &combine)
 {
     j.at("resultItemId")
         .get_to(combine.resultItemId);

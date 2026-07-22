@@ -12,10 +12,9 @@ struct HyperLinkNameExcelConfig
     int64_t nameTextMapHash{};
 };
 
-
 inline void from_json(
-    const nlohmann::json& j,
-    HyperLinkNameExcelConfig& hyperlink)
+    const nlohmann::json &j,
+    HyperLinkNameExcelConfig &hyperlink)
 {
     j.at("id").get_to(hyperlink.id);
     j.at("descTextMapHash").get_to(hyperlink.descTextMapHash);

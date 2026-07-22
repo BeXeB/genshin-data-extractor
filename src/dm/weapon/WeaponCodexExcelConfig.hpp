@@ -12,8 +12,8 @@ struct WeaponCodexExcelConfig
 };
 
 inline void from_json(
-    const nlohmann::json& j,
-    WeaponCodexExcelConfig& codex)
+    const nlohmann::json &j,
+    WeaponCodexExcelConfig &codex)
 {
     j.at("weaponId").get_to(codex.weaponId);
     j.at("sortOrder").get_to(codex.sortOrder);

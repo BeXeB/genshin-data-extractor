@@ -4,8 +4,8 @@
 
 std::vector<std::optional<WeaponRefine>>
 WeaponAffixBuilder::Build(
-    const GameDatabase& database,
-    const std::vector<int>& skillAffix)
+    const GameDatabase &database,
+    const std::vector<int> &skillAffix)
 {
     std::vector<std::optional<WeaponRefine>> refinements;
 
@@ -14,10 +14,10 @@ WeaponAffixBuilder::Build(
         return refinements;
     }
 
-    const auto& affixes =
+    const auto &affixes =
         database.GetEquipAffixes(skillAffix[0]);
 
-    for (const auto& affix : affixes)
+    for (const auto &affix : affixes)
     {
         WeaponRefine refine;
 

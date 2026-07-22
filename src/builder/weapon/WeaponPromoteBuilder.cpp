@@ -2,23 +2,22 @@
 
 #include "database/GameDatabase.hpp"
 
-
 std::map<std::string, std::vector<Item>>
 WeaponPromoteBuilder::Build(
-    const GameDatabase& database,
+    const GameDatabase &database,
     int weaponPromoteId)
 {
     std::map<std::string, std::vector<Item>> costs;
 
-    const auto& promotes =
+    const auto &promotes =
         database.GetWeaponPromoteInfo(weaponPromoteId);
 
-    auto& moraMaterial =
+    auto &moraMaterial =
         database.GetMaterial(202);
     std::string moraName =
         database.GetText(moraMaterial.nameTextMapHash);
 
-    for (const auto& promote : promotes)
+    for (const auto &promote : promotes)
     {
         std::vector<Item> items;
 
@@ -29,14 +28,14 @@ WeaponPromoteBuilder::Build(
         if (mora.count != 0)
             items.push_back(mora);
 
-        for (const auto& cost : promote.costItems)
+        for (const auto &cost : promote.costItems)
         {
             if (cost.id == 0 || cost.count == 0)
                 continue;
 
-            const auto& material =
+            const auto &material =
                 database.GetMaterial(cost.id);
-           
+
             Item item;
 
             item.id = material.id;
@@ -52,10 +51,8 @@ WeaponPromoteBuilder::Build(
 
         if (!items.empty())
         {
-            costs[
-                "ascend" +
-                    std::to_string(promote.promoteLevel)
-            ] = std::move(items);
+            costs["ascend" +
+                  std::to_string(promote.promoteLevel)] = std::move(items);
         }
     }
 

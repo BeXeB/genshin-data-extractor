@@ -8,6 +8,6 @@ class WeaponExporter
 {
 public:
     void Export(
-        const std::vector<Weapon>& weapons,
-        const std::string& outputDirectory) const;
+        const std::vector<Weapon> &weapons,
+        const std::string &outputDirectory) const;
 };

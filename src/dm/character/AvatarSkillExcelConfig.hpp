@@ -19,8 +19,8 @@ struct AvatarSkillExcelConfig
 };
 
 inline void from_json(
-    const nlohmann::json& j,
-    AvatarSkillExcelConfig& skill)
+    const nlohmann::json &j,
+    AvatarSkillExcelConfig &skill)
 {
     j.at("id")
         .get_to(skill.id);

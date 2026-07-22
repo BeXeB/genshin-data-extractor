@@ -4,13 +4,9 @@
 
 #include "model/character/CharacterStats.hpp"
 
-
 class StatsExporter
 {
 public:
-
     nlohmann::json Export(
-        const CharacterStats& stats
-    ) const;
-
+        const CharacterStats &stats) const;
 };

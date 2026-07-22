@@ -2,9 +2,8 @@
 #include <iostream>
 
 CharacterStats CharacterStatBuilder::Build(
-    const AvatarExcelConfig& avatar,
-    const GameDatabase& db
-) const
+    const AvatarExcelConfig &avatar,
+    const GameDatabase &db) const
 {
     CharacterStats stats;
 
@@ -50,8 +49,7 @@ CharacterStats CharacterStatBuilder::Build(
 }
 
 int CharacterStatBuilder::GetAscension(
-    int level
-) const
+    int level) const
 {
     if (level <= 20)
         return 0;
@@ -70,30 +68,28 @@ int CharacterStatBuilder::GetAscension(
 }
 
 bool CharacterStatBuilder::IsAscensionLevel(
-    int level
-) const
+    int level) const
 {
     return level == 20 ||
-        level == 40 ||
-        level == 50 ||
-        level == 60 ||
-        level == 70 ||
-        level == 80;
+           level == 40 ||
+           level == 50 ||
+           level == 60 ||
+           level == 70 ||
+           level == 80;
 }
 
 CharacterStat CharacterStatBuilder::BuildStat(
-    const AvatarExcelConfig& avatar,
+    const AvatarExcelConfig &avatar,
     int level,
     int ascension,
-    const GameDatabase& db
-) const
+    const GameDatabase &db) const
 {
     CharacterStat stat;
 
     stat.level = level;
     stat.ascension = ascension;
 
-    const auto& promotes =
+    const auto &promotes =
         db.GetAvatarPromoteInfo(
             avatar.avatarPromoteId);
 
@@ -102,8 +98,8 @@ CharacterStat CharacterStatBuilder::BuildStat(
             avatar,
             level,
             db,
-            "FIGHT_PROP_BASE_HP")
-        + GetAscensionBonus(
+            "FIGHT_PROP_BASE_HP") +
+        GetAscensionBonus(
             promotes,
             ascension,
             "FIGHT_PROP_BASE_HP");
@@ -113,8 +109,8 @@ CharacterStat CharacterStatBuilder::BuildStat(
             avatar,
             level,
             db,
-            "FIGHT_PROP_BASE_ATTACK")
-        + GetAscensionBonus(
+            "FIGHT_PROP_BASE_ATTACK") +
+        GetAscensionBonus(
             promotes,
             ascension,
             "FIGHT_PROP_BASE_ATTACK");
@@ -124,8 +120,8 @@ CharacterStat CharacterStatBuilder::BuildStat(
             avatar,
             level,
             db,
-            "FIGHT_PROP_BASE_DEFENSE")
-        + GetAscensionBonus(
+            "FIGHT_PROP_BASE_DEFENSE") +
+        GetAscensionBonus(
             promotes,
             ascension,
             "FIGHT_PROP_BASE_DEFENSE");
@@ -133,23 +129,22 @@ CharacterStat CharacterStatBuilder::BuildStat(
     stat.specialized =
         GetSpecializedStat(
             avatar,
-            promotes, 
+            promotes,
             ascension);
 
     return stat;
 }
 
 double CharacterStatBuilder::GetCurveMultiplier(
-    const AvatarExcelConfig& avatar,
+    const AvatarExcelConfig &avatar,
     int level,
-    const GameDatabase& db,
-    const std::string& propType
-) const
+    const GameDatabase &db,
+    const std::string &propType) const
 {
     // Find the growth curve used by this stat.
     std::string curveType;
 
-    for (const auto& curve : avatar.propGrowCurves)
+    for (const auto &curve : avatar.propGrowCurves)
     {
         if (curve.type == propType)
         {
@@ -165,10 +160,10 @@ double CharacterStatBuilder::GetCurveMultiplier(
     }
 
     // Look up the curve data for this level.
-    const auto& avatarCurve =
+    const auto &avatarCurve =
         db.GetAvatarCurve(level);
 
-    for (const auto& curveInfo : avatarCurve.curveInfos)
+    for (const auto &curveInfo : avatarCurve.curveInfos)
     {
         if (curveInfo.type == curveType)
         {
@@ -184,11 +179,10 @@ double CharacterStatBuilder::GetCurveMultiplier(
 }
 
 double CharacterStatBuilder::CalculateBaseStat(
-    const AvatarExcelConfig& avatar,
+    const AvatarExcelConfig &avatar,
     int level,
-    const GameDatabase& db,
-    const std::string& propType
-) const
+    const GameDatabase &db,
+    const std::string &propType) const
 {
     double baseStat = 0.0;
 
@@ -210,18 +204,17 @@ double CharacterStatBuilder::CalculateBaseStat(
     }
 
     return baseStat *
-        GetCurveMultiplier(
-            avatar,
-            level,
-            db,
-            propType);
+           GetCurveMultiplier(
+               avatar,
+               level,
+               db,
+               propType);
 }
 
 double CharacterStatBuilder::GetAscensionBonus(
-    const std::vector<AvatarPromoteExcelConfig>& promotes,
+    const std::vector<AvatarPromoteExcelConfig> &promotes,
     int ascension,
-    const std::string& propType
-) const
+    const std::string &propType) const
 {
     if (ascension == 0)
     {
@@ -234,9 +227,9 @@ double CharacterStatBuilder::GetAscensionBonus(
         return 0.0;
     }
 
-    const auto& promote = promotes.at(ascension);
+    const auto &promote = promotes.at(ascension);
 
-    for (const auto& prop : promote.addProps)
+    for (const auto &prop : promote.addProps)
     {
         if (prop.propType == propType)
         {
@@ -248,10 +241,9 @@ double CharacterStatBuilder::GetAscensionBonus(
 }
 
 double CharacterStatBuilder::GetSpecializedStat(
-    const AvatarExcelConfig& avatar,
-    const std::vector<AvatarPromoteExcelConfig>& promotes,
-    int ascension
-) const
+    const AvatarExcelConfig &avatar,
+    const std::vector<AvatarPromoteExcelConfig> &promotes,
+    int ascension) const
 {
     std::string propType;
     double result = 0.0;
@@ -259,10 +251,10 @@ double CharacterStatBuilder::GetSpecializedStat(
     if (
         static_cast<size_t>(ascension) < promotes.size())
     {
-        const auto& promote =
+        const auto &promote =
             promotes.at(ascension);
 
-        for (const auto& prop : promote.addProps)
+        for (const auto &prop : promote.addProps)
         {
             if (prop.propType == "FIGHT_PROP_BASE_HP")
                 continue;

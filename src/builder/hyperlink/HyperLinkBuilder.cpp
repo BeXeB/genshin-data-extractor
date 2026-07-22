@@ -1,9 +1,8 @@
 #include "HyperLinkBuilder.hpp"
 
-
 HyperLink HyperLinkBuilder::Build(
-    const HyperLinkNameExcelConfig& dmHyperlink,
-    const GameDatabase& database) const
+    const HyperLinkNameExcelConfig &dmHyperlink,
+    const GameDatabase &database) const
 {
     HyperLink hyperlink;
 

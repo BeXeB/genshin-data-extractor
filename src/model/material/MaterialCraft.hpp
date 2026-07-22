@@ -6,7 +6,6 @@
 
 #include "model/Item.hpp"
 
-
 struct MaterialCraft
 {
     int id{};
@@ -18,16 +17,14 @@ struct MaterialCraft
     std::vector<Item> recipe;
 };
 
-
 inline void to_json(
-    nlohmann::json& j,
-    const MaterialCraft& craft)
+    nlohmann::json &j,
+    const MaterialCraft &craft)
 {
     j =
-    {
-        {"id", craft.id},
-        {"resultCount", craft.resultCount},
-        {"moraCost", craft.moraCost},
-        {"recipe", craft.recipe}
-    };
+        {
+            {"id", craft.id},
+            {"resultCount", craft.resultCount},
+            {"moraCost", craft.moraCost},
+            {"recipe", craft.recipe}};
 }

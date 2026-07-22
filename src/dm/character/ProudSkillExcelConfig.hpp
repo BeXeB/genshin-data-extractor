@@ -14,8 +14,8 @@ struct ProudSkillCostItem
 };
 
 inline void from_json(
-    const nlohmann::json& j,
-    ProudSkillCostItem& item)
+    const nlohmann::json &j,
+    ProudSkillCostItem &item)
 {
     j.at("id")
         .get_to(item.id);
@@ -48,8 +48,8 @@ struct ProudSkillExcelConfig
 };
 
 inline void from_json(
-    const nlohmann::json& j,
-    ProudSkillExcelConfig& skill)
+    const nlohmann::json &j,
+    ProudSkillExcelConfig &skill)
 {
     j.at("proudSkillId")
         .get_to(skill.proudSkillId);
@@ -74,7 +74,7 @@ inline void from_json(
 
     j.at("costItems")
         .get_to(skill.costItems);
-    
+
     j.at("coinCost")
         .get_to(skill.coinCost);
 

@@ -24,8 +24,8 @@ struct ReliquaryExcelConfig
 };
 
 inline void from_json(
-    const nlohmann::json& j,
-    ReliquaryExcelConfig& reliquary)
+    const nlohmann::json &j,
+    ReliquaryExcelConfig &reliquary)
 {
     j.at("id")
         .get_to(reliquary.id);

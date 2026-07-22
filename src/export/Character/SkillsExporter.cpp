@@ -1,62 +1,45 @@
 #include "SkillsExporter.hpp"
 
 nlohmann::json SkillsExporter::Export(
-    const CharacterTalents& skills
-) const
+    const CharacterTalents &skills) const
 {
     nlohmann::json json;
 
     json["combat1"] = {
         {"name", skills.combat1.name},
         {"descriptionRaw", skills.combat1.descriptionRaw},
-        {"attributes", {
-            {"labels", skills.combat1.labels},
-            {"parameters", skills.combat1.parameters}
-        }}
-    };
+        {"attributes", {{"labels", skills.combat1.labels}, {"parameters", skills.combat1.parameters}}}};
 
     json["combat2"] = {
         {"name", skills.combat2.name},
         {"descriptionRaw", skills.combat2.descriptionRaw},
-        {"attributes", {
-            {"labels", skills.combat2.labels},
-            {"parameters", skills.combat2.parameters}
-        }}
-    };
+        {"attributes", {{"labels", skills.combat2.labels}, {"parameters", skills.combat2.parameters}}}};
 
     json["combat3"] = {
         {"name", skills.combat3.name},
         {"descriptionRaw", skills.combat3.descriptionRaw},
-        {"attributes", {
-            {"labels", skills.combat3.labels},
-            {"parameters", skills.combat3.parameters}
-        }}
-    };
+        {"attributes", {{"labels", skills.combat3.labels}, {"parameters", skills.combat3.parameters}}}};
 
     json["passive1"] = {
         {"name", skills.passive1.name},
-        {"descriptionRaw", skills.passive1.descriptionRaw}
-    };
+        {"descriptionRaw", skills.passive1.descriptionRaw}};
 
     json["passive2"] = {
         {"name", skills.passive2.name},
-        {"descriptionRaw", skills.passive2.descriptionRaw}
-    };
+        {"descriptionRaw", skills.passive2.descriptionRaw}};
 
     if (skills.passive3)
     {
         json["passive3"] = {
             {"name", skills.passive3->name},
-            {"descriptionRaw", skills.passive3->descriptionRaw}
-        };
+            {"descriptionRaw", skills.passive3->descriptionRaw}};
     }
 
     if (skills.passive4)
     {
         json["passive4"] = {
             {"name", skills.passive4->name},
-            {"descriptionRaw", skills.passive4->descriptionRaw}
-        };
+            {"descriptionRaw", skills.passive4->descriptionRaw}};
     }
 
     json["costs"] = skills.costs;

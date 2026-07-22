@@ -8,10 +8,8 @@
 
 #include "util/Slug.hpp"
 
-
 nlohmann::json ProfileExporter::Export(
-    const CharacterProfile& profile
-) const
+    const CharacterProfile &profile) const
 {
     nlohmann::json json = profile;
 

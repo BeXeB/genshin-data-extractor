@@ -12,13 +12,11 @@ struct WeaponRefine
     std::vector<std::string> values;
 };
 
-
 inline void to_json(
-    nlohmann::json& j,
-    const WeaponRefine& refine)
+    nlohmann::json &j,
+    const WeaponRefine &refine)
 {
     j = nlohmann::json{
         {"description", refine.description},
-        //{"values", refine.values}
     };
 }

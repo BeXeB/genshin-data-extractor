@@ -54,8 +54,8 @@ struct TalentImages
 };
 
 inline void to_json(
-    nlohmann::json& j,
-    const TalentImages& images)
+    nlohmann::json &j,
+    const TalentImages &images)
 {
     j = nlohmann::json::object();
 
@@ -110,8 +110,8 @@ struct CharacterTalents
 };
 
 inline void to_json(
-    nlohmann::json& j,
-    const CharacterTalents& talents)
+    nlohmann::json &j,
+    const CharacterTalents &talents)
 {
     j = nlohmann::json{
         {"id", talents.id},
@@ -120,8 +120,7 @@ inline void to_json(
         {"combat3", talents.combat3},
         {"passive1", talents.passive1},
         {"passive2", talents.passive2},
-        {"costs", talents.costs}
-    };
+        {"costs", talents.costs}};
 
     if (talents.passive3)
         j["passive3"] = *talents.passive3;

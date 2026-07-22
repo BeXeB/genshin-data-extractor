@@ -5,10 +5,9 @@
 
 #include <nlohmann/json.hpp>
 
-
 void HyperLinkExporter::Export(
-    const std::vector<HyperLink>& hyperlinks,
-    const std::string& outputPath) const
+    const std::vector<HyperLink> &hyperlinks,
+    const std::string &outputPath) const
 {
     nlohmann::json json =
         hyperlinks;

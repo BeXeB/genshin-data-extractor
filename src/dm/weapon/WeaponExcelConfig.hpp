@@ -12,7 +12,6 @@ struct WeaponPropGrowCurve
     double initValue{};
 };
 
-
 inline void from_json(
     const nlohmann::json &j,
     WeaponPropGrowCurve &curve)
@@ -44,7 +43,6 @@ struct WeaponExcelConfig
 
     std::vector<int> skillAffix;
 };
-
 
 inline void from_json(
     const nlohmann::json &j,

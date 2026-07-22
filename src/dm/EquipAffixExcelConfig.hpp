@@ -5,13 +5,11 @@
 
 #include <nlohmann/json.hpp>
 
-
 struct Prop
 {
     std::string propType{};
     double value{};
 };
-
 
 inline void from_json(
     const nlohmann::json &j,
@@ -20,7 +18,6 @@ inline void from_json(
     j.at("propType").get_to(prop.propType);
     j.at("value").get_to(prop.value);
 };
-
 
 struct EquipAffixExcelConfig
 {
@@ -35,7 +32,6 @@ struct EquipAffixExcelConfig
 
     std::vector<Prop> addProps;
 };
-
 
 inline void from_json(
     const nlohmann::json &j,

@@ -2,11 +2,9 @@
 
 #include <stdexcept>
 
-
 CharacterTalents CharacterTalentBuilder::Build(
-    const AvatarSkillDepotExcelConfig& skillDepot,
-    const GameDatabase& db
-) const
+    const AvatarSkillDepotExcelConfig &skillDepot,
+    const GameDatabase &db) const
 {
     CharacterTalents talents;
     TalentImages images;
@@ -15,42 +13,42 @@ CharacterTalents CharacterTalentBuilder::Build(
     talents.id = skillDepot.id;
 
     auto selectCombatIcon =
-        [](const AvatarSkillExcelConfig& skill,
-           const std::vector<ProudSkillExcelConfig>& proudSkills)
+        [](const AvatarSkillExcelConfig &skill,
+           const std::vector<ProudSkillExcelConfig> &proudSkills)
+    {
+        if (!skill.skillIcon.empty())
+            return std::optional<std::string>{skill.skillIcon};
+
+        for (const auto &proudSkill : proudSkills)
         {
-            if (!skill.skillIcon.empty())
-                return std::optional<std::string>{skill.skillIcon};
+            if (!proudSkill.icon.empty())
+                return std::optional<std::string>{proudSkill.icon};
+        }
 
-            for (const auto& proudSkill : proudSkills)
-            {
-                if (!proudSkill.icon.empty())
-                    return std::optional<std::string>{proudSkill.icon};
-            }
-
-            return std::optional<std::string>{};
-        };
+        return std::optional<std::string>{};
+    };
 
     auto selectPassiveIcon =
-        [](const std::vector<ProudSkillExcelConfig>& proudSkills)
+        [](const std::vector<ProudSkillExcelConfig> &proudSkills)
+    {
+        for (const auto &proudSkill : proudSkills)
         {
-            for (const auto& proudSkill : proudSkills)
-            {
-                if (!proudSkill.icon.empty())
-                    return std::optional<std::string>{proudSkill.icon};
-            }
+            if (!proudSkill.icon.empty())
+                return std::optional<std::string>{proudSkill.icon};
+        }
 
-            return std::optional<std::string>{};
-        };
+        return std::optional<std::string>{};
+    };
 
     auto getProudSkillsOrEmpty =
         [&](int proudSkillGroupId)
-        -> const std::vector<ProudSkillExcelConfig>&
-        {
-            if (proudSkillGroupId == 0)
-                return emptyProudSkills;
+        -> const std::vector<ProudSkillExcelConfig> &
+    {
+        if (proudSkillGroupId == 0)
+            return emptyProudSkills;
 
-            return db.GetProudSkills(proudSkillGroupId);
-        };
+        return db.GetProudSkills(proudSkillGroupId);
+    };
 
     std::vector<ProudSkillExcelConfig> costSkills;
 
@@ -61,10 +59,9 @@ CharacterTalents CharacterTalentBuilder::Build(
         auto skill =
             db.GetSkill(skillDepot.skills[0]);
 
-        const auto& proudSkills =
+        const auto &proudSkills =
             getProudSkillsOrEmpty(
                 skill.proudSkillGroupId);
-
 
         talents.combat1 =
             BuildCombatTalent(
@@ -77,11 +74,9 @@ CharacterTalents CharacterTalentBuilder::Build(
                 skill,
                 proudSkills);
 
-
         // Costs are shared, use Normal Attack
         costSkills = proudSkills;
     }
-
 
     // Elemental Skill
     if (skillDepot.skills.size() > 1 &&
@@ -90,7 +85,7 @@ CharacterTalents CharacterTalentBuilder::Build(
         auto skill =
             db.GetSkill(skillDepot.skills[1]);
 
-        const auto& proudSkills =
+        const auto &proudSkills =
             getProudSkillsOrEmpty(
                 skill.proudSkillGroupId);
 
@@ -106,14 +101,13 @@ CharacterTalents CharacterTalentBuilder::Build(
                 proudSkills);
     }
 
-
     // Elemental Burst
     if (skillDepot.energySkill != 0)
     {
         auto skill =
             db.GetSkill(skillDepot.energySkill);
 
-        const auto& proudSkills =
+        const auto &proudSkills =
             getProudSkillsOrEmpty(
                 skill.proudSkillGroupId);
 
@@ -131,24 +125,20 @@ CharacterTalents CharacterTalentBuilder::Build(
 
     std::vector<PassiveTalent> passives;
 
-
-    for (const auto& passiveGroup :
-        skillDepot.passiveSkills)
+    for (const auto &passiveGroup :
+         skillDepot.passiveSkills)
     {
         if (passiveGroup.passiveSkillGroupId == 0)
             continue;
 
-
-        const auto& passiveSkills =
+        const auto &passiveSkills =
             getProudSkillsOrEmpty(
                 passiveGroup.passiveSkillGroupId);
-
 
         auto passive =
             BuildPassiveTalent(
                 passiveSkills,
                 db);
-
 
         passives.push_back(passive);
 
@@ -209,10 +199,9 @@ CharacterTalents CharacterTalentBuilder::Build(
 }
 
 CombatTalent CharacterTalentBuilder::BuildCombatTalent(
-    const AvatarSkillExcelConfig& skill,
-    const std::vector<ProudSkillExcelConfig>& proudSkills,
-    const GameDatabase& db
-) const
+    const AvatarSkillExcelConfig &skill,
+    const std::vector<ProudSkillExcelConfig> &proudSkills,
+    const GameDatabase &db) const
 {
     CombatTalent result;
 
@@ -226,7 +215,7 @@ CombatTalent CharacterTalentBuilder::BuildCombatTalent(
 
     if (!proudSkills.empty())
     {
-        const auto& first =
+        const auto &first =
             proudSkills.front();
 
         for (auto hash : first.paramDescList)
@@ -240,29 +229,23 @@ CombatTalent CharacterTalentBuilder::BuildCombatTalent(
             result.labels.push_back(label);
         }
 
-
-        for (const auto& proud : proudSkills)
+        for (const auto &proud : proudSkills)
         {
-            for (size_t i = 0;
-                i < proud.paramDescList.size();
-                i++)
+            size_t count = proud.paramList.size();
+
+            while (count > 0 &&
+                   std::abs(proud.paramList[count - 1]) < 1e-9)
             {
-                if (i >= proud.paramList.size())
-                    continue;
+                count--;
+            }
 
-                std::string label =
-                    db.GetText(
-                        proud.paramDescList[i]);
-
-                if (label.empty())
-                    continue;
-
+            for (size_t i = 0; i < count; i++)
+            {
                 std::string key =
                     "param" + std::to_string(i + 1);
 
                 result.parameters[key]
-                    .push_back(
-                        proud.paramList[i]);
+                    .push_back(proud.paramList[i]);
             }
         }
     }
@@ -271,26 +254,21 @@ CombatTalent CharacterTalentBuilder::BuildCombatTalent(
 }
 
 PassiveTalent CharacterTalentBuilder::BuildPassiveTalent(
-    const std::vector<ProudSkillExcelConfig>& proudSkills,
-    const GameDatabase& db
-) const
+    const std::vector<ProudSkillExcelConfig> &proudSkills,
+    const GameDatabase &db) const
 {
     PassiveTalent result;
-
 
     if (proudSkills.empty())
         return result;
 
-
     // Level 1 contains the display information
-    const auto& passive =
+    const auto &passive =
         proudSkills.front();
-
 
     result.name =
         db.GetText(
             passive.nameTextMapHash);
-
 
     result.descriptionRaw =
         db.GetText(
@@ -301,13 +279,12 @@ PassiveTalent CharacterTalentBuilder::BuildPassiveTalent(
 
 std::unordered_map<std::string, std::vector<Item>>
 CharacterTalentBuilder::GetTalentCosts(
-    const std::vector<ProudSkillExcelConfig>& proudSkills,
-    const GameDatabase& db) const
+    const std::vector<ProudSkillExcelConfig> &proudSkills,
+    const GameDatabase &db) const
 {
     std::unordered_map<std::string, std::vector<Item>> result;
 
-
-    for (const auto& skill : proudSkills)
+    for (const auto &skill : proudSkills)
     {
         if (skill.level < 2 ||
             skill.level > 10)
@@ -315,14 +292,11 @@ CharacterTalentBuilder::GetTalentCosts(
             continue;
         }
 
-
         std::string key =
             "lvl" + std::to_string(skill.level);
 
-
-        auto& costs =
+        auto &costs =
             result[key];
-
 
         // Mora
         if (skill.coinCost > 0)
@@ -336,17 +310,14 @@ CharacterTalentBuilder::GetTalentCosts(
             costs.push_back(mora);
         }
 
-
         // Materials
-        for (const auto& cost : skill.costItems)
+        for (const auto &cost : skill.costItems)
         {
             if (cost.id == 0)
                 continue;
 
-
             auto material =
                 db.GetMaterial(cost.id);
-
 
             Item item;
 
@@ -360,11 +331,9 @@ CharacterTalentBuilder::GetTalentCosts(
             item.count =
                 cost.count;
 
-
             costs.push_back(item);
         }
     }
-
 
     return result;
 }

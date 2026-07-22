@@ -1,35 +1,28 @@
 #include "ConstellationExporter.hpp"
 
 nlohmann::json ConstellationExporter::Export(
-    const CharacterConstellation& constellation
-) const
+    const CharacterConstellation &constellation) const
 {
     nlohmann::json json;
 
     json["c1"] = {
         {"name", constellation.c1.name},
-        {"descriptionRaw", constellation.c1.descriptionRaw}
-    };
+        {"descriptionRaw", constellation.c1.descriptionRaw}};
     json["c2"] = {
         {"name", constellation.c2.name},
-        {"descriptionRaw", constellation.c2.descriptionRaw}
-    };
+        {"descriptionRaw", constellation.c2.descriptionRaw}};
     json["c3"] = {
         {"name", constellation.c3.name},
-        {"descriptionRaw", constellation.c3.descriptionRaw}
-    };
+        {"descriptionRaw", constellation.c3.descriptionRaw}};
     json["c4"] = {
         {"name", constellation.c4.name},
-        {"descriptionRaw", constellation.c4.descriptionRaw}
-    };
+        {"descriptionRaw", constellation.c4.descriptionRaw}};
     json["c5"] = {
         {"name", constellation.c5.name},
-        {"descriptionRaw", constellation.c5.descriptionRaw}
-    };
+        {"descriptionRaw", constellation.c5.descriptionRaw}};
     json["c6"] = {
         {"name", constellation.c6.name},
-        {"descriptionRaw", constellation.c6.descriptionRaw}
-    };
+        {"descriptionRaw", constellation.c6.descriptionRaw}};
 
     nlohmann::json images;
 

@@ -2,6 +2,8 @@
 #include <filesystem>
 #include <fstream>
 #include <vector>
+#include <map>
+#include <set>
 
 #include "database/GameDatabase.hpp"
 #include "util/EnumConverter.hpp"
@@ -108,6 +110,11 @@ int main()
         {
             try
             {
+                if (id == 15504 || id == 12505 || id == 15505) 
+                {
+                    continue;
+                }
+
                 weapons.push_back(
                     builder.Build(
                         db,
@@ -140,6 +147,11 @@ int main()
         {
             try
             {
+                if (set.disableFilter == 1) 
+                {
+                    continue;
+                }
+
                 artifacts.push_back(
                     builder.Build(
                         id,

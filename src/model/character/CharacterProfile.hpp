@@ -86,5 +86,5 @@ inline void to_json(
         {"substatType", StatTypeToDM(profile.substatType)},
         {"constellation", profile.constellation},
         {"sortId", profile.sortId},
-        {"images", profile.images} };
+        {"images", profile.images}};
 }

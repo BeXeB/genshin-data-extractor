@@ -8,8 +8,8 @@ class WeaponStatBuilder
 {
 public:
     WeaponStats Build(
-        const WeaponExcelConfig& weapon,
-        const GameDatabase& db) const;
+        const WeaponExcelConfig &weapon,
+        const GameDatabase &db) const;
 
 private:
     int GetAscension(
@@ -19,23 +19,23 @@ private:
         int level) const;
 
     WeaponStat BuildStat(
-        const WeaponExcelConfig& weapon,
+        const WeaponExcelConfig &weapon,
         int level,
         int ascension,
-        const GameDatabase& db) const;
+        const GameDatabase &db) const;
 
     double CalculateBaseStat(
-        const WeaponPropGrowCurve& prop,
+        const WeaponPropGrowCurve &prop,
         int level,
-        const GameDatabase& db) const;
+        const GameDatabase &db) const;
 
     double GetCurveMultiplier(
-        const WeaponPropGrowCurve& prop,
+        const WeaponPropGrowCurve &prop,
         int level,
-        const GameDatabase& db) const;
+        const GameDatabase &db) const;
 
     double GetAscensionBonus(
-        const std::vector<WeaponPromoteExcelConfig>& promotes,
+        const std::vector<WeaponPromoteExcelConfig> &promotes,
         int ascension,
-        const std::string& propType) const;
+        const std::string &propType) const;
 };

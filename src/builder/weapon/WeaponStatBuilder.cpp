@@ -3,8 +3,8 @@
 #include <stdexcept>
 
 WeaponStats WeaponStatBuilder::Build(
-    const WeaponExcelConfig& weapon,
-    const GameDatabase& db) const
+    const WeaponExcelConfig &weapon,
+    const GameDatabase &db) const
 {
     WeaponStats stats;
 
@@ -59,32 +59,32 @@ bool WeaponStatBuilder::IsAscensionLevel(
     int level) const
 {
     return level == 20 ||
-        level == 40 ||
-        level == 50 ||
-        level == 60 ||
-        level == 70 ||
-        level == 80;
+           level == 40 ||
+           level == 50 ||
+           level == 60 ||
+           level == 70 ||
+           level == 80;
 }
 
 WeaponStat WeaponStatBuilder::BuildStat(
-    const WeaponExcelConfig& weapon,
+    const WeaponExcelConfig &weapon,
     int level,
     int ascension,
-    const GameDatabase& db) const
+    const GameDatabase &db) const
 {
     WeaponStat stat;
 
     stat.level = level;
     stat.ascension = ascension;
 
-    const auto& promotes =
+    const auto &promotes =
         db.GetWeaponPromoteInfo(
             weapon.weaponPromoteId);
 
-    const WeaponPropGrowCurve* attackProp = nullptr;
-    const WeaponPropGrowCurve* secondaryProp = nullptr;
+    const WeaponPropGrowCurve *attackProp = nullptr;
+    const WeaponPropGrowCurve *secondaryProp = nullptr;
 
-    for (const auto& prop : weapon.weaponProp)
+    for (const auto &prop : weapon.weaponProp)
     {
         if (prop.propType == "FIGHT_PROP_BASE_ATTACK")
         {
@@ -106,8 +106,8 @@ WeaponStat WeaponStatBuilder::BuildStat(
         CalculateBaseStat(
             *attackProp,
             level,
-            db)
-        + GetAscensionBonus(
+            db) +
+        GetAscensionBonus(
             promotes,
             ascension,
             attackProp->propType);
@@ -118,8 +118,8 @@ WeaponStat WeaponStatBuilder::BuildStat(
             CalculateBaseStat(
                 *secondaryProp,
                 level,
-                db)
-            + GetAscensionBonus(
+                db) +
+            GetAscensionBonus(
                 promotes,
                 ascension,
                 secondaryProp->propType);
@@ -129,26 +129,26 @@ WeaponStat WeaponStatBuilder::BuildStat(
 }
 
 double WeaponStatBuilder::CalculateBaseStat(
-    const WeaponPropGrowCurve& prop,
+    const WeaponPropGrowCurve &prop,
     int level,
-    const GameDatabase& db) const
+    const GameDatabase &db) const
 {
     return prop.initValue *
-        GetCurveMultiplier(
-            prop,
-            level,
-            db);
+           GetCurveMultiplier(
+               prop,
+               level,
+               db);
 }
 
 double WeaponStatBuilder::GetCurveMultiplier(
-    const WeaponPropGrowCurve& prop,
+    const WeaponPropGrowCurve &prop,
     int level,
-    const GameDatabase& db) const
+    const GameDatabase &db) const
 {
-    const auto& curve =
+    const auto &curve =
         db.GetWeaponCurve(level);
 
-    for (const auto& info : curve.curveInfos)
+    for (const auto &info : curve.curveInfos)
     {
         if (info.type == prop.type)
         {
@@ -164,9 +164,9 @@ double WeaponStatBuilder::GetCurveMultiplier(
 }
 
 double WeaponStatBuilder::GetAscensionBonus(
-    const std::vector<WeaponPromoteExcelConfig>& promotes,
+    const std::vector<WeaponPromoteExcelConfig> &promotes,
     int ascension,
-    const std::string& propType) const
+    const std::string &propType) const
 {
     if (ascension == 0)
     {
@@ -179,10 +179,10 @@ double WeaponStatBuilder::GetAscensionBonus(
         return 0.0;
     }
 
-    const auto& promote =
+    const auto &promote =
         promotes.at(ascension);
 
-    for (const auto& prop : promote.addProps)
+    for (const auto &prop : promote.addProps)
     {
         if (prop.propType == propType)
         {

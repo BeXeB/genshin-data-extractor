@@ -11,6 +11,6 @@ class WeaponAffixBuilder
 {
 public:
     std::vector<std::optional<WeaponRefine>> Build(
-        const GameDatabase& database,
-        const std::vector<int>& skillAffix);
+        const GameDatabase &database,
+        const std::vector<int> &skillAffix);
 };

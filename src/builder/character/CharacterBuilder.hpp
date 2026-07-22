@@ -10,14 +10,12 @@
 
 #include "database/GameDatabase.hpp"
 
-
 class CharacterBuilder
 {
 public:
     Character Build(
-        const AvatarExcelConfig& avatar,
-        const GameDatabase& db
-    ) const;
+        const AvatarExcelConfig &avatar,
+        const GameDatabase &db) const;
 
 private:
     CharacterProfileBuilder profileBuilder;

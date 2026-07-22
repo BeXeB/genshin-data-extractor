@@ -63,25 +63,6 @@ enum class StatType
     Unknown
 };
 
-enum class DmMaterialType
-{
-    Adsorbate,
-    AvatarMaterial,
-    Consume,
-    ElemCrystal,
-    Exchange,
-    ExpFruit,
-    FishBait,
-    FishRod,
-    None,
-    NoticeAddHp,
-    WeaponExpStone,
-    WeaponMaterial,
-    Wood,
-
-    Unknown
-};
-
 enum class MaterialType
 {
     TalentMaterial,

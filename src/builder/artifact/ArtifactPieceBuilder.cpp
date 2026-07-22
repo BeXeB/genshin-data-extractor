@@ -5,8 +5,8 @@
 #include "util/EnumConverter.hpp"
 
 ArtifactPiece ArtifactPieceBuilder::Build(
-    const ReliquaryExcelConfig& reliquary,
-    const GameDatabase& database)
+    const ReliquaryExcelConfig &reliquary,
+    const GameDatabase &database)
 {
     ArtifactPiece piece;
 
@@ -24,16 +24,16 @@ ArtifactPiece ArtifactPieceBuilder::Build(
 
     piece.story =
         database.GetReadableTextLoader()
-        .Get(
-            "Relic",
-            reliquary.setId,
-            GetPieceNumber(reliquary.icon));
+            .Get(
+                "Relic",
+                reliquary.setId,
+                GetPieceNumber(reliquary.icon));
 
     return piece;
 }
 
 ArtifactType ArtifactPieceBuilder::ConvertType(
-    const std::string& equipType)
+    const std::string &equipType)
 {
     const auto type = ArtifactTypeFromDM(equipType);
 
@@ -47,7 +47,7 @@ ArtifactType ArtifactPieceBuilder::ConvertType(
 }
 
 int ArtifactPieceBuilder::GetPieceNumber(
-    const std::string& icon)
+    const std::string &icon)
 {
     const auto pos =
         icon.find_last_of('_');

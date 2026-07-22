@@ -8,12 +8,11 @@
 #include "util/Slug.hpp"
 #include "util/EnumConverter.hpp"
 
-
 Weapon WeaponBuilder::Build(
-    const GameDatabase& database,
+    const GameDatabase &database,
     int id)
 {
-    const auto& dmWeapon =
+    const auto &dmWeapon =
         database.GetWeapon(id);
 
     Weapon weapon;
@@ -53,15 +52,14 @@ Weapon WeaponBuilder::Build(
         dmWeapon.icon.substr(
             dmWeapon.icon.find_last_of('_') + 1);
 
-    weapon.images.filename_gacha = 
+    weapon.images.filename_gacha =
         "UI_Gacha_EquipIcon_" + WeaponTypeToText(weapon.weaponType) + "_" + iconSuffix;
 
     weapon.story =
         database.GetReadableTextLoader()
-        .Get("Weapon", dmWeapon.id);
+            .Get("Weapon", dmWeapon.id);
 
-
-    for (const auto& prop : dmWeapon.weaponProp)
+    for (const auto &prop : dmWeapon.weaponProp)
     {
         if (prop.propType == "FIGHT_PROP_BASE_ATTACK")
         {
@@ -86,8 +84,6 @@ Weapon WeaponBuilder::Build(
         weapon.effectName = database.GetText(dmEquipAffix.nameTextMapHash);
     }
 
-
-
     auto refinements =
         affixBuilder.Build(
             database,
@@ -108,19 +104,17 @@ Weapon WeaponBuilder::Build(
     if (refinements.size() > 4)
         weapon.r5 = refinements[4];
 
-
     weapon.costs =
         promoteBuilder.Build(
             database,
             dmWeapon.weaponPromoteId);
-
 
     weapon.stats =
         statBuilder.Build(
             dmWeapon,
             database);
 
-    weapon.sortOrder = 
+    weapon.sortOrder =
         database.GetWeaponCodex(weapon.id).sortOrder;
 
     return weapon;

@@ -12,8 +12,8 @@ struct PropGrowCurve
 };
 
 inline void from_json(
-    const nlohmann::json& j,
-    PropGrowCurve& curve)
+    const nlohmann::json &j,
+    PropGrowCurve &curve)
 {
     j.at("type").get_to(curve.type);
     j.at("growCurve").get_to(curve.growCurve);

@@ -8,7 +8,7 @@
 #include "model/Enums.hpp"
 
 CharacterProfile CharacterProfileBuilder::Build(const AvatarExcelConfig &avatar,
-                                       const GameDatabase &db) const
+                                                const GameDatabase &db) const
 {
     CharacterProfile profile;
 
@@ -96,7 +96,6 @@ CharacterProfile CharacterProfileBuilder::Build(const AvatarExcelConfig &avatar,
         avatar.sideIconName;
     profile.images.gachaSplash = "UI_Gacha_AvatarImg_" + iconSuffix;
     profile.images.gachaSlice = "UI_Gacha_AvatarIcon_" + iconSuffix;
-
 
     if (avatar.id == 10000005 || avatar.id == 10000007)
     {
