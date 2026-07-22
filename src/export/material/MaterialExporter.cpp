@@ -14,11 +14,21 @@ void MaterialExporter::Export(
 
     for (const auto &material : materials)
     {
-        if (material.type == MaterialType::Unknown)
+        if (material.type == MaterialType::Unknown && material.id != 113021)
             continue;
 
-        grouped[MaterialTypeToText(material.type)]
-            .push_back(material);
+        std::string group;
+
+        if (material.id == 113021)
+        {
+            group = MaterialTypeToText(MaterialType::Boss);
+        }
+        else
+        {
+            group = MaterialTypeToText(material.type);
+        }
+
+        grouped[group].push_back(material);
     }
 
     for (const auto &[type, entries] : grouped)
