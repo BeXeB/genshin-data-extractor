@@ -215,6 +215,8 @@ CombatTalent CharacterTalentBuilder::BuildCombatTalent(
 
     result.id = skill.id;
 
+	result.proudSkillGroupId = skill.proudSkillGroupId;
+
     if (!proudSkills.empty())
     {
         const auto &first =

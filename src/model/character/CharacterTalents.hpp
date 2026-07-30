@@ -14,6 +14,8 @@ struct CombatTalent
 {
 	int id{};
 
+	int proudSkillGroupId{};
+
     std::string name;
 
     std::string descriptionRaw;
@@ -35,7 +37,8 @@ inline void to_json(
         {"name", talent.name},
         {"descriptionRaw", talent.descriptionRaw},
         {"labels", talent.labels},
-        {"parameters", talent.parameters}};
+        {"parameters", talent.parameters},
+        {"proudSkillGroupId", talent.proudSkillGroupId}};
 }
 
 struct PassiveTalent

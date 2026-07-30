@@ -7,18 +7,21 @@ nlohmann::json SkillsExporter::Export(
 
     json["combat1"] = {
 		{"id", skills.combat1.id},
+        {"proudSkillGroupId", skills.combat1.proudSkillGroupId },
         {"name", skills.combat1.name},
         {"descriptionRaw", skills.combat1.descriptionRaw},
         {"attributes", {{"labels", skills.combat1.labels}, {"parameters", skills.combat1.parameters}}}};
 
     json["combat2"] = {
         {"id", skills.combat2.id},
+        {"proudSkillGroupId", skills.combat2.proudSkillGroupId },
         {"name", skills.combat2.name},
         {"descriptionRaw", skills.combat2.descriptionRaw},
         {"attributes", {{"labels", skills.combat2.labels}, {"parameters", skills.combat2.parameters}}}};
 
     json["combat3"] = {
         {"id", skills.combat3.id},
+        {"proudSkillGroupId", skills.combat3.proudSkillGroupId },
         {"name", skills.combat3.name},
         {"descriptionRaw", skills.combat3.descriptionRaw},
         {"attributes", {{"labels", skills.combat3.labels}, {"parameters", skills.combat3.parameters}}}};
