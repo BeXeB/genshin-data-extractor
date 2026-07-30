@@ -6,21 +6,27 @@ nlohmann::json ConstellationExporter::Export(
     nlohmann::json json;
 
     json["c1"] = {
+		{"id", constellation.c1.id },
         {"name", constellation.c1.name},
         {"descriptionRaw", constellation.c1.descriptionRaw}};
     json["c2"] = {
+        {"id", constellation.c2.id },
         {"name", constellation.c2.name},
         {"descriptionRaw", constellation.c2.descriptionRaw}};
     json["c3"] = {
+        {"id", constellation.c3.id },
         {"name", constellation.c3.name},
         {"descriptionRaw", constellation.c3.descriptionRaw}};
     json["c4"] = {
+        {"id", constellation.c4.id },
         {"name", constellation.c4.name},
         {"descriptionRaw", constellation.c4.descriptionRaw}};
     json["c5"] = {
+        {"id", constellation.c5.id },
         {"name", constellation.c5.name},
         {"descriptionRaw", constellation.c5.descriptionRaw}};
     json["c6"] = {
+        {"id", constellation.c6.id },
         {"name", constellation.c6.name},
         {"descriptionRaw", constellation.c6.descriptionRaw}};
 

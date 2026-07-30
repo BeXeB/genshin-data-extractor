@@ -8,6 +8,8 @@
 
 struct ConstellationDetail
 {
+	int id{};
+
     std::string name;
 
     std::string descriptionRaw;
@@ -18,6 +20,7 @@ inline void to_json(
     const ConstellationDetail &detail)
 {
     j = nlohmann::json{
+        { "id", detail.id },
         {"name", detail.name},
         {"descriptionRaw", detail.descriptionRaw}};
 }

@@ -12,6 +12,8 @@
 
 struct CombatTalent
 {
+	int id{};
+
     std::string name;
 
     std::string descriptionRaw;
@@ -29,6 +31,7 @@ inline void to_json(
     const CombatTalent &talent)
 {
     j = nlohmann::json{
+		{"id", talent.id},
         {"name", talent.name},
         {"descriptionRaw", talent.descriptionRaw},
         {"labels", talent.labels},
@@ -37,6 +40,8 @@ inline void to_json(
 
 struct PassiveTalent
 {
+	int id{};
+
     std::string name;
 
     std::string descriptionRaw;
@@ -86,6 +91,7 @@ inline void to_json(
     const PassiveTalent &talent)
 {
     j = nlohmann::json{
+		{"id", talent.id},
         {"name", talent.name},
         {"descriptionRaw", talent.descriptionRaw}};
 }

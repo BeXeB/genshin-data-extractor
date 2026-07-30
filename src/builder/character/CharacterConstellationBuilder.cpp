@@ -64,6 +64,8 @@ ConstellationDetail CharacterConstellationBuilder::BuildDetail(
 {
     ConstellationDetail detail;
 
+    detail.id = talent.talentId;
+
     detail.name =
         db.GetText(
             talent.nameTextMapHash);

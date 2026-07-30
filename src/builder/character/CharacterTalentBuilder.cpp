@@ -213,6 +213,8 @@ CombatTalent CharacterTalentBuilder::BuildCombatTalent(
         db.GetText(
             skill.descTextMapHash);
 
+    result.id = skill.id;
+
     if (!proudSkills.empty())
     {
         const auto &first =
@@ -265,6 +267,8 @@ PassiveTalent CharacterTalentBuilder::BuildPassiveTalent(
     // Level 1 contains the display information
     const auto &passive =
         proudSkills.front();
+
+	result.id = passive.proudSkillId;
 
     result.name =
         db.GetText(
