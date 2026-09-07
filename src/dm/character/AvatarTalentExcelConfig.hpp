@@ -21,7 +21,7 @@ inline void from_json(
     AvatarTalentExcelConfig &talent)
 {
     talent.talentId = j.value("talentId", 0);
-    talent.nameTextMapHash = j.value("nameTextMapHash", 0);
-    talent.descTextMapHash = j.value("descTextMapHash", 0);
+    talent.nameTextMapHash = j.value("nameTextMapHash", 0ULL);
+    talent.descTextMapHash = j.value("descTextMapHash", 0ULL);
     talent.icon = j.value("icon", "");
 }

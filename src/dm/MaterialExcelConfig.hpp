@@ -28,9 +28,9 @@ inline void from_json(
 {
     material.id = j.value("id", 0);
     material.icon = j.value("icon", "");
-    material.nameTextMapHash = j.value("nameTextMapHash", 0);
-    material.descTextMapHash = j.value("descTextMapHash", 0);
-    material.typeDescTextMapHash = j.value("typeDescTextMapHash", 0);
+    material.nameTextMapHash = j.value("nameTextMapHash", 0ULL);
+    material.descTextMapHash = j.value("descTextMapHash", 0ULL);
+    material.typeDescTextMapHash = j.value("typeDescTextMapHash", 0ULL);
     material.rank = j.value("rank", 0);
     material.rankLevel = j.value("rankLevel", 0);
 }

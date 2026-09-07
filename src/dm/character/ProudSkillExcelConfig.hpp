@@ -51,8 +51,8 @@ inline void from_json(
     skill.proudSkillId = j.value("proudSkillId", 0);
     skill.proudSkillGroupId = j.value("proudSkillGroupId", 0);
     skill.level = j.value("level", 0);
-    skill.nameTextMapHash = j.value("nameTextMapHash", 0);
-    skill.descTextMapHash = j.value("descTextMapHash", 0);
+    skill.nameTextMapHash = j.value("nameTextMapHash", 0ULL);
+    skill.descTextMapHash = j.value("descTextMapHash", 0ULL);
     skill.paramDescList = j.value("paramDescList", std::vector<uint64_t>{});
     skill.paramList = j.value("paramList", std::vector<double>{});
     skill.costItems = j.value("costItems", std::vector<ProudSkillCostItem>{});

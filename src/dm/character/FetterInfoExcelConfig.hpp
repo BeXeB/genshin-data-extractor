@@ -29,11 +29,11 @@ inline void from_json(
     FetterInfoExcelConfig &fetter)
 {
     fetter.avatarId = j.value("avatarId", 0);
-    fetter.avatarConstellationBeforTextMapHash = j.value("avatarConstellationBeforTextMapHash", 0);
-    fetter.avatarDetailTextMapHash = j.value("avatarDetailTextMapHash", 0);
-    fetter.avatarNativeTextMapHash = j.value("avatarNativeTextMapHash", 0);
-    fetter.avatarTitleTextMapHash = j.value("avatarTitleTextMapHash", 0);
-    fetter.avatarVisionBeforTextMapHash = j.value("avatarVisionBeforTextMapHash", 0);
+    fetter.avatarConstellationBeforTextMapHash = j.value("avatarConstellationBeforTextMapHash", 0ULL);
+    fetter.avatarDetailTextMapHash = j.value("avatarDetailTextMapHash", 0ULL);
+    fetter.avatarNativeTextMapHash = j.value("avatarNativeTextMapHash", 0ULL);
+    fetter.avatarTitleTextMapHash = j.value("avatarTitleTextMapHash", 0ULL);
+    fetter.avatarVisionBeforTextMapHash = j.value("avatarVisionBeforTextMapHash", 0ULL);
 	fetter.infoBirthDay = j.value("infoBirthDay", 0);
 	fetter.infoBirthMonth = j.value("infoBirthMonth", 0);
 }

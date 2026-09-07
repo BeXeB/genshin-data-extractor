@@ -3,6 +3,9 @@
 #include <algorithm>
 #include <cctype>
 
+#include <fstream>
+#include <iostream>
+
 #include "util/Slug.hpp"
 #include "util/EnumConverter.hpp"
 #include "model/Enums.hpp"

@@ -39,8 +39,8 @@ inline void from_json(
 {
     affix.id = j.value("id", 0);
     affix.level = j.value("level", 0);
-    affix.descTextMapHash = j.value("descTextMapHash", 0);
-    affix.nameTextMapHash = j.value("nameTextMapHash", 0);
+    affix.descTextMapHash = j.value("descTextMapHash", 0ULL);
+    affix.nameTextMapHash = j.value("nameTextMapHash", 0ULL);
     affix.paramList = j.value("paramList", std::vector<double>{});
     affix.addProps = j.value("addProps", std::vector<Prop>{});
 };

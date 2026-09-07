@@ -49,14 +49,14 @@ inline void from_json(
     WeaponExcelConfig &weapon)
 {
     weapon.id = j.value("id", 0);
-    weapon.nameTextMapHash = j.value("nameTextMapHash", 0);
-    weapon.descTextMapHash = j.value("descTextMapHash", 0);
+    weapon.nameTextMapHash = j.value("nameTextMapHash", 0ULL);
+    weapon.descTextMapHash = j.value("descTextMapHash", 0ULL);
     weapon.weaponType = j.value("weaponType", "");
     weapon.rankLevel = j.value("rankLevel", 0);
     weapon.icon = j.value("icon", "");
     weapon.awakenIcon = j.value("awakenIcon", "");
-    weapon.storyId = j.value("storyId", 0);
-    weapon.weaponPromoteId = j.value("weaponPromoteId", 0);
+    weapon.storyId = j.value("storyId", 0ULL);
+    weapon.weaponPromoteId = j.value("weaponPromoteId", 0ULL);
     weapon.weaponProp = j.value("weaponProp", std::vector<WeaponPropGrowCurve>{});
     weapon.skillAffix = j.value("skillAffix", std::vector<int>{});
 };
