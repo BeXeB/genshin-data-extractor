@@ -68,8 +68,7 @@ inline void from_json(
         .get_to(avatar.weaponType);
     j.at("qualityType")
         .get_to(avatar.qualityType);
-    j.at("useType")
-        .get_to(avatar.useType);
+    avatar.useType = j.value("useType", "AVATAR_ABANDON");
     j.at("avatarPromoteId")
         .get_to(avatar.avatarPromoteId);
     j.at("skillDepotId")
