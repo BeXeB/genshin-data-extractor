@@ -27,11 +27,11 @@ inline void from_json(
     const nlohmann::json &j,
     AvatarPromoteExcelConfig &promote)
 {
-    j.at("avatarPromoteId").get_to(promote.avatarPromoteId);
-    j.at("promoteLevel").get_to(promote.promoteLevel);
+    promote.avatarPromoteId = j.value("avatarPromoteId", 0);
+    promote.promoteLevel = j.value("promoteLevel", 0);
 
-    j.at("addProps").get_to(promote.addProps);
-    j.at("costItems").get_to(promote.costItems);
+    promote.addProps = j.value("addProps", std::vector<PromoteProp>{});
+    promote.costItems = j.value("costItems", std::vector<PromoteCostItem>{});
 
-    j.at("scoinCost").get_to(promote.scoinCost);
+    promote.scoinCost = j.value("scoinCost", 0);
 }

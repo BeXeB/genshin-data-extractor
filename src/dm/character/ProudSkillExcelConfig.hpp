@@ -17,11 +17,8 @@ inline void from_json(
     const nlohmann::json &j,
     ProudSkillCostItem &item)
 {
-    j.at("id")
-        .get_to(item.id);
-
-    j.at("count")
-        .get_to(item.count);
+    item.id = j.value("id", 0);
+    item.count = j.value("count", 0);
 }
 
 struct ProudSkillExcelConfig
@@ -51,33 +48,14 @@ inline void from_json(
     const nlohmann::json &j,
     ProudSkillExcelConfig &skill)
 {
-    j.at("proudSkillId")
-        .get_to(skill.proudSkillId);
-
-    j.at("proudSkillGroupId")
-        .get_to(skill.proudSkillGroupId);
-
-    j.at("level")
-        .get_to(skill.level);
-
-    j.at("nameTextMapHash")
-        .get_to(skill.nameTextMapHash);
-
-    j.at("descTextMapHash")
-        .get_to(skill.descTextMapHash);
-
-    j.at("paramDescList")
-        .get_to(skill.paramDescList);
-
-    j.at("paramList")
-        .get_to(skill.paramList);
-
-    j.at("costItems")
-        .get_to(skill.costItems);
-
-    j.at("coinCost")
-        .get_to(skill.coinCost);
-
-    j.at("icon")
-        .get_to(skill.icon);
+    skill.proudSkillId = j.value("proudSkillId", 0);
+    skill.proudSkillGroupId = j.value("proudSkillGroupId", 0);
+    skill.level = j.value("level", 0);
+    skill.nameTextMapHash = j.value("nameTextMapHash", 0);
+    skill.descTextMapHash = j.value("descTextMapHash", 0);
+    skill.paramDescList = j.value("paramDescList", std::vector<uint64_t>{});
+    skill.paramList = j.value("paramList", std::vector<double>{});
+    skill.costItems = j.value("costItems", std::vector<ProudSkillCostItem>{});
+    skill.coinCost = j.value("coinCost", 0);
+    skill.icon = j.value("icon", "");
 }

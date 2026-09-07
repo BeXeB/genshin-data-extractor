@@ -14,8 +14,7 @@ inline void from_json(
     const nlohmann::json &j,
     PassiveSkillGroup &skill)
 {
-    j.at("proudSkillGroupId")
-        .get_to(skill.passiveSkillGroupId);
+    skill.passiveSkillGroupId = j.value("proudSkillGroupId", 0);
 }
 
 struct AvatarSkillDepotExcelConfig
@@ -35,17 +34,10 @@ inline void from_json(
     const nlohmann::json &j,
     AvatarSkillDepotExcelConfig &depot)
 {
-    j.at("id")
-        .get_to(depot.id);
-
-    j.at("skills")
-        .get_to(depot.skills);
-
-    j.at("talents")
-        .get_to(depot.talents);
-
-    j.at("energySkill")
-        .get_to(depot.energySkill);
+    depot.id = j.value("id", 0);
+    depot.skills = j.value("skills", std::vector<int>{});
+    depot.talents = j.value("talents", std::vector<int>{});
+    depot.energySkill = j.value("energySkill", 0);
 
     // Datamine keys are obfuscated and can change, so detect passive arrays by shape.
     std::vector<PassiveSkillGroup> normalPassiveGroups;

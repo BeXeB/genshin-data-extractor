@@ -20,15 +20,8 @@ inline void from_json(
     const nlohmann::json &j,
     AvatarTalentExcelConfig &talent)
 {
-    j.at("talentId")
-        .get_to(talent.talentId);
-
-    j.at("nameTextMapHash")
-        .get_to(talent.nameTextMapHash);
-
-    j.at("descTextMapHash")
-        .get_to(talent.descTextMapHash);
-
-    j.at("icon")
-        .get_to(talent.icon);
+    talent.talentId = j.value("talentId", 0);
+    talent.nameTextMapHash = j.value("nameTextMapHash", 0);
+    talent.descTextMapHash = j.value("descTextMapHash", 0);
+    talent.icon = j.value("icon", "");
 }

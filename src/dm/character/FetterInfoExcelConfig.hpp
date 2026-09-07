@@ -28,20 +28,12 @@ inline void from_json(
     const nlohmann::json &j,
     FetterInfoExcelConfig &fetter)
 {
-    j.at("avatarId")
-        .get_to(fetter.avatarId);
-    j.at("avatarConstellationBeforTextMapHash")
-        .get_to(fetter.avatarConstellationBeforTextMapHash);
-    j.at("avatarDetailTextMapHash")
-        .get_to(fetter.avatarDetailTextMapHash);
-    j.at("avatarNativeTextMapHash")
-        .get_to(fetter.avatarNativeTextMapHash);
-    j.at("avatarTitleTextMapHash")
-        .get_to(fetter.avatarTitleTextMapHash);
-    j.at("avatarVisionBeforTextMapHash")
-        .get_to(fetter.avatarVisionBeforTextMapHash);
-    j.at("infoBirthDay")
-        .get_to(fetter.infoBirthDay);
-    j.at("infoBirthMonth")
-        .get_to(fetter.infoBirthMonth);
+    fetter.avatarId = j.value("avatarId", 0);
+    fetter.avatarConstellationBeforTextMapHash = j.value("avatarConstellationBeforTextMapHash", 0);
+    fetter.avatarDetailTextMapHash = j.value("avatarDetailTextMapHash", 0);
+    fetter.avatarNativeTextMapHash = j.value("avatarNativeTextMapHash", 0);
+    fetter.avatarTitleTextMapHash = j.value("avatarTitleTextMapHash", 0);
+    fetter.avatarVisionBeforTextMapHash = j.value("avatarVisionBeforTextMapHash", 0);
+	fetter.infoBirthDay = j.value("infoBirthDay", 0);
+	fetter.infoBirthMonth = j.value("infoBirthMonth", 0);
 }

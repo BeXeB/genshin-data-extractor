@@ -26,26 +26,16 @@ inline void from_json(
     const nlohmann::json &j,
     CombineMaterialItem &item)
 {
-    j.at("id")
-        .get_to(item.id);
-
-    j.at("count")
-        .get_to(item.count);
+    item.id = j.value("id", 0);
+    item.count = j.value("count", 0);
 }
 
 inline void from_json(
     const nlohmann::json &j,
     CombineExcelConfig &combine)
 {
-    j.at("resultItemId")
-        .get_to(combine.resultItemId);
-
-    j.at("resultItemCount")
-        .get_to(combine.resultItemCount);
-
-    j.at("scoinCost")
-        .get_to(combine.scoinCost);
-
-    j.at("materialItems")
-        .get_to(combine.materialItems);
+    combine.resultItemId = j.value("resultItemId", 0);
+    combine.resultItemCount = j.value("resultItemCount", 0);
+    combine.scoinCost = j.value("scoinCost", 0);
+    combine.materialItems = j.value("materialItems", std::vector<CombineMaterialItem>{});
 }

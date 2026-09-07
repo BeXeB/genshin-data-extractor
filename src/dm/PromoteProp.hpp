@@ -17,8 +17,8 @@ inline void from_json(
     const nlohmann::json& j,
     PromoteProp& prop)
 {
-    j.at("propType").get_to(prop.propType);
-    j.at("value").get_to(prop.value);
+    prop.propType = j.value("propType", "");
+    prop.value = j.value("value", 0.0);
 }
 
 struct PromoteCostItem
@@ -32,6 +32,6 @@ inline void from_json(
     const nlohmann::json& j,
     PromoteCostItem& item)
 {
-    j.at("id").get_to(item.id);
-    j.at("count").get_to(item.count);
+    item.id = j.value("id", 0);
+    item.count = j.value("count", 0);
 }

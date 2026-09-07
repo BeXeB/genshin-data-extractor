@@ -15,8 +15,8 @@ inline void from_json(
     const nlohmann::json &j,
     Prop &prop)
 {
-    j.at("propType").get_to(prop.propType);
-    j.at("value").get_to(prop.value);
+    prop.propType = j.value("propType", "");
+    prop.value = j.value("value", 0.0);
 };
 
 struct EquipAffixExcelConfig
@@ -37,10 +37,10 @@ inline void from_json(
     const nlohmann::json &j,
     EquipAffixExcelConfig &affix)
 {
-    j.at("id").get_to(affix.id);
-    j.at("level").get_to(affix.level);
-    j.at("descTextMapHash").get_to(affix.descTextMapHash);
-    j.at("nameTextMapHash").get_to(affix.nameTextMapHash);
-    j.at("paramList").get_to(affix.paramList);
-    j.at("addProps").get_to(affix.addProps);
+    affix.id = j.value("id", 0);
+    affix.level = j.value("level", 0);
+    affix.descTextMapHash = j.value("descTextMapHash", 0);
+    affix.nameTextMapHash = j.value("nameTextMapHash", 0);
+    affix.paramList = j.value("paramList", std::vector<double>{});
+    affix.addProps = j.value("addProps", std::vector<Prop>{});
 };

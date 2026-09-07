@@ -26,24 +26,11 @@ inline void from_json(
     const nlohmann::json &j,
     MaterialExcelConfig &material)
 {
-    j.at("id")
-        .get_to(material.id);
-
-    j.at("icon")
-        .get_to(material.icon);
-
-    j.at("nameTextMapHash")
-        .get_to(material.nameTextMapHash);
-
-    j.at("descTextMapHash")
-        .get_to(material.descTextMapHash);
-
-    j.at("typeDescTextMapHash")
-        .get_to(material.typeDescTextMapHash);
-
-    j.at("rank")
-        .get_to(material.rank);
-
-    j.at("rankLevel")
-        .get_to(material.rankLevel);
+    material.id = j.value("id", 0);
+    material.icon = j.value("icon", "");
+    material.nameTextMapHash = j.value("nameTextMapHash", 0);
+    material.descTextMapHash = j.value("descTextMapHash", 0);
+    material.typeDescTextMapHash = j.value("typeDescTextMapHash", 0);
+    material.rank = j.value("rank", 0);
+    material.rankLevel = j.value("rankLevel", 0);
 }

@@ -27,27 +27,12 @@ inline void from_json(
     const nlohmann::json &j,
     ReliquaryExcelConfig &reliquary)
 {
-    j.at("id")
-        .get_to(reliquary.id);
-
-    j.at("setId")
-        .get_to(reliquary.setId);
-
-    j.at("nameTextMapHash")
-        .get_to(reliquary.nameTextMapHash);
-
-    j.at("descTextMapHash")
-        .get_to(reliquary.descTextMapHash);
-
-    j.at("equipType")
-        .get_to(reliquary.equipType);
-
-    j.at("icon")
-        .get_to(reliquary.icon);
-
-    j.at("rankLevel")
-        .get_to(reliquary.rankLevel);
-
-    j.at("storyId")
-        .get_to(reliquary.storyId);
+    reliquary.id = j.value("id", 0);
+    reliquary.setId = j.value("setId", 0);
+    reliquary.nameTextMapHash = j.value("nameTextMapHash", 0);
+    reliquary.descTextMapHash = j.value("descTextMapHash", 0);
+    reliquary.equipType = j.value("equipType", "");
+    reliquary.icon = j.value("icon", "");
+    reliquary.rankLevel = j.value("rankLevel", 0);
+    reliquary.storyId = j.value("storyId", 0);
 }

@@ -22,18 +22,9 @@ inline void from_json(
     const nlohmann::json &j,
     ReliquarySetExcelConfig &set)
 {
-    j.at("setId")
-        .get_to(set.setId);
-
-    j.at("equipAffixId")
-        .get_to(set.equipAffixId);
-
-    j.at("setNeedNum")
-        .get_to(set.setNeedNum);
-
-    j.at("textList")
-        .get_to(set.textList);
-
-    j.at("disableFilter")
-        .get_to(set.disableFilter);
+    set.setId = j.value("setId", 0);
+    set.equipAffixId = j.value("equipAffixId", 0);
+    set.setNeedNum = j.value("setNeedNum", std::vector<int>{});
+    set.textList = j.value("textList", std::vector<uint64_t>{});
+    set.disableFilter = j.value("disableFilter", 0);
 }

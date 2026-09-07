@@ -25,12 +25,12 @@ inline void from_json(
     const nlohmann::json &j,
     WeaponPromoteExcelConfig &promote)
 {
-    j.at("weaponPromoteId").get_to(promote.weaponPromoteId);
-    j.at("promoteLevel").get_to(promote.promoteLevel);
-    j.at("unlockMaxLevel").get_to(promote.unlockMaxLevel);
+    promote.weaponPromoteId = j.value("weaponPromoteId", 0);
+    promote.promoteLevel = j.value("promoteLevel", 0);
+    promote.unlockMaxLevel = j.value("unlockMaxLevel", 0);
 
-    j.at("coinCost").get_to(promote.coinCost);
+    promote.coinCost = j.value("coinCost", 0);
 
-    j.at("costItems").get_to(promote.costItems);
-    j.at("addProps").get_to(promote.addProps);
+    promote.costItems = j.value("costItems", std::vector<PromoteCostItem>{});
+    promote.addProps = j.value("addProps", std::vector<PromoteProp>{});
 }

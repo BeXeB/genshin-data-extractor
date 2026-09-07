@@ -16,9 +16,9 @@ inline void from_json(
     const nlohmann::json &j,
     CurveInfo &curve)
 {
-    j.at("arith").get_to(curve.arith);
-    j.at("type").get_to(curve.type);
-    j.at("value").get_to(curve.value);
+    curve.arith = j.value("arith", "");
+    curve.type = j.value("type", "");
+    curve.value = j.value("value", 0.0);
 }
 
 struct WeaponCurveExcelConfig
@@ -32,6 +32,6 @@ inline void from_json(
     const nlohmann::json &j,
     WeaponCurveExcelConfig &curve)
 {
-    j.at("level").get_to(curve.level);
-    j.at("curveInfos").get_to(curve.curveInfos);
+    curve.level = j.value("level", 0);
+    curve.curveInfos = j.value("curveInfos", std::vector<CurveInfo>{});
 }

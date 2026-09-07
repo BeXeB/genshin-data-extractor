@@ -22,18 +22,9 @@ inline void from_json(
     const nlohmann::json &j,
     AvatarSkillExcelConfig &skill)
 {
-    j.at("id")
-        .get_to(skill.id);
-
-    j.at("proudSkillGroupId")
-        .get_to(skill.proudSkillGroupId);
-
-    j.at("nameTextMapHash")
-        .get_to(skill.nameTextMapHash);
-
-    j.at("descTextMapHash")
-        .get_to(skill.descTextMapHash);
-
-    j.at("skillIcon")
-        .get_to(skill.skillIcon);
+    skill.id = j.value("id", 0);
+    skill.proudSkillGroupId = j.value("proudSkillGroupId", 0);
+    skill.nameTextMapHash = j.value("nameTextMapHash", 0);
+    skill.descTextMapHash = j.value("descTextMapHash", 0);
+    skill.skillIcon = j.value("skillIcon", "");
 }

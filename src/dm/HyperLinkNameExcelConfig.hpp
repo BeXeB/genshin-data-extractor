@@ -16,7 +16,7 @@ inline void from_json(
     const nlohmann::json &j,
     HyperLinkNameExcelConfig &hyperlink)
 {
-    j.at("id").get_to(hyperlink.id);
-    j.at("descTextMapHash").get_to(hyperlink.descTextMapHash);
-    j.at("nameTextMapHash").get_to(hyperlink.nameTextMapHash);
+    hyperlink.id = j.value("id", 0);
+    hyperlink.descTextMapHash = j.value("descTextMapHash", 0);
+    hyperlink.nameTextMapHash = j.value("nameTextMapHash", 0);
 };

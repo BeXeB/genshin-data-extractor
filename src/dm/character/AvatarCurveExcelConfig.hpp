@@ -15,8 +15,8 @@ inline void from_json(
     const nlohmann::json& j,
     AvatarCurveInfo& info)
 {
-    j.at("type").get_to(info.type);
-    j.at("value").get_to(info.value);
+    info.type = j.value("type", "");
+    info.value = j.value("value", 0.0);
 }
 
 
@@ -30,6 +30,6 @@ inline void from_json(
     const nlohmann::json& j,
     AvatarCurveExcelConfig& curve)
 {
-    j.at("level").get_to(curve.level);
-    j.at("curveInfos").get_to(curve.curveInfos);
+    curve.level = j.value("level", 0);
+    curve.curveInfos = j.value("curveInfos", std::vector<AvatarCurveInfo>{});
 }
