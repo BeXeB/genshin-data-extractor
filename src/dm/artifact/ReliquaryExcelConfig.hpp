@@ -29,8 +29,8 @@ inline void from_json(
 {
     reliquary.id = j.value("id", 0);
     reliquary.setId = j.value("setId", 0);
-    reliquary.nameTextMapHash = j.value("nameTextMapHash", 0);
-    reliquary.descTextMapHash = j.value("descTextMapHash", 0);
+    reliquary.nameTextMapHash = j.value("nameTextMapHash", 0ULL);
+    reliquary.descTextMapHash = j.value("descTextMapHash", 0ULL);
     reliquary.equipType = j.value("equipType", "");
     reliquary.icon = j.value("icon", "");
     reliquary.rankLevel = j.value("rankLevel", 0);

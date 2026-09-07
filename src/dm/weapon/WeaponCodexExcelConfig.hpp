@@ -15,6 +15,6 @@ inline void from_json(
     const nlohmann::json &j,
     WeaponCodexExcelConfig &codex)
 {
-    codex.weaponId = j.value("weaponId", 0);
+    codex.weaponId = j.value("weaponId", 0LL);
     codex.sortOrder = j.value("sortOrder", 0);
 }

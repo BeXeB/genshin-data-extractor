@@ -16,7 +16,7 @@ inline void from_json(
     const nlohmann::json &j,
     HyperLinkNameExcelConfig &hyperlink)
 {
-    hyperlink.id = j.value("id", 0);
-    hyperlink.descTextMapHash = j.value("descTextMapHash", 0);
-    hyperlink.nameTextMapHash = j.value("nameTextMapHash", 0);
+    hyperlink.id = j.value("id", 0LL);
+    hyperlink.descTextMapHash = j.value("descTextMapHash", 0LL);
+    hyperlink.nameTextMapHash = j.value("nameTextMapHash", 0LL);
 };

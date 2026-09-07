@@ -57,7 +57,7 @@ inline void from_json(
     AvatarExcelConfig &avatar)
 {
     avatar.id = j.value("id", 0);
-    avatar.nameTextMapHash = j.value("nameTextMapHash", 0);
+    avatar.nameTextMapHash = j.value("nameTextMapHash", 0ULL);
     avatar.iconName = j.value("iconName", "");
     avatar.sideIconName = j.value("sideIconName", "");
     avatar.weaponType = j.value("weaponType", "");

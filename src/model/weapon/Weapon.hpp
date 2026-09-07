@@ -99,7 +99,7 @@ inline void to_json(
 
         {"sortOrder", weapon.sortOrder}};
 
-    if (weapon.mainStatType)
+    if (weapon.mainStatType && *weapon.mainStatType != StatType::Unknown)
         j["mainStatType"] = StatTypeToDM(*weapon.mainStatType);
 
     if (weapon.effectName)

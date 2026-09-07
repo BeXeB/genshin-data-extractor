@@ -27,7 +27,7 @@ inline void to_json(
     if (stat.attack)
         j["attack"] = *stat.attack;
 
-    if (stat.specialized)
+    if (stat.specialized && *stat.specialized != 0.0)
         j["specialized"] = *stat.specialized;
 }
 

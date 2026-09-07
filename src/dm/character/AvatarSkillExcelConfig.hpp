@@ -24,7 +24,7 @@ inline void from_json(
 {
     skill.id = j.value("id", 0);
     skill.proudSkillGroupId = j.value("proudSkillGroupId", 0);
-    skill.nameTextMapHash = j.value("nameTextMapHash", 0);
-    skill.descTextMapHash = j.value("descTextMapHash", 0);
+    skill.nameTextMapHash = j.value("nameTextMapHash", 0ULL);
+    skill.descTextMapHash = j.value("descTextMapHash", 0ULL);
     skill.skillIcon = j.value("skillIcon", "");
 }

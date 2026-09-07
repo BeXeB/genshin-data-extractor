@@ -16,7 +16,7 @@ inline void from_json(
     const nlohmann::json &j,
     AvatarCodexExcelConfig &codex)
 {
-    codex.avatarId = j.value("avatarId", 0);
+    codex.avatarId = j.value("avatarId", 0LL);
     codex.sortFactor = j.value("sortFactor", 0);
     codex.sortId = j.value("sortId", 0);
 }

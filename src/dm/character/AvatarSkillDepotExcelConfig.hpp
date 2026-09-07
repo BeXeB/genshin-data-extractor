@@ -61,6 +61,12 @@ inline void from_json(
                 break;
             }
 
+            // Skip empty objects (trailing placeholders in the array)
+            if (entry.empty())
+            {
+                continue;
+            }
+
             if (!entry.contains("proudSkillGroupId"))
             {
                 matchesPassiveSkillGroupShape = false;
