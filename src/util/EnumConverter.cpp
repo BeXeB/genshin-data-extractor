@@ -58,7 +58,7 @@ std::string WeaponTypeToText(
         return "Claymore";
 
     case WeaponType::Polearm:
-        return "Polearm";
+        return "Pole";
 
     case WeaponType::Bow:
         return "Bow";
