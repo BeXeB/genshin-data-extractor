@@ -23,6 +23,7 @@
 #include "dm/weapon/WeaponPromoteExcelConfig.hpp"
 #include "dm/artifact/ReliquarySetExcelConfig.hpp"
 #include "dm/artifact/ReliquaryExcelConfig.hpp"
+#include "dm/artifact/ReliquaryCodexExcelConfig.hpp"
 #include "dm/CombineExcelConfig.hpp"
 #include "dm/weapon/WeaponCodexExcelConfig.hpp"
 #include "dm/character/AvatarCodexExcelConfig.hpp"
@@ -53,6 +54,7 @@ public:
 
     const ReliquarySetExcelConfig &GetReliquarySet(int setId) const;
     const std::vector<ReliquaryExcelConfig> &GetReliquaries(int setId) const;
+    const std::vector<ReliquaryCodexExcelConfig> &GetReliquaryCodex(int setId) const;
     const std::unordered_map<int, ReliquarySetExcelConfig> &GetReliquarySets() const;
 
     const MaterialExcelConfig &GetMaterial(int id) const;
@@ -81,6 +83,7 @@ private:
     void LoadWeaponCurves(const std::string &path);
     void LoadReliquarySets(const std::string &path);
     void LoadReliquaries(const std::string &path);
+    void LoadReliquaryCodexes(const std::string &path);
     void LoadCombines(const std::string &path);
     void LoadAvaterCodexes(const std::string &path);
     void LoadWeaponCodexes(const std::string &path);
@@ -104,6 +107,7 @@ private:
     std::unordered_map<int, WeaponCurveExcelConfig> weaponCurves;
     std::unordered_map<int, ReliquarySetExcelConfig> reliquarySets;
     std::unordered_map<int, std::vector<ReliquaryExcelConfig>> reliquaries;
+    std::unordered_map<int, std::vector<ReliquaryCodexExcelConfig>> reliquaryCodexes;
     std::unordered_map<int, CombineExcelConfig> combines;
     std::unordered_map<int, AvatarCodexExcelConfig> avatarCodexes;
     std::unordered_map<int, WeaponCodexExcelConfig> weaponCodexes;

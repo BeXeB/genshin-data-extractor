@@ -1,5 +1,6 @@
 #include "GameDatabase.hpp"
 
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 
@@ -27,6 +28,7 @@ void GameDatabase::Load(
     equipAffixes.clear();
     reliquarySets.clear();
     reliquaries.clear();
+    reliquaryCodexes.clear();
     combines.clear();
     avatarCodexes.clear();
     weaponCodexes.clear();
@@ -50,6 +52,7 @@ void GameDatabase::Load(
     LoadWeaponCurves(path + "/ExcelBinOutput/WeaponCurveExcelConfigData.json");
     LoadReliquarySets(path + "/ExcelBinOutput/ReliquarySetExcelConfigData.json");
     LoadReliquaries(path + "/ExcelBinOutput/ReliquaryExcelConfigData.json");
+    LoadReliquaryCodexes(path + "/ExcelBinOutput/ReliquaryCodexExcelConfigData.json");
     LoadCombines(path + "/ExcelBinOutput/CombineExcelConfigData.json");
     LoadAvaterCodexes(path + "/ExcelBinOutput/AvatarCodexExcelConfigData.json");
     LoadWeaponCodexes(path + "/ExcelBinOutput/WeaponCodexExcelConfigData.json");
@@ -389,6 +392,31 @@ void GameDatabase::LoadReliquaries(const std::string &path)
     }
 }
 
+void GameDatabase::LoadReliquaryCodexes(const std::string &path)
+{
+    auto json = LoadJson(path);
+
+    for (const auto &entry : json)
+    {
+        ReliquaryCodexExcelConfig codex =
+            entry.get<ReliquaryCodexExcelConfig>();
+
+        reliquaryCodexes[codex.suitId]
+            .push_back(std::move(codex));
+    }
+
+    for (auto &[suitId, codexes] : reliquaryCodexes)
+    {
+        std::sort(
+            codexes.begin(),
+            codexes.end(),
+            [](const auto &a, const auto &b)
+            {
+                return a.level < b.level;
+            });
+    }
+}
+
 void GameDatabase::LoadCombines(const std::string &path)
 {
     auto json = LoadJson(path);
@@ -556,6 +584,11 @@ const ReliquarySetExcelConfig &GameDatabase::GetReliquarySet(int setId) const
 const std::vector<ReliquaryExcelConfig> &GameDatabase::GetReliquaries(int setId) const
 {
     return reliquaries.at(setId);
+}
+
+const std::vector<ReliquaryCodexExcelConfig> &GameDatabase::GetReliquaryCodex(int setId) const
+{
+    return reliquaryCodexes.at(setId);
 }
 
 const std::unordered_map<int, ReliquarySetExcelConfig> &GameDatabase::GetReliquarySets() const

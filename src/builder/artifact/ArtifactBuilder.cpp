@@ -1,4 +1,6 @@
 #include <set>
+#include <algorithm>
+#include <unordered_map>
 
 #include "ArtifactBuilder.hpp"
 #include <util/Slug.hpp>
@@ -51,15 +53,73 @@ ArtifactSet ArtifactBuilder::Build(
         }
     }
 
+    // Use ReliquaryCodexExcelConfigData as the canonical source
+    const auto &codexEntries =
+        database.GetReliquaryCodex(setId);
+
+    // Ensure we have Codex entries
+    if (codexEntries.empty())
+    {
+        return artifact;
+    }
+
+    // Build rarityList from Codex levels
+    std::set<int> rarities;
+    for (const auto &codex : codexEntries)
+    {
+        rarities.insert(codex.level);
+    }
+    artifact.rarityList.assign(
+        rarities.begin(),
+        rarities.end());
+
+    // Find the highest level Codex entry for canonical piece data
+    const auto highestCodex = std::max_element(
+        codexEntries.begin(),
+        codexEntries.end(),
+        [](const auto &a, const auto &b)
+        {
+            return a.level < b.level;
+        });
+
+    if (highestCodex == codexEntries.end())
+    {
+        return artifact;
+    }
+
+    // Map Codex piece IDs to ReliquaryExcelConfig entries
+    // and build the pieces
+    const int pieceIds[] = {
+        highestCodex->flowerId,  // Flower
+        highestCodex->leatherId, // Plume
+        highestCodex->sandId,    // Sands
+        highestCodex->cupId,     // Goblet
+        highestCodex->capId      // Circlet
+    };
+
+    // Get all reliquaries to resolve piece IDs
     const auto &reliquaries =
         database.GetReliquaries(setId);
-    std::set<int> rarities;
 
+    // Build a map from reliquary ID to reliquary config for quick lookup
+    std::unordered_map<int, const ReliquaryExcelConfig *> reliquaryMap;
     for (const auto &reliquary : reliquaries)
     {
-        rarities.insert(
-            reliquary.rankLevel);
+        reliquaryMap[reliquary.id] = &reliquary;
+    }
 
+    // Process each piece ID in order: flower, plume, sands, goblet, circlet
+    for (int i = 0; i < 5; ++i)
+    {
+        int pieceId = pieceIds[i];
+        auto it = reliquaryMap.find(pieceId);
+
+        if (it == reliquaryMap.end())
+        {
+            continue;
+        }
+
+        const auto &reliquary = *it->second;
         ArtifactPiece piece =
             pieceBuilder.Build(
                 reliquary,
@@ -101,10 +161,6 @@ ArtifactSet ArtifactBuilder::Build(
             break;
         }
     }
-
-    artifact.rarityList.assign(
-        rarities.begin(),
-        rarities.end());
 
     return artifact;
 }
