@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <fstream>
 #include <iostream>
+#include <string_view>
 
 #include <nlohmann/json.hpp>
 
@@ -81,6 +82,91 @@ std::string FixEscapedNewlines(std::string value)
     }
 
     return result;
+}
+
+uint64_t FindAlternateDescriptionHash(
+    const nlohmann::json &entry,
+    uint64_t baseDescriptionHash,
+    const GameDatabase &db,
+    std::string_view recordType,
+    int recordId)
+{
+    uint64_t alternateHash{};
+    const auto baseDescription =
+        db.GetText(baseDescriptionHash);
+
+    for (auto it = entry.begin(); it != entry.end(); ++it)
+    {
+        const auto &key = it.key();
+        const bool isObfuscatedKey =
+            !key.empty() &&
+            std::all_of(
+                key.begin(),
+                key.end(),
+                [](unsigned char character)
+                {
+                    return character >= 'A' &&
+                           character <= 'Z';
+                });
+
+        if (!isObfuscatedKey)
+        {
+            continue;
+        }
+
+        uint64_t candidateHash{};
+        if (it->is_number_unsigned())
+        {
+            candidateHash = it->get<uint64_t>();
+        }
+        else if (it->is_number_integer())
+        {
+            const auto signedHash =
+                it->get<int64_t>();
+
+            if (signedHash < 0)
+            {
+                continue;
+            }
+
+            candidateHash =
+                static_cast<uint64_t>(signedHash);
+        }
+        else
+        {
+            continue;
+        }
+
+        if (candidateHash == baseDescriptionHash)
+        {
+            continue;
+        }
+
+        const auto candidateText =
+            db.GetText(candidateHash);
+
+        if (candidateText.empty() ||
+            candidateText == baseDescription)
+        {
+            continue;
+        }
+
+        if (alternateHash != 0 &&
+            alternateHash != candidateHash)
+        {
+            std::cerr
+                << "Ambiguous alternate descriptions for "
+                << recordType
+                << ' '
+                << recordId
+                << "; using base description\n";
+            return 0;
+        }
+
+        alternateHash = candidateHash;
+    }
+
+    return alternateHash;
 }
 
 // Loaders
@@ -237,6 +323,14 @@ void GameDatabase::LoadTalents(const std::string &path)
         AvatarTalentExcelConfig talent =
             entry.get<AvatarTalentExcelConfig>();
 
+        talent.enhancedDescTextMapHash =
+            FindAlternateDescriptionHash(
+                entry,
+                talent.descTextMapHash,
+                *this,
+                "constellation talent",
+                talent.talentId);
+
         talents.emplace(
             talent.talentId,
             std::move(talent));
@@ -252,6 +346,14 @@ void GameDatabase::LoadSkills(const std::string &path)
         AvatarSkillExcelConfig skill =
             entry.get<AvatarSkillExcelConfig>();
 
+        skill.enhancedDescTextMapHash =
+            FindAlternateDescriptionHash(
+                entry,
+                skill.descTextMapHash,
+                *this,
+                "combat talent",
+                skill.id);
+
         skills.emplace(
             skill.id,
             std::move(skill));
@@ -266,6 +368,14 @@ void GameDatabase::LoadProudSkills(const std::string &path)
     {
         ProudSkillExcelConfig skill =
             entry.get<ProudSkillExcelConfig>();
+
+        skill.enhancedDescTextMapHash =
+            FindAlternateDescriptionHash(
+                entry,
+                skill.descTextMapHash,
+                *this,
+                "passive talent",
+                skill.proudSkillId);
 
         proudSkills[skill.proudSkillGroupId]
             .push_back(std::move(skill));
