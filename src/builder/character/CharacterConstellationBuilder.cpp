@@ -72,7 +72,14 @@ ConstellationDetail CharacterConstellationBuilder::BuildDetail(
 
     detail.descriptionRaw =
         db.GetText(
-            talent.descTextMapHash);
+            talent.enhancedDescTextMapHash);
+
+    if (detail.descriptionRaw.empty())
+    {
+        detail.descriptionRaw =
+            db.GetText(
+                talent.descTextMapHash);
+    }
 
     return detail;
 }

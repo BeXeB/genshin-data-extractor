@@ -15,6 +15,8 @@ struct AvatarSkillExcelConfig
 
     uint64_t descTextMapHash{};
 
+    uint64_t enhancedDescTextMapHash{};
+
     std::string skillIcon;
 };
 
@@ -26,5 +28,6 @@ inline void from_json(
     skill.proudSkillGroupId = j.value("proudSkillGroupId", 0);
     skill.nameTextMapHash = j.value("nameTextMapHash", 0ULL);
     skill.descTextMapHash = j.value("descTextMapHash", 0ULL);
+    skill.enhancedDescTextMapHash = j.value("CJJODEPIILB", 0ULL);
     skill.skillIcon = j.value("skillIcon", "");
 }

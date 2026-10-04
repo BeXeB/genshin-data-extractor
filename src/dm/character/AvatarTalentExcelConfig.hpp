@@ -13,6 +13,8 @@ struct AvatarTalentExcelConfig
 
     uint64_t descTextMapHash{};
 
+    uint64_t enhancedDescTextMapHash{};
+
     std::string icon;
 };
 
@@ -23,5 +25,6 @@ inline void from_json(
     talent.talentId = j.value("talentId", 0);
     talent.nameTextMapHash = j.value("nameTextMapHash", 0ULL);
     talent.descTextMapHash = j.value("descTextMapHash", 0ULL);
+    talent.enhancedDescTextMapHash = j.value("CJJODEPIILB", 0ULL);
     talent.icon = j.value("icon", "");
 }

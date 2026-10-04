@@ -211,7 +211,14 @@ CombatTalent CharacterTalentBuilder::BuildCombatTalent(
 
     result.descriptionRaw =
         db.GetText(
-            skill.descTextMapHash);
+            skill.enhancedDescTextMapHash);
+
+    if (result.descriptionRaw.empty())
+    {
+        result.descriptionRaw =
+            db.GetText(
+                skill.descTextMapHash);
+    }
 
     result.id = skill.id;
 
@@ -278,7 +285,14 @@ PassiveTalent CharacterTalentBuilder::BuildPassiveTalent(
 
     result.descriptionRaw =
         db.GetText(
-            passive.descTextMapHash);
+            passive.enhancedDescTextMapHash);
+
+    if (result.descriptionRaw.empty())
+    {
+        result.descriptionRaw =
+            db.GetText(
+                passive.descTextMapHash);
+    }
 
     return result;
 }
