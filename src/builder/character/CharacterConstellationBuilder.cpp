@@ -81,5 +81,9 @@ ConstellationDetail CharacterConstellationBuilder::BuildDetail(
                 talent.descTextMapHash);
     }
 
+    detail.descriptionRaw +=
+        db.GetText(
+            talent.additionalDescTextMapHash);
+
     return detail;
 }

@@ -4,6 +4,7 @@
 #include <fstream>
 #include <iostream>
 #include <string_view>
+#include <vector>
 
 #include <nlohmann/json.hpp>
 
@@ -84,14 +85,21 @@ std::string FixEscapedNewlines(std::string value)
     return result;
 }
 
-uint64_t FindAlternateDescriptionHash(
+struct AlternateDescriptionHashes
+{
+    uint64_t replacement{};
+    uint64_t additional{};
+};
+
+AlternateDescriptionHashes FindAlternateDescriptionHashes(
     const nlohmann::json &entry,
     uint64_t baseDescriptionHash,
     const GameDatabase &db,
     std::string_view recordType,
     int recordId)
 {
-    uint64_t alternateHash{};
+    std::vector<uint64_t> replacementHashes;
+    std::vector<uint64_t> additionalHashes;
     const auto baseDescription =
         db.GetText(baseDescriptionHash);
 
@@ -151,22 +159,45 @@ uint64_t FindAlternateDescriptionHash(
             continue;
         }
 
-        if (alternateHash != 0 &&
-            alternateHash != candidateHash)
+        auto &hashes =
+            candidateText.front() == '\n'
+                ? additionalHashes
+                : replacementHashes;
+
+        if (std::find(
+                hashes.begin(),
+                hashes.end(),
+                candidateHash) == hashes.end())
+        {
+            hashes.push_back(candidateHash);
+        }
+    }
+
+    auto selectUniqueHash =
+        [&](const std::vector<uint64_t> &hashes,
+            std::string_view descriptionType)
+    {
+        if (hashes.size() > 1)
         {
             std::cerr
-                << "Ambiguous alternate descriptions for "
+                << "Ambiguous "
+                << descriptionType
+                << " descriptions for "
                 << recordType
                 << ' '
                 << recordId
-                << "; using base description\n";
-            return 0;
+                << "; ignoring those candidates\n";
+            return uint64_t{};
         }
 
-        alternateHash = candidateHash;
-    }
+        return hashes.empty()
+            ? uint64_t{}
+            : hashes.front();
+    };
 
-    return alternateHash;
+    return {
+        selectUniqueHash(replacementHashes, "replacement"),
+        selectUniqueHash(additionalHashes, "additional")};
 }
 
 // Loaders
@@ -323,13 +354,17 @@ void GameDatabase::LoadTalents(const std::string &path)
         AvatarTalentExcelConfig talent =
             entry.get<AvatarTalentExcelConfig>();
 
-        talent.enhancedDescTextMapHash =
-            FindAlternateDescriptionHash(
+        const auto descriptionHashes =
+            FindAlternateDescriptionHashes(
                 entry,
                 talent.descTextMapHash,
                 *this,
                 "constellation talent",
                 talent.talentId);
+        talent.enhancedDescTextMapHash =
+            descriptionHashes.replacement;
+        talent.additionalDescTextMapHash =
+            descriptionHashes.additional;
 
         talents.emplace(
             talent.talentId,
@@ -346,13 +381,17 @@ void GameDatabase::LoadSkills(const std::string &path)
         AvatarSkillExcelConfig skill =
             entry.get<AvatarSkillExcelConfig>();
 
-        skill.enhancedDescTextMapHash =
-            FindAlternateDescriptionHash(
+        const auto descriptionHashes =
+            FindAlternateDescriptionHashes(
                 entry,
                 skill.descTextMapHash,
                 *this,
                 "combat talent",
                 skill.id);
+        skill.enhancedDescTextMapHash =
+            descriptionHashes.replacement;
+        skill.additionalDescTextMapHash =
+            descriptionHashes.additional;
 
         skills.emplace(
             skill.id,
@@ -369,13 +408,17 @@ void GameDatabase::LoadProudSkills(const std::string &path)
         ProudSkillExcelConfig skill =
             entry.get<ProudSkillExcelConfig>();
 
-        skill.enhancedDescTextMapHash =
-            FindAlternateDescriptionHash(
+        const auto descriptionHashes =
+            FindAlternateDescriptionHashes(
                 entry,
                 skill.descTextMapHash,
                 *this,
                 "passive talent",
                 skill.proudSkillId);
+        skill.enhancedDescTextMapHash =
+            descriptionHashes.replacement;
+        skill.additionalDescTextMapHash =
+            descriptionHashes.additional;
 
         proudSkills[skill.proudSkillGroupId]
             .push_back(std::move(skill));

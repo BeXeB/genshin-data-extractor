@@ -17,6 +17,8 @@ struct AvatarSkillExcelConfig
 
     uint64_t enhancedDescTextMapHash{};
 
+    uint64_t additionalDescTextMapHash{};
+
     std::string skillIcon;
 };
 

@@ -220,6 +220,10 @@ CombatTalent CharacterTalentBuilder::BuildCombatTalent(
                 skill.descTextMapHash);
     }
 
+    result.descriptionRaw +=
+        db.GetText(
+            skill.additionalDescTextMapHash);
+
     result.id = skill.id;
 
 	result.proudSkillGroupId = skill.proudSkillGroupId;
@@ -293,6 +297,10 @@ PassiveTalent CharacterTalentBuilder::BuildPassiveTalent(
             db.GetText(
                 passive.descTextMapHash);
     }
+
+    result.descriptionRaw +=
+        db.GetText(
+            passive.additionalDescTextMapHash);
 
     return result;
 }

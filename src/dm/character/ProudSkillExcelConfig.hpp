@@ -35,6 +35,8 @@ struct ProudSkillExcelConfig
 
     uint64_t enhancedDescTextMapHash{};
 
+    uint64_t additionalDescTextMapHash{};
+
     std::vector<uint64_t> paramDescList;
 
     std::vector<double> paramList;
